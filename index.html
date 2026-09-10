@@ -1,1 +1,872 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reprendr — Reprenez ce qui vous appartient</title>
+  <meta name="description" content="Abonnement caché, prélèvement non consenti ? Reprendr génère votre dossier de contestation en 5 minutes. Diagnostic gratuit.">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#F5F7FA;color:#1A1A2E}
+    :root{--blue:#1B3F6E;--red:#E02B2B;--white:#fff;--gray:#F5F7FA;--gray2:#E8ECF2;--muted:#5A6478}
 
+    /* NAV */
+    .nav{background:#fff;border-bottom:1px solid var(--gray2);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo .re{color:var(--blue);font-size:22px;font-weight:800;letter-spacing:-0.5px}
+    .logo .ndr{color:var(--red);font-size:22px;font-weight:800;letter-spacing:-0.5px}
+    .nav-cta{background:var(--blue);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+
+    /* HERO */
+    .hero{background:var(--blue);color:#fff;padding:72px 32px 80px;text-align:center}
+    .hero-eyebrow{font-size:13px;font-weight:500;color:#fff;margin-bottom:20px;opacity:.9}
+    .hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.12;letter-spacing:-1px;max-width:700px;margin:0 auto 24px;color:#fff}
+    .hero h1 em{color:var(--red);font-style:normal}
+    .hero-sub{font-size:17px;color:#fff;max-width:520px;margin:0 auto 40px;line-height:1.6;opacity:.92}
+    .hero-stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+    .hero-stat{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:12px 24px;font-size:14px;color:#fff}
+    .hero-stat strong{color:#fff;font-size:22px;display:block;font-weight:800}
+    .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn-on-blue{background:#fff;color:var(--blue);border:none;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s}
+    .btn-on-blue:hover{transform:translateY(-1px)}
+    .btn-outline-white{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer}
+
+    /* SECTIONS */
+    .section{padding:64px 32px;max-width:900px;margin:0 auto}
+    .section-title{font-size:26px;font-weight:700;color:var(--blue);margin-bottom:8px;letter-spacing:-.3px}
+    .section-sub{font-size:15px;color:var(--muted);margin-bottom:40px}
+
+    /* CASE CARD */
+    .case-card{background:#fff;border:1.5px solid var(--gray2);border-radius:14px;padding:40px;cursor:pointer;transition:border-color .15s,box-shadow .15s;max-width:500px;margin:0 auto}
+    .case-card:hover{border-color:var(--blue);box-shadow:0 4px 20px rgba(27,63,110,.1)}
+    .case-icon{width:52px;height:52px;border-radius:10px;background:var(--gray);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
+    .case-card h3{font-size:20px;font-weight:700;color:#1A1A2E;margin-bottom:10px}
+    .case-card p{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+    .case-amount{font-size:13px;font-weight:600;color:var(--red);margin-bottom:20px;display:block}
+    .btn-on-white{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer}
+
+    /* HOW */
+    .how{background:#fff;border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2);padding:64px 32px}
+    .how-inner{max-width:900px;margin:0 auto}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-top:40px}
+    .step{text-align:center}
+    .step-num{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+    .step h4{font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:6px}
+    .step p{font-size:13px;color:var(--muted);line-height:1.5}
+
+    /* TRUST */
+    .trust{padding:48px 32px;max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .trust-item{text-align:center;padding:24px 12px;background:#fff;border-radius:12px;border:1px solid var(--gray2)}
+    .trust-num{font-size:26px;font-weight:800;color:var(--blue);display:block;margin-bottom:4px}
+    .trust-label{font-size:12px;color:var(--muted);line-height:1.4}
+
+    /* BOTTOM CTA */
+    .bottom-cta{background:var(--blue);color:#fff;text-align:center;padding:64px 32px}
+    .bottom-cta h2{font-size:28px;font-weight:800;margin-bottom:12px;letter-spacing:-.3px;color:#fff}
+    .bottom-cta p{font-size:15px;color:#fff;margin-bottom:32px;opacity:.9}
+    .price-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:6px 16px;font-size:13px;color:#fff;margin-bottom:24px}
+
+    /* FORMS & CARDS */
+    .wrapper{max-width:600px;margin:0 auto;padding:48px 24px}
+    .card{background:#fff;border-radius:16px;border:1px solid var(--gray2);padding:36px;box-shadow:0 2px 12px rgba(27,63,110,.06);margin-bottom:20px}
+    .eyebrow{font-size:12px;font-weight:600;color:var(--red);letter-spacing:.06em;margin-bottom:8px}
+    .card-title{font-size:21px;font-weight:800;color:var(--blue);margin-bottom:6px}
+    .card-sub{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:28px}
+
+    /* PROGRESS BAR */
+    .progress-bar{display:flex;align-items:center;gap:8px;margin-bottom:40px}
+    .step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all .3s}
+    .step-dot.done{background:var(--blue);color:#fff}
+    .step-dot.active{background:var(--red);color:#fff}
+    .step-dot.todo{background:var(--gray2);color:var(--muted)}
+    .step-line{flex:1;height:2px;background:var(--gray2);border-radius:2px;transition:background .3s}
+    .step-line.done{background:var(--blue)}
+
+    /* FIELDS */
+    .field{margin-bottom:20px}
+    .field label{display:block;font-size:13px;font-weight:600;color:#1A1A2E;margin-bottom:6px}
+    .field input,.field select,.field textarea{width:100%;padding:10px 14px;border:1.5px solid var(--gray2);border-radius:8px;font-size:14px;color:#1A1A2E;background:#fff;outline:none;font-family:inherit;transition:border-color .2s}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue)}
+    .field textarea{resize:vertical;min-height:80px;line-height:1.5}
+    .field .hint{font-size:12px;color:var(--muted);margin-top:6px}
+
+    /* CHOICE BUTTONS */
+    .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .choice-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .choice-btn{background:var(--gray);border:2px solid var(--gray2);border-radius:10px;padding:14px 16px;font-size:13px;font-weight:500;color:#1A1A2E;cursor:pointer;text-align:left;transition:all .2s;line-height:1.4}
+    .choice-btn:hover{border-color:var(--muted)}
+    .choice-btn.selected{border:2.5px solid var(--red);background:#FFF5F5;font-weight:600}
+    .choice-btn .icon{font-size:18px;display:block;margin-bottom:6px}
+    .choice-btn-full{width:100%;background:var(--gray);border:2px dashed #C8CDD6;border-radius:10px;padding:12px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;text-align:center;transition:all .2s;margin-top:4px}
+    .choice-btn-full:hover{border-color:var(--muted);color:#1A1A2E}
+    .choice-btn-full.selected{border:2.5px solid var(--red);background:#FFF5F5;color:#1A1A2E;font-weight:600}
+    .field-autre{margin-top:10px;display:none}
+
+    /* ACTION BUTTONS */
+    .actions{display:flex;justify-content:space-between;align-items:center;margin-top:32px}
+    .btn-back{background:none;border:none;font-size:14px;color:var(--muted);cursor:pointer;font-weight:500;padding:0}
+    .btn-next{background:var(--blue);color:#fff;border:none;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s}
+    .btn-next:hover{transform:translateY(-1px)}
+    .btn-next:disabled{background:#B0BEC5;cursor:not-allowed;transform:none}
+
+    /* SYNTHESE */
+    .synthese-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--gray);font-size:14px}
+    .synthese-row:last-child{border:none}
+    .synthese-label{color:var(--muted);font-weight:500}
+    .synthese-value{color:#1A1A2E;font-weight:600;text-align:right;max-width:60%}
+
+    /* VERDICT */
+    .verdict-box{border-radius:12px;padding:24px;margin-bottom:20px}
+    .verdict-box.vert{background:#F0FBF4;border:2px solid #2E7D52}
+    .verdict-box.orange{background:#FFF8EE;border:2px solid #D97706}
+    .verdict-box.rouge{background:#FFF5F5;border:2px solid #DC2626}
+    .verdict-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .verdict-emoji{font-size:26px}
+    .verdict-titre{font-size:17px;font-weight:800}
+    .verdict-titre.vert{color:#1B5E3A}
+    .verdict-titre.orange{color:#92400E}
+    .verdict-titre.rouge{color:#991B1B}
+    .verdict-analyse{font-size:14px;line-height:1.75;color:#374151;margin:14px 0 16px}
+    .conf-bar{height:6px;border-radius:3px;background:var(--gray2);overflow:hidden;margin:10px 0 4px}
+    .conf-fill{height:100%;border-radius:3px;transition:width 1.2s ease}
+    .conf-fill.vert{background:#2E7D52}
+    .conf-fill.orange{background:#D97706}
+    .conf-fill.rouge{background:#DC2626}
+    .conf-label{font-size:11px;color:var(--muted);text-align:right}
+    .criteres{display:grid;gap:7px;margin-top:14px}
+    .critere{display:flex;align-items:flex-start;gap:8px;font-size:13px;padding:8px 10px;border-radius:7px;background:rgba(0,0,0,.03);line-height:1.4;color:#374151}
+    .alt-box{background:#EEF3FA;border-radius:10px;padding:16px;margin-bottom:18px}
+    .alt-titre{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px}
+    .alt-item{font-size:13px;color:#374151;margin-bottom:5px;padding-left:14px;position:relative;line-height:1.4}
+    .alt-item::before{content:"→";position:absolute;left:0;color:var(--blue)}
+    .montant-box{background:#F0FBF4;border:1px solid #C6E8D3;border-radius:10px;padding:13px 16px;margin-bottom:18px;font-size:13px;color:#1B5E3A}
+    .gratuit-note{text-align:center;font-size:12px;color:var(--muted);margin-top:14px;line-height:1.5}
+
+    /* PAIEMENT */
+    .recap-box{background:#F0F4FA;border:1.5px solid #C5D5EE;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+    .recap-titre{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:14px}
+    .recap-ligne{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:7px 0;border-bottom:1px solid #E2EAF5;color:#374151}
+    .recap-ligne:last-child{border:none;padding-top:10px;margin-top:4px}
+    .recap-ligne.total{font-size:16px;font-weight:800;color:var(--blue)}
+    .badge-offert{font-size:11px;font-weight:600;color:#2E7D52;background:#E8F5E9;border-radius:20px;padding:2px 8px}
+    .badge-gratuit{font-size:11px;color:var(--muted)}
+    .badge-inclus{font-size:11px;font-weight:600;color:var(--blue);background:#EEF3FA;border-radius:20px;padding:2px 8px}
+    .info-box{font-size:12px;color:var(--muted);background:#FFF8EE;border-radius:8px;padding:10px 14px;margin-bottom:20px;line-height:1.6}
+    .stripe-zone{border:1.5px solid var(--gray2);border-radius:10px;padding:20px;margin-bottom:20px}
+    .stripe-label{font-size:13px;font-weight:600;color:#1A1A2E;margin-bottom:7px;display:block}
+    .stripe-input{width:100%;padding:10px 14px;border:1.5px solid var(--gray2);border-radius:8px;font-size:14px;color:#1A1A2E;background:#fff;outline:none;font-family:inherit;margin-bottom:12px;transition:border-color .2s}
+    .stripe-input:focus{border-color:var(--blue)}
+    .stripe-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stripe-securite{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-top:8px}
+    .btn-payer{width:100%;background:var(--blue);color:#fff;border:none;padding:16px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer}
+    .cgu-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6}
+    .cgu-note a{color:var(--blue);text-decoration:underline;cursor:pointer}
+
+    /* DASHBOARD */
+    .dashboard-header{text-align:center;padding:4px 0 24px}
+    .dashboard-icon{font-size:44px;margin-bottom:12px}
+    .dashboard-titre{font-size:22px;font-weight:800;color:var(--blue);margin-bottom:6px}
+    .dashboard-sub{font-size:14px;color:var(--muted);line-height:1.6}
+    .progress-global{background:var(--gray2);border-radius:4px;height:6px;margin:20px 0 4px;overflow:hidden}
+    .progress-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .8s ease}
+    .progress-label{font-size:12px;color:var(--muted);text-align:right;margin-bottom:20px}
+    .action-card{border:1.5px solid var(--gray2);border-radius:12px;padding:20px;margin-bottom:14px;transition:all .3s}
+    .action-card.done{border-color:#2E7D52;background:#F0FBF4}
+    .action-card.active{border-color:var(--blue);background:#F0F4FA}
+    .action-card.locked{opacity:.55}
+    .action-header{display:flex;align-items:flex-start;gap:14px}
+    .action-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;transition:all .3s}
+    .action-num.done{background:#2E7D52;color:#fff}
+    .action-num.active{background:var(--blue);color:#fff}
+    .action-num.locked{background:var(--gray2);color:var(--muted)}
+    .action-body{flex:1}
+    .action-titre{font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:6px}
+    .action-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;border-radius:20px;padding:3px 10px;margin-bottom:10px}
+    .action-badge.offert{background:#E8F5E9;color:#2E7D52}
+    .action-badge.gratuit{background:#EEF3FA;color:var(--blue)}
+    .action-badge.legal{background:#FFF8EE;color:#92400E}
+    .action-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+    .doc-apercu{background:var(--gray);border:1px solid var(--gray2);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:12px;color:#374151;line-height:1.8;font-family:'Courier New',monospace}
+    .doc-apercu strong{color:#1A1A2E;font-family:'Inter',sans-serif;font-size:13px;display:block;margin-bottom:8px}
+    .banque-note{background:#FFF8EE;border:1px solid #FCD34D;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400E;margin-top:10px;line-height:1.5}
+    .btn-action{border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+    .btn-action.primary{background:var(--blue);color:#fff}
+    .btn-action.secondary{background:var(--gray);color:var(--blue);border:1.5px solid var(--blue)}
+    .btn-action.done{background:#2E7D52;color:#fff;cursor:default}
+    .btn-action:disabled{opacity:.4;cursor:not-allowed}
+
+    /* SUIVI */
+    .suivi-card{background:#fff;border-radius:12px;border:1px solid var(--gray2);padding:20px 24px;margin-bottom:20px}
+    .suivi-titre{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:10px}
+    .suivi-etape{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#374151;margin-bottom:10px;line-height:1.5;padding-bottom:10px;border-bottom:1px solid var(--gray)}
+    .suivi-etape:last-child{border:none;margin-bottom:0;padding-bottom:0}
+    .suivi-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:4px}
+    .suivi-dot.orange{background:#D97706}
+    .suivi-dot.vert{background:#2E7D52}
+    .suivi-badge{font-size:11px;font-weight:600;border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+    .suivi-badge.gratuit{background:#E8F5E9;color:#2E7D52}
+    .suivi-badge.payant{background:#FFF8EE;color:#92400E}
+
+    /* RECAP FINAL */
+    .recap-final{background:#F0FBF4;border:1.5px solid #C6E8D3;border-radius:12px;padding:24px;text-align:center}
+    .recap-final-titre{font-size:18px;font-weight:800;color:#1B5E3A;margin-bottom:8px}
+    .recap-final-sub{font-size:13px;color:#374151;line-height:1.7}
+    .share-btn{background:var(--blue);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:16px}
+
+    /* LOADER */
+    .loader{text-align:center;padding:48px 20px}
+    .spinner{width:42px;height:42px;border:3px solid var(--gray2);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loader-txt{font-size:14px;color:var(--muted);margin-bottom:4px}
+    .loader-sub{font-size:12px;color:#9AA3AF}
+
+    /* FOOTER */
+    footer{background:#12294A;color:rgba(255,255,255,.6);text-align:center;padding:20px 32px;font-size:12px}
+    footer .re{color:#fff;font-weight:700}
+    footer .ndr{color:var(--red);font-weight:700}
+
+    /* RESPONSIVE */
+    @media(max-width:600px){
+      .trust{grid-template-columns:repeat(2,1fr)}
+      .hero-stats{flex-direction:column;align-items:center}
+      .choice-grid{grid-template-columns:1fr}
+      .choice-grid-3{grid-template-columns:1fr}
+      .stripe-row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== VUE : ACCUEIL ========== -->
+<div id="vueAccueil">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr</span></div>
+    <button class="nav-cta" onclick="afficher('vueDiagnostic')">Déposer un dossier</button>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Le droit des consommateurs, enfin actionnable</div>
+    <h1>Ils vous ont prélevé.<br><em>On reprend.</em></h1>
+    <p class="hero-sub">Un abonnement que vous n'avez pas choisi, des frais cachés, un service impossible à résilier — <strong>Re</strong><span style="color:var(--red);font-weight:700">prendr</span> génère votre dossier de contestation en 5 minutes.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>+500 000</strong>victimes par an en France</div>
+      <div class="hero-stat"><strong>9,90€</strong>par dossier traité</div>
+      <div class="hero-stat"><strong>5 min</strong>pour agir</div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn-on-blue" onclick="afficher('vueDiagnostic')">Commencer gratuitement</button>
+      <button class="btn-outline-white" onclick="document.getElementById('comment').scrollIntoView({behavior:'smooth'})">Comment ça marche ?</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Vous avez été prélevé sans vraiment l'avoir accepté ?</div>
+    <p class="section-sub">Décrivez votre situation — le diagnostic est gratuit, sans engagement.</p>
+    <div class="case-card" onclick="afficher('vueDiagnostic')">
+      <div class="case-icon">💳</div>
+      <h3>Prélèvement ou abonnement non consenti</h3>
+      <p>Un abonnement caché lors d'un achat, des frais que vous n'avez pas autorisés, un service que vous ne pouvez pas résilier malgré vos demandes.</p>
+      <span class="case-amount">Montant moyen récupéré : 180€ · Diagnostic gratuit</span><br><br>
+      <button class="btn-on-white">Déposer mon dossier →</button>
+    </div>
+  </div>
+
+  <div class="how" id="comment">
+    <div class="how-inner">
+      <div class="section-title" style="text-align:center">Comment ça marche ?</div>
+      <p class="section-sub" style="text-align:center">Trois étapes. Cinq minutes. Un dossier prêt à envoyer.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Décrivez votre situation</h4>
+          <p>En quelques questions guidées, sans jargon juridique.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4><span style="color:var(--blue);font-weight:700">Re</span><span style="color:var(--red);font-weight:700">prendr</span> analyse</h4>
+          <p>Notre IA qualifie votre dossier et évalue vos chances de succès.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Votre dossier est prêt</h4>
+          <p>4 documents générés, recommandé électronique offert. 9,90€.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="trust-item"><span class="trust-num">100%</span><span class="trust-label">Basé sur le droit français</span></div>
+    <div class="trust-item"><span class="trust-num">9,90€</span><span class="trust-label">Seulement si vous passez à l'action</span></div>
+    <div class="trust-item"><span class="trust-num">5 min</span><span class="trust-label">Pour un dossier complet</span></div>
+    <div class="trust-item"><span class="trust-num">0€</span><span class="trust-label">Pour le diagnostic initial</span></div>
+  </div>
+
+  <div class="bottom-cta">
+    <div class="price-badge">Diagnostic gratuit — dossier complet à 9,90€</div>
+    <h2>Arrêtez de payer pour ce que vous n'avez pas choisi.</h2>
+    <p>Rejoignez les milliers de Français qui font valoir leurs droits avec <strong style="color:#fff">Re</strong><span style="color:var(--red);font-weight:700">prendr</span>.</p>
+    <button class="btn-on-blue" onclick="afficher('vueDiagnostic')">Déposer mon dossier gratuitement</button>
+  </div>
+
+  <footer>© 2026 <span class="re">Re</span><span class="ndr">prendr</span> · Mentions légales · CGU · Contact — Ce service ne constitue pas un conseil juridique.</footer>
+</div>
+
+<!-- ========== VUE : DIAGNOSTIC ========== -->
+<div id="vueDiagnostic" style="display:none">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr</span></div>
+    <span style="font-size:13px;color:var(--muted)">Diagnostic gratuit</span>
+  </nav>
+  <div class="wrapper">
+    <div class="progress-bar">
+      <div class="step-dot active" id="dot1">1</div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-dot todo" id="dot2">2</div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-dot todo" id="dot3">3</div>
+      <div class="step-line" id="line3"></div>
+      <div class="step-dot todo" id="dot4">✓</div>
+    </div>
+
+    <!-- ÉTAPE 1 -->
+    <div id="dstep1" class="card">
+      <div class="eyebrow">Étape 1 sur 3</div>
+      <div class="card-title">Qui vous a prélevé ?</div>
+      <div class="card-sub">Dites-nous quel type de prélèvement vous pose problème.</div>
+      <div class="field">
+        <label>Nom de l'entreprise ou du service</label>
+        <input type="text" id="f_entreprise" placeholder="Ex : Fnac, SFR, Amazon…" oninput="checkD1()">
+        <div class="hint">Tel qu'il apparaît sur votre relevé bancaire</div>
+      </div>
+      <div class="field">
+        <label>Type de problème</label>
+        <div class="choice-grid" id="typeChoix">
+          <button class="choice-btn" onclick="selType(this,'abonnement_cache')"><span class="icon">📦</span>Abonnement caché lors d'un achat</button>
+          <button class="choice-btn" onclick="selType(this,'resiliation_refus')"><span class="icon">🔒</span>Résiliation refusée ou ignorée</button>
+          <button class="choice-btn" onclick="selType(this,'prelevement_inconnu')"><span class="icon">❓</span>Prélèvement non reconnu</button>
+          <button class="choice-btn" onclick="selType(this,'frais_non_autorises')"><span class="icon">💸</span>Frais non autorisés</button>
+        </div>
+        <button class="choice-btn-full" id="btnAutre" onclick="selType(this,'autre')">+ Autre cas de figure</button>
+        <div class="field-autre" id="fieldAutre">
+          <input type="text" id="autreTexte" placeholder="Décrivez brièvement…" oninput="checkD1()">
+        </div>
+      </div>
+      <div class="actions"><span></span><button class="btn-next" id="btnD1" disabled onclick="goDstep(2)">Continuer →</button></div>
+    </div>
+
+    <!-- ÉTAPE 2 -->
+    <div id="dstep2" class="card" style="display:none">
+      <div class="eyebrow">Étape 2 sur 3</div>
+      <div class="card-title">Les détails de la situation</div>
+      <div class="card-sub">Ces informations permettront à <strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr</span> de qualifier votre dossier.</div>
+      <div class="field">
+        <label>Montant prélevé par mois (€)</label>
+        <input type="number" id="f_montant" placeholder="Ex : 24" min="1" oninput="checkD2()">
+      </div>
+      <div class="field">
+        <label>Depuis combien de temps ?</label>
+        <select id="f_duree" onchange="checkD2()">
+          <option value="">Sélectionnez…</option>
+          <option value="moins1">Moins d'un mois</option>
+          <option value="1a3">1 à 3 mois</option>
+          <option value="3a6">3 à 6 mois</option>
+          <option value="6a12">6 mois à 1 an</option>
+          <option value="plus1an">Plus d'un an</option>
+          <option value="plus3ans">Plus de 3 ans</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Pays de l'entreprise</label>
+        <select id="f_pays" onchange="checkD2()">
+          <option value="">Sélectionnez…</option>
+          <option value="france">France</option>
+          <option value="ue">Union européenne</option>
+          <option value="hors_ue">Hors UE (USA, Asie…)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Avez-vous déjà tenté de contacter l'entreprise ?</label>
+        <div class="choice-grid-3" id="contactChoix">
+          <button class="choice-btn" onclick="selContact(this,'non')"><span class="icon">🙅</span>Non, pas encore</button>
+          <button class="choice-btn" onclick="selContact(this,'oui_ignore')"><span class="icon">📵</span>Oui, sans réponse</button>
+          <button class="choice-btn" onclick="selContact(this,'oui_refuse')"><span class="icon">❌</span>Oui, refus</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Décrivez brièvement <span style="color:var(--muted);font-weight:400">(optionnel)</span></label>
+        <textarea id="f_contexte" placeholder="Ex : Lors de l'achat d'une console, une assurance à 24€/mois a été ajoutée sans que je l'aie vraiment choisie…"></textarea>
+      </div>
+      <div class="actions"><button class="btn-back" onclick="goDstep(1)">← Retour</button><button class="btn-next" id="btnD2" disabled onclick="goDstep(3)">Continuer →</button></div>
+    </div>
+
+    <!-- ÉTAPE 3 -->
+    <div id="dstep3" class="card" style="display:none">
+      <div class="eyebrow">Étape 3 sur 3</div>
+      <div class="card-title">Vos coordonnées</div>
+      <div class="card-sub">Pour personnaliser votre lettre de mise en demeure. Vos données ne sont jamais revendues.</div>
+      <div class="field"><label>Prénom et nom</label><input type="text" id="f_nom" placeholder="Ex : Jean Dupont" oninput="checkD3()"></div>
+      <div class="field"><label>Adresse email</label><input type="email" id="f_email" placeholder="votre@email.fr" oninput="checkD3()"><div class="hint">Votre dossier vous sera envoyé à cette adresse</div></div>
+      <div class="field"><label>Ville</label><input type="text" id="f_ville" placeholder="Ex : Paris" oninput="checkD3()"></div>
+      <div class="actions"><button class="btn-back" onclick="goDstep(2)">← Retour</button><button class="btn-next" id="btnD3" disabled onclick="goSynthese()">Analyser mon dossier →</button></div>
+    </div>
+
+    <!-- SYNTHESE -->
+    <div id="dstepS" class="card" style="display:none">
+      <div style="text-align:center;margin-bottom:24px"><div style="font-size:44px;margin-bottom:12px">🔍</div>
+      <div class="card-title">Votre dossier en un coup d'œil</div>
+      <div style="font-size:14px;color:var(--muted);margin-top:6px">Vérifiez avant que <strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr</span> analyse votre situation.</div></div>
+      <div id="syntheseContent" style="margin:24px 0"></div>
+      <div style="background:#FFF5F5;border:1px solid #FFCDD2;border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;color:#B71C1C;line-height:1.5">⚡ Analyse en cours de qualification — cliquez ci-dessous pour obtenir le verdict.</div>
+      <button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick="lancerAnalyse()">Obtenir le verdict gratuit →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VUE : QUALIFICATION ========== -->
+<div id="vueQualification" style="display:none">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr</span></div>
+    <span style="font-size:13px;color:var(--muted)">Analyse du dossier</span>
+  </nav>
+  <div class="wrapper">
+    <div id="qLoader" class="card">
+      <div class="loader">
+        <div class="spinner"></div>
+        <div class="loader-txt">Analyse juridique en cours…</div>
+        <div class="loader-sub">Qualification · Vérification des délais · Évaluation des risques</div>
+      </div>
+    </div>
+    <div id="qResultat" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ========== VUE : PAIEMENT ========== -->
+<div id="vuePaiement" style="display:none">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr</span></div>
+    <span style="font-size:13px;color:var(--muted)">Finalisation du dossier</span>
+  </nav>
+  <div class="wrapper">
+    <div class="card">
+      <div class="eyebrow">Dossier qualifié — recevable</div>
+      <div class="card-title">Finalisez votre commande</div>
+      <div class="card-sub">Vos 4 documents sont générés et prêts à être envoyés dès validation.</div>
+      <div class="recap-box">
+        <div class="recap-titre">Ce qui est inclus dans votre dossier</div>
+        <div class="recap-ligne"><span>Lettre de mise en demeure rédigée</span><span class="badge-inclus">✅ Inclus</span></div>
+        <div class="recap-ligne"><span>Envoi recommandé électronique (AR24)</span><span><span class="badge-offert">🎁 Offert</span></span></div>
+        <div class="recap-ligne"><span>Signalement DGCCRF / SignalConso</span><span class="badge-gratuit">Gratuit</span></div>
+        <div class="recap-ligne"><span>Courrier opposition bancaire</span><span class="badge-gratuit">Gratuit</span></div>
+        <div class="recap-ligne"><span>Saisine médiateur sectoriel</span><span class="badge-gratuit">Gratuit</span></div>
+        <div class="recap-ligne"><span>Relances et suivi J+15, J+30</span><span class="badge-gratuit">Gratuit</span></div>
+        <div class="recap-ligne total"><span>Total TTC</span><span>9,90€</span></div>
+      </div>
+      <div class="info-box">💡 <strong>Le recommandé électronique est offert.</strong> Il a la même valeur juridique qu'un recommandé avec accusé de réception — sans nécessité de vous déplacer ni de faire la queue à La Poste. Seule une éventuelle procédure judiciaire via un cabinet partenaire générerait des honoraires supplémentaires, communiqués avant tout engagement.</div>
+      <div class="stripe-zone">
+        <label class="stripe-label">Numéro de carte</label>
+        <input class="stripe-input" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCarte(this)">
+        <div class="stripe-row">
+          <div><label class="stripe-label">Expiration</label><input class="stripe-input" placeholder="MM/AA" maxlength="5"></div>
+          <div><label class="stripe-label">CVC</label><input class="stripe-input" placeholder="123" maxlength="3"></div>
+        </div>
+        <label class="stripe-label">Nom sur la carte</label>
+        <input class="stripe-input" placeholder="Jean Dupont">
+        <div class="stripe-securite">🔒 Paiement sécurisé par Stripe · Vos données bancaires ne sont jamais stockées par <strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr</span></div>
+      </div>
+      <button class="btn-payer" onclick="afficher('vueDashboard')">Payer 9,90€ et accéder à mon dossier →</button>
+      <div class="cgu-note">En procédant, vous acceptez nos <a>CGU</a> et notre <a>Politique de confidentialité</a>.<br>Satisfait ou remboursé 7 jours si aucune action effectuée · Paiement unique · Aucun abonnement</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VUE : DASHBOARD ========== -->
+<div id="vueDashboard" style="display:none">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr</span></div>
+    <span style="font-size:13px;color:var(--muted)">Votre dossier</span>
+  </nav>
+  <div class="wrapper">
+    <div class="card">
+      <div class="dashboard-header">
+        <div class="dashboard-icon">📁</div>
+        <div class="dashboard-titre">Votre dossier est prêt</div>
+        <div class="dashboard-sub">Effectuez les 4 actions dans l'ordre.<br>Chaque envoi se fait en un clic — aucun déplacement nécessaire.</div>
+      </div>
+      <div class="progress-global"><div class="progress-fill" id="pgFill" style="width:0%"></div></div>
+      <div class="progress-label" id="pgLabel">0 action sur 4 effectuée</div>
+
+      <div class="action-card active" id="ac1">
+        <div class="action-header">
+          <div class="action-num active" id="an1">1</div>
+          <div class="action-body">
+            <div class="action-titre">Mise en demeure — <span id="dashEntreprise">l'entreprise</span></div>
+            <div class="action-badge offert">🎁 Recommandé électronique offert</div>
+            <div class="doc-apercu"><strong>Aperçu du document généré</strong><span id="nomUser">Jean Dupont</span><br>Paris<br><br>À l'attention du Service Juridique<br><span id="dashEntreprise2">l'entreprise</span><br><br><strong>Objet : Mise en demeure — Résiliation d'abonnement non consenti et remboursement des sommes indûment prélevées</strong><br><br>Conformément à l'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l'abonnement concerné, sous 15 jours à compter de la réception du présent courrier...</div>
+            <div class="action-desc">Votre lettre est rédigée et adressée. L'envoi recommandé électronique génère un accusé de réception ayant valeur juridique — sans nécessité de se rendre à La Poste ni de faire la queue.</div>
+            <button class="btn-action primary" id="ab1" onclick="doAction(1)">Envoyer en recommandé électronique →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card locked" id="ac2">
+        <div class="action-header">
+          <div class="action-num locked" id="an2">2</div>
+          <div class="action-body">
+            <div class="action-titre">Signalement DGCCRF — SignalConso</div>
+            <div class="action-badge gratuit">Gratuit</div>
+            <div class="action-desc">Votre signalement est pré-rempli sur SignalConso.gouv.fr. Un clic le soumet officiellement à la DGCCRF — cela crée un dossier administratif et renforce considérablement votre position.</div>
+            <button class="btn-action primary" id="ab2" onclick="doAction(2)" disabled>Soumettre le signalement →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card locked" id="ac3">
+        <div class="action-header">
+          <div class="action-num locked" id="an3">3</div>
+          <div class="action-body">
+            <div class="action-titre">Opposition bancaire — Blocage du prélèvement</div>
+            <div class="action-badge gratuit">Gratuit</div>
+            <div class="action-desc">Ce courrier est valable auprès de toute banque française ou européenne, conformément au Règlement SEPA (UE n°260/2012). Il contient l'identifiant créancier SEPA (ICS) permettant à votre banque de bloquer tout prélèvement futur.</div>
+            <div class="banque-note">⚠️ La procédure varie selon votre banque. Le PDF inclut les instructions pour BNP, Crédit Agricole, Société Générale, LCL, La Banque Postale, Boursorama, Revolut et N26.</div>
+            <button class="btn-action secondary" id="ab3" onclick="doAction(3)" disabled>Télécharger le courrier PDF + instructions →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card locked" id="ac4">
+        <div class="action-header">
+          <div class="action-num locked" id="an4">4</div>
+          <div class="action-body">
+            <div class="action-titre">Saisine du médiateur sectoriel</div>
+            <div class="action-badge legal">⚖️ Légalement obligatoire pour l'entreprise</div>
+            <div class="action-desc">La médiation de la consommation est entièrement gratuite pour vous. L'entreprise est légalement tenue d'y répondre sous 90 jours (loi Hamon, 17 mars 2014). Votre formulaire est pré-rempli.</div>
+            <button class="btn-action secondary" id="ab4" onclick="doAction(4)" disabled>Accéder au formulaire médiateur →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="suivi-card">
+      <div class="suivi-titre">⏱ Suivi automatique activé — ce qui se passe ensuite</div>
+      <div class="suivi-etape"><div class="suivi-dot"></div><div><strong>J+15 — Pas de réponse</strong><span class="suivi-badge gratuit">Inclus</span><br>Reprendr vous alerte et génère automatiquement une relance renforcée mentionnant la saisine imminente du médiateur et le dépôt de plainte DGCCRF.</div></div>
+      <div class="suivi-etape"><div class="suivi-dot orange"></div><div><strong>J+30 — Refus ou silence persistant</strong><span class="suivi-badge gratuit">Inclus</span><br>Analyse de la situation, génération d'un courrier de contestation de refus, activation de la médiation sectorielle si non effectuée.</div></div>
+      <div class="suivi-etape"><div class="suivi-dot orange"></div><div><strong>Si procédure judiciaire nécessaire</strong><span class="suivi-badge payant">Honoraires cabinet</span><br>Orientation vers un cabinet partenaire spécialisé. Leurs honoraires vous sont communiqués avant tout engagement — vous restez libre d'accepter ou non.</div></div>
+      <div class="suivi-etape"><div class="suivi-dot vert"></div><div><strong>Remboursement obtenu</strong><span class="suivi-badge gratuit">Inclus</span><br>Reprendr confirme la clôture de votre dossier et vous invite à partager votre expérience pour aider d'autres consommateurs.</div></div>
+    </div>
+
+    <div class="card" id="recapFinal" style="display:none">
+      <div class="recap-final">
+        <div class="recap-final-titre">🎉 Toutes vos actions sont effectuées !</div>
+        <div class="recap-final-sub">Votre dossier complet a été transmis.<br>L'entreprise dispose de <strong>15 jours</strong> pour vous répondre.<br><strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr</span> surveille et vous alerte à chaque avancement.</div>
+        <button class="share-btn" onclick="afficher('vueAccueil')">← Retour à l'accueil</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== NAVIGATION =====
+function afficher(id) {
+  ['vueAccueil','vueDiagnostic','vueQualification','vuePaiement','vueDashboard'].forEach(function(v){
+    document.getElementById(v).style.display = 'none';
+  });
+  document.getElementById(id).style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+// ===== DIAGNOSTIC =====
+var typeSelected = null;
+var contactSelected = null;
+
+function selType(btn, val) {
+  document.querySelectorAll('#typeChoix .choice-btn, #btnAutre').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  typeSelected = val;
+  document.getElementById('fieldAutre').style.display = val === 'autre' ? 'block' : 'none';
+  checkD1();
+}
+
+function selContact(btn, val) {
+  document.querySelectorAll('#contactChoix .choice-btn').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  contactSelected = val;
+  checkD2();
+}
+
+function checkD1() {
+  var ok = document.getElementById('f_entreprise').value.trim().length > 1 && typeSelected !== null;
+  if(typeSelected === 'autre') ok = ok && document.getElementById('autreTexte').value.trim().length > 3;
+  document.getElementById('btnD1').disabled = !ok;
+}
+
+function checkD2() {
+  var m = document.getElementById('f_montant').value;
+  var d = document.getElementById('f_duree').value;
+  var p = document.getElementById('f_pays').value;
+  document.getElementById('btnD2').disabled = !(m > 0 && d && p && contactSelected);
+}
+
+function checkD3() {
+  var n = document.getElementById('f_nom').value.trim();
+  var e = document.getElementById('f_email').value.trim();
+  var v = document.getElementById('f_ville').value.trim();
+  document.getElementById('btnD3').disabled = !(n.length > 2 && e.includes('@') && v.length > 1);
+}
+
+function goDstep(n) {
+  [1,2,3,'S'].forEach(function(s){ document.getElementById('dstep'+s).style.display = 'none'; });
+  document.getElementById('dstep'+n).style.display = 'block';
+  updateDots(n);
+  window.scrollTo(0,0);
+}
+
+function updateDots(n) {
+  for(var i=1;i<=4;i++){
+    var dot = document.getElementById('dot'+i);
+    if(i < n) dot.className = 'step-dot done';
+    else if(i === n) dot.className = 'step-dot active';
+    else dot.className = 'step-dot todo';
+  }
+  for(var j=1;j<=3;j++){
+    document.getElementById('line'+j).className = j < n ? 'step-line done' : 'step-line';
+  }
+}
+
+function goSynthese() {
+  var tL = {'abonnement_cache':'Abonnement caché lors d\'un achat','resiliation_refus':'Résiliation refusée','prelevement_inconnu':'Prélèvement non reconnu','frais_non_autorises':'Frais non autorisés','autre':document.getElementById('autreTexte').value||'Autre'};
+  var dL = {'moins1':'Moins d\'un mois','1a3':'1 à 3 mois','3a6':'3 à 6 mois','6a12':'6 mois à 1 an','plus1an':'Plus d\'un an','plus3ans':'Plus de 3 ans'};
+  var pL = {'france':'France','ue':'Union européenne','hors_ue':'Hors UE'};
+  var cL = {'non':'Pas encore contacté','oui_ignore':'Contacté, sans réponse','oui_refuse':'Contacté, refus'};
+  var dureeVal = document.getElementById('f_duree').value;
+  var montant = parseFloat(document.getElementById('f_montant').value)||0;
+  var mois = {'moins1':1,'1a3':2,'3a6':4,'6a12':9,'plus1an':14,'plus3ans':36}[dureeVal]||3;
+  var total = (montant * mois).toFixed(0);
+  var rows = [
+    ['Entreprise', document.getElementById('f_entreprise').value],
+    ['Type de problème', tL[typeSelected]||'-'],
+    ['Montant mensuel', montant+'€/mois'],
+    ['Durée', dL[dureeVal]||'-'],
+    ['Pays', pL[document.getElementById('f_pays').value]||'-'],
+    ['Montant potentiel à récupérer', '<strong style="color:var(--red)">~'+total+'€</strong>'],
+    ['Démarches effectuées', cL[contactSelected]||'-'],
+    ['Titulaire', document.getElementById('f_nom').value],
+    ['Documents justificatifs', '<span style="color:var(--muted);font-style:italic">À compléter à l\'étape suivante</span>']
+  ];
+  document.getElementById('syntheseContent').innerHTML = rows.map(function(r){
+    return '<div class="synthese-row"><span class="synthese-label">'+r[0]+'</span><span class="synthese-value">'+r[1]+'</span></div>';
+  }).join('');
+  [1,2,3].forEach(function(s){ document.getElementById('dstep'+s).style.display='none'; });
+  document.getElementById('dstepS').style.display='block';
+  for(var i=1;i<=4;i++) document.getElementById('dot'+i).className='step-dot done';
+  window.scrollTo(0,0);
+}
+
+// ===== QUALIFICATION =====
+function lancerAnalyse() {
+  afficher('vueQualification');
+  setTimeout(analyser, 1800);
+}
+
+function analyser() {
+  var entreprise = document.getElementById('f_entreprise').value||'l\'entreprise';
+  var type = typeSelected;
+  var montant = parseFloat(document.getElementById('f_montant').value)||0;
+  var duree = document.getElementById('f_duree').value;
+  var pays = document.getElementById('f_pays').value;
+  var contact = contactSelected;
+  var contexte = (document.getElementById('f_contexte').value||'').toLowerCase();
+
+  var points = 0, criteres = [], raisons = [], alternatives = [];
+
+  // Prescription
+  if(duree==='plus3ans'){
+    criteres.push({icon:'❌',texte:'Prescription : le délai légal de 3 ans est probablement dépassé.'});
+    raisons.push('Le délai de prescription de 3 ans est vraisemblablement dépassé. Vous ne pouvez plus agir juridiquement sur les sommes les plus anciennes.');
+    alternatives.push('Contactez UFC-Que Choisir ou 60 Millions de Consommateurs pour une intervention gratuite.');
+    alternatives.push('Signalez la pratique sur SignalConso.gouv.fr pour protéger d\'autres consommateurs.');
+  } else if(duree==='plus1an'){
+    criteres.push({icon:'⚠️',texte:'Prescription : délai respecté, mais agissez rapidement — le délai de 3 ans court depuis le premier prélèvement.'});
+    points+=10;
+  } else {
+    criteres.push({icon:'✅',texte:'Prescription : délai de 3 ans largement respecté — vous êtes dans les temps.'});
+    points+=15;
+  }
+
+  // Juridiction
+  if(pays==='hors_ue'){
+    criteres.push({icon:'❌',texte:'Juridiction : entreprise hors UE — une mise en demeure française a très peu de portée.'});
+    raisons.push('L\'entreprise est établie hors de l\'Union européenne. Le droit français ne s\'applique pas directement.');
+    alternatives.push('Contactez votre banque pour bloquer les prélèvements SEPA futurs — c\'est votre recours le plus efficace.');
+    alternatives.push('Signalez sur la plateforme européenne ODR : ec.europa.eu/consumers/odr');
+  } else if(pays==='ue'){
+    criteres.push({icon:'⚠️',texte:'Juridiction : entreprise UE — recours possible via la plateforme ODR européenne.'});
+    points+=8;
+    alternatives.push('Utilisez la plateforme ODR européenne en parallèle : ec.europa.eu/consumers/odr');
+  } else {
+    criteres.push({icon:'✅',texte:'Juridiction : entreprise française — droit de la consommation français applicable.'});
+    points+=15;
+  }
+
+  // Vice du consentement
+  if(type==='abonnement_cache'){
+    criteres.push({icon:'✅',texte:'Vice du consentement : pratique commerciale trompeuse caractérisée (art. L.121-1 Code conso) — terrain juridique solide.'});
+    points+=20;
+  } else if(type==='resiliation_refus'){
+    criteres.push({icon:'✅',texte:'Résiliation refusée : loi Pouvoir d\'achat 2022 — obligation de résiliation en ligne, sanctions jusqu\'à 75 000€.'});
+    points+=18;
+  } else if(type==='prelevement_inconnu'){
+    criteres.push({icon:'⚠️',texte:'Prélèvement non reconnu : recevable, mais identifiez d\'abord l\'émetteur via l\'ICS auprès de votre banque.'});
+    points+=10;
+    alternatives.push('Demandez à votre banque l\'identifiant créancier SEPA (ICS) pour identifier l\'émetteur avec certitude.');
+  } else if(type==='frais_non_autorises'){
+    criteres.push({icon:'✅',texte:'Frais non autorisés : consentement explicite obligatoire — son absence caractérise une pratique abusive.'});
+    points+=16;
+  } else {
+    criteres.push({icon:'⚠️',texte:'Cas atypique : qualification juridique précise à affiner selon les détails.'});
+    points+=8;
+  }
+
+  // Montant
+  if(montant<5){
+    criteres.push({icon:'❌',texte:'Montant : inférieur à 5€/mois — trop faible pour justifier une procédure formelle.'});
+    raisons.push('Le montant mensuel est trop faible pour justifier économiquement une mise en demeure.');
+    alternatives.push('Contactez directement votre banque pour bloquer le prélèvement — gratuit et efficace.');
+  } else if(montant<15){
+    criteres.push({icon:'⚠️',texte:'Montant : modeste mais suffisant si le cumul sur la durée est significatif.'});
+    points+=8;
+  } else {
+    criteres.push({icon:'✅',texte:'Montant : significatif — pleinement justifié d\'engager une démarche formelle.'});
+    points+=12;
+  }
+
+  // Preuves
+  if(contexte.includes('relevé')||contexte.includes('achat')||contexte.includes('facture')||contexte.includes('email')){
+    criteres.push({icon:'✅',texte:'Preuves : des éléments documentaires sont mentionnés — munissez-vous de votre relevé bancaire faisant apparaître le ou les prélèvements litigieux.'});
+    points+=12;
+  } else {
+    criteres.push({icon:'⚠️',texte:'Preuves : munissez-vous de votre relevé bancaire faisant apparaître le ou les prélèvements litigieux, ainsi que du bon de commande initial.'});
+    points+=6;
+  }
+
+  // Démarches préalables
+  if(contact==='oui_refuse'){
+    criteres.push({icon:'✅',texte:'Démarches préalables : refus explicite documenté — positionne idéalement le dossier pour une mise en demeure.'});
+    points+=12;
+  } else if(contact==='oui_ignore'){
+    criteres.push({icon:'✅',texte:'Démarches préalables : absence de réponse dans un délai raisonnable — constitue un manquement en soi.'});
+    points+=10;
+  } else {
+    criteres.push({icon:'⚠️',texte:'Démarches préalables : aucune tentative — la mise en demeure reste recevable, une tentative amiable préalable renforce le dossier.'});
+    points+=5;
+  }
+
+  // Solvabilité
+  var ens = entreprise.toLowerCase();
+  var grandes = ['fnac','sfr','orange','free','bouygues','amazon','google','apple','netflix','spotify','gym','basic','direct','canal','darty','boulanger','leclerc','carrefour','sncf','edf','engie'];
+  if(grandes.some(function(n){return ens.includes(n);})){
+    criteres.push({icon:'✅',texte:'Entreprise : grande enseigne connue — taux de réponse élevé face à une mise en demeure formelle.'});
+    points+=14;
+  } else if(pays==='france'){
+    criteres.push({icon:'⚠️',texte:'Entreprise française moins connue — mise en demeure valide, délai de réponse potentiellement plus long.'});
+    points+=8;
+  } else {
+    criteres.push({icon:'⚠️',texte:'Peu d\'informations sur cette entité — suivi potentiellement plus complexe.'});
+    points+=4;
+  }
+
+  var nbR = raisons.length;
+  var verdict, titre, analyse, score;
+  var moisEstim = {'moins1':1,'1a3':2,'3a6':4,'6a12':9,'plus1an':14,'plus3ans':36}[duree]||3;
+  var total = (montant*moisEstim).toFixed(0);
+
+  if(nbR>=2){
+    verdict='rouge'; score=Math.min(15,points);
+    titre='Dossier non traitable — plusieurs blocages';
+    analyse='Nous ne pouvons pas constituer ce dossier : '+raisons.join(' ')+" Ces blocages sont indépendants de votre bonne foi. Aucun frais ne vous sera demandé.";
+  } else if(nbR===1){
+    verdict='rouge'; score=Math.min(20,points);
+    titre='Dossier non traitable — '+(pays==='hors_ue'?'entreprise hors portée':duree==='plus3ans'?'prescription dépassée':'montant insuffisant');
+    analyse='Nous ne pouvons pas constituer ce dossier : '+raisons[0]+' Aucun frais ne vous sera demandé.';
+  } else if(points>=70){
+    verdict='vert'; score=Math.min(92,points);
+    titre='Dossier solide — mise en demeure recevable';
+    analyse='Votre situation présente les éléments caractéristiques d\'une pratique commerciale trompeuse au sens du Code de la consommation. La mise en demeure est pleinement justifiée et a de fortes chances d\'aboutir. Nous pouvons constituer votre dossier immédiatement.';
+  } else if(points>=45){
+    verdict='orange'; score=Math.min(55,points);
+    titre='Dossier incertain — recevable avec réserves';
+    analyse='Votre situation est recevable mais présente des points de fragilité. Nous pouvons préparer la mise en demeure en vous informant des risques, ou vous orienter vers un cabinet partenaire pour une analyse plus approfondie.';
+    alternatives.push('Rassemblez bon de commande, relevé bancaire et échanges écrits avant de lancer la démarche.');
+  } else {
+    verdict='orange'; score=Math.min(38,points);
+    titre='Dossier fragile — éléments insuffisants';
+    analyse='Des preuves supplémentaires ou des précisions sont nécessaires avant d\'engager une démarche formelle.';
+    alternatives.push('Revenez avec votre bon de commande, les échanges écrits et votre relevé bancaire.');
+    alternatives.push('Consultez gratuitement UFC-Que Choisir (quechoisir.org) pour évaluer votre situation.');
+  }
+
+  afficherVerdict({verdict:verdict,score:score,titre:titre,analyse:analyse,criteres:criteres,alternatives:alternatives},total,verdict,entreprise);
+}
+
+function afficherVerdict(r, total, col, entreprise) {
+  document.getElementById('qLoader').style.display='none';
+  var emoji = col==='vert'?'✅':col==='orange'?'⚠️':'🚫';
+  var critHtml = r.criteres.map(function(c){return '<div class="critere"><span style="flex-shrink:0">'+c.icon+'</span><span>'+c.texte+'</span></div>';}).join('');
+  var altHtml = r.alternatives.length?'<div class="alt-box"><div class="alt-titre">Ce que vous pouvez faire</div>'+r.alternatives.map(function(a){return '<div class="alt-item">'+a+'</div>';}).join('')+'</div>':'';
+  var montantHtml = col!=='rouge'?'<div class="montant-box">💰 Montant potentiel à récupérer : <strong>~'+total+'€</strong></div>':'';
+  var btnHtml = col==='vert'
+    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick="afficher(\'vuePaiement\')">Constituer mon dossier complet — 9,90€ →</button>'
+    :col==='orange'
+    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick="afficher(\'vuePaiement\')">Constituer le dossier malgré tout — 9,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
+    :'<div class="gratuit-note">🤝 <strong>Aucun frais ne vous est demandé.</strong><br>Reprendr ne constitue pas de dossier sans issue réelle — c\'est notre engagement d\'honnêteté.</div>';
+
+  document.getElementById('qResultat').innerHTML =
+    '<div class="card"><div class="verdict-box '+col+'">'
+    +'<div class="verdict-header"><span class="verdict-emoji">'+emoji+'</span><div class="verdict-titre '+col+'">'+r.titre+'</div></div>'
+    +'<div class="conf-bar"><div class="conf-fill '+col+'" id="cFill" style="width:0%"></div></div>'
+    +'<div class="conf-label">Probabilité de succès estimée : '+r.score+'%</div>'
+    +'<div class="verdict-analyse">'+r.analyse+'</div>'
+    +'<div class="criteres">'+critHtml+'</div></div>'
+    +altHtml+montantHtml+btnHtml
+    +'<button style="width:100%;background:var(--gray);color:var(--blue);border:2px solid var(--blue);padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px" onclick="afficher(\'vueDiagnostic\')">← Analyser un autre dossier</button>'
+    +'</div>';
+  document.getElementById('qResultat').style.display='block';
+  setTimeout(function(){var el=document.getElementById('cFill');if(el)el.style.width=r.score+'%';},100);
+  window.scrollTo(0,0);
+
+  // Prépare le dashboard
+  var ent = document.getElementById('f_entreprise').value||'l\'entreprise';
+  document.querySelectorAll('#dashEntreprise,#dashEntreprise2').forEach(function(el){el.textContent=ent;});
+  var nom = document.getElementById('f_nom').value||'';
+  if(nom) document.getElementById('nomUser').textContent=nom;
+}
+
+// ===== DASHBOARD =====
+var nbActions = 0;
+function doAction(n){
+  document.getElementById('ab'+n).textContent='✓ Effectué';
+  document.getElementById('ab'+n).className='btn-action done';
+  document.getElementById('ab'+n).disabled=true;
+  document.getElementById('ac'+n).className='action-card done';
+  document.getElementById('an'+n).className='action-num done';
+  document.getElementById('an'+n).textContent='✓';
+  nbActions++;
+  var pct=Math.round((nbActions/4)*100);
+  document.getElementById('pgFill').style.width=pct+'%';
+  document.getElementById('pgLabel').textContent=nbActions+' action'+(nbActions>1?'s':'')+' sur 4 effectuée'+(nbActions>1?'s':'');
+  var s=n+1;
+  if(s<=4){
+    document.getElementById('ac'+s).className='action-card active';
+    document.getElementById('an'+s).className='action-num active';
+    document.getElementById('ab'+s).disabled=false;
+    document.getElementById('ab'+s).style.opacity='1';
+  }
+  if(nbActions===4){setTimeout(function(){document.getElementById('recapFinal').style.display='block';window.scrollTo(0,document.body.scrollHeight);},400);}
+}
+
+function fmtCarte(input){
+  var v=input.value.replace(/\D/g,'').substring(0,16);
+  input.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+</script>
+</body>
+</html>
