@@ -1,190 +1,596 @@
-Reprendr.
-← Retour au site
-Sommaire
-1. Mentions légales
-2. Conditions Générales d'Utilisation et de Vente (CGUV)
-3. Politique de confidentialité — RGPD
-Mentions légales
-En vigueur au 10 septembre 2026
-1. Éditeur du site
-Le site reprendr.fr est édité par :
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reprendr. — Mentions légales, CGU & Politique de confidentialité</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#F5F7FA;color:#1A1A2E;line-height:1.7}
+    :root{--blue:#1B3F6E;--red:#E02B2B;--gray:#F5F7FA;--gray2:#E8ECF2;--muted:#5A6478}
 
-Reprendr.
-Micro-entreprise enregistrée en France
-Siège social : Meudon, 92360
-SIRET : 828 819 300 00025
-Email : contact@reprendr.fr
-Directeur de la publication : le titulaire de la micro-entreprise
-2. Hébergement
-GitHub Pages
-GitHub, Inc.
-88 Colin P. Kelly Jr. Street
-San Francisco, CA 94107, États-Unis
-Site : github.com
-3. Propriété intellectuelle
-L'ensemble des éléments constituant le site reprendr.fr (textes, graphismes, logiciels, photographies, images, sons, plans, logos, marques) sont la propriété exclusive de Reprendr. ou font l'objet d'une autorisation d'utilisation. Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation préalable écrite de Reprendr.
+    nav{background:#fff;border-bottom:1px solid var(--gray2);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo .re{color:var(--blue);font-size:22px;font-weight:800}
+    .logo .ndr{color:var(--red);font-size:22px;font-weight:800}
+    .back{font-size:13px;color:var(--blue);text-decoration:none;font-weight:600}
 
-4. Limitation de responsabilité
-Reprendr. s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site. Toutefois, Reprendr. ne peut garantir l'exactitude, la précision ou l'exhaustivité des informations mises à disposition. Reprendr. décline toute responsabilité pour toute imprécision, inexactitude ou omission portant sur des informations disponibles sur ce site.
+    .wrapper{max-width:780px;margin:0 auto;padding:48px 24px 80px}
 
-Ce site ne constitue pas un cabinet d'avocats. Les documents générés par Reprendr. sont des outils d'aide à la rédaction et ne constituent pas un conseil juridique personnalisé au sens de la loi n°71-1130 du 31 décembre 1971. Reprendr. ne garantit pas le résultat des démarches entreprises.
-5. Médiation de la consommation
-Conformément aux articles L.616-1 et R.616-1 du Code de la consommation, Reprendr. propose un dispositif de médiation de la consommation. En cas de litige non résolu entre Reprendr. et un client, ce dernier peut recourir gratuitement au médiateur de la consommation compétent.
+    .toc{background:#fff;border:1px solid var(--gray2);border-radius:12px;padding:24px 28px;margin-bottom:48px}
+    .toc-titre{font-size:14px;font-weight:700;color:var(--blue);margin-bottom:14px}
+    .toc a{display:block;font-size:13px;color:var(--blue);text-decoration:none;padding:4px 0;border-bottom:1px solid var(--gray);opacity:.8}
+    .toc a:last-child{border:none}
+    .toc a:hover{opacity:1}
 
-Conditions Générales d'Utilisation et de Vente
-En vigueur au 10 septembre 2026
-En accédant au site reprendr.fr et en utilisant ses services, vous acceptez sans réserve les présentes Conditions Générales d'Utilisation et de Vente (CGUV). Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser ce service.
-Article 1 — Objet et nature du service
-Reprendr. est un service en ligne d'assistance à la rédaction de documents destinés aux consommateurs victimes de prélèvements non consentis, d'abonnements frauduleux ou de pratiques commerciales trompeuses.
+    .doc-section{margin-bottom:56px}
+    .doc-titre{font-size:26px;font-weight:800;color:var(--blue);margin-bottom:6px;padding-top:24px;border-top:3px solid var(--red)}
+    .doc-date{font-size:12px;color:var(--muted);margin-bottom:28px}
 
-Reprendr. fournit :
+    h2{font-size:17px;font-weight:700;color:var(--blue);margin:28px 0 10px}
+    h3{font-size:15px;font-weight:600;color:#1A1A2E;margin:20px 0 8px}
+    p{font-size:14px;color:#374151;margin-bottom:12px}
+    ul{margin:8px 0 14px 20px}
+    li{font-size:14px;color:#374151;margin-bottom:6px}
+    strong{color:#1A1A2E}
 
-Un diagnostic gratuit de la situation décrite par l'utilisateur
-Une qualification de la recevabilité du dossier selon des critères objectifs
-La rédaction de documents (lettre de mise en demeure, courrier d'opposition bancaire, formulaire de saisine du médiateur)
-L'envoi recommandé électronique de la mise en demeure via le prestataire AR24
-Un suivi automatisé du dossier à J+15 et J+30
-Reprendr. est un prestataire de rédaction documentaire. Reprendr. n'est pas un cabinet d'avocats, ne dispense pas de conseil juridique personnalisé au sens de la loi du 31 décembre 1971, et ne représente pas l'utilisateur devant les juridictions. Les documents générés constituent des outils d'aide à la démarche, pas une garantie de résultat.
-Article 2 — Accès au service et inscription
-L'accès au diagnostic est gratuit et ne nécessite pas de création de compte. L'accès aux documents générés est conditionné au paiement du tarif en vigueur au moment de la commande.
+    .highlight{background:#EEF3FA;border-left:3px solid var(--blue);padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px;color:#374151}
+    .warning{background:#FFF8EE;border-left:3px solid #D97706;padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px;color:#92400E}
+    .contact-box{background:#F0F4FA;border:1px solid #C5D5EE;border-radius:10px;padding:20px 24px;margin:20px 0;font-size:14px;color:#374151}
+    .contact-box strong{display:block;margin-bottom:8px;color:var(--blue);font-size:15px}
 
-L'utilisateur garantit que les informations fournies lors de l'utilisation du service sont exactes, complètes et à jour. Toute fausse déclaration engage la responsabilité exclusive de l'utilisateur.
+    footer{background:#12294A;color:rgba(255,255,255,.6);text-align:center;padding:20px 32px;font-size:12px}
+    footer .re{color:#fff;font-weight:700}
+    footer .ndr{color:var(--red);font-weight:700}
+  </style>
+</head>
+<body>
 
-Article 3 — Tarifs et paiement
-Le tarif du dossier complet est de 9,90€ TTC au moment de la publication des présentes conditions. Ce tarif est susceptible d'évoluer. Le tarif applicable est celui affiché au moment de la commande.
+<nav>
+  <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
+  <a class="back" href="index.html">← Retour au site</a>
+</nav>
 
-Ce tarif inclut :
+<div class="wrapper">
 
-La lettre de mise en demeure personnalisée
-L'envoi recommandé électronique (offert — valeur juridique identique au recommandé papier)
-Le formulaire de signalement DGCCRF pré-rempli
-Le courrier d'opposition bancaire
-La saisine du médiateur sectoriel
-Le suivi automatisé à J+15 et J+30
-Le paiement est sécurisé par Stripe. Reprendr. ne stocke aucune donnée bancaire. Le paiement est unique — aucun abonnement n'est souscrit par ce biais.
+  <div class="toc">
+    <div class="toc-titre">Sommaire</div>
+    <a href="#mentions">1. Mentions légales</a>
+    <a href="#cgu">2. Conditions Générales d'Utilisation et de Vente (CGUV)</a>
+    <a href="#confidentialite">3. Politique de confidentialité — RGPD</a>
+  </div>
 
-Article 4 — Droit de rétractation et remboursement
-Conformément à l'article L.221-28 du Code de la consommation, le droit de rétractation ne peut être exercé pour les contrats de fourniture de contenu numérique dont l'exécution a commencé avec l'accord préalable exprès du consommateur.
+  <!-- ===== MENTIONS LÉGALES ===== -->
+  <div class="doc-section" id="mentions">
+    <div class="doc-titre">Mentions légales</div>
+    <div class="doc-date">En vigueur au 10 septembre 2026</div>
 
-Toutefois, Reprendr. s'engage à rembourser intégralement tout utilisateur qui en ferait la demande dans les 7 jours suivant le paiement, à condition qu'aucune action n'ait encore été effectuée depuis le tableau de bord (aucun recommandé envoyé, aucun signalement soumis).
+    <h2>1. Éditeur du site</h2>
+    <p>Le site <strong>reprendr.fr</strong> est édité par :</p>
+    <div class="contact-box">
+      <strong>Reprendr.</strong>
+      Micro-entreprise enregistrée en France<br>
+      Siège social : Meudon, 92360<br>
+      SIRET : 828 819 300 00025<br>
+      Email : contact@reprendr.fr<br>
+      Directeur de la publication : le titulaire de la micro-entreprise
+    </div>
 
-Demande de remboursement : contact@reprendr.fr avec l'objet "Remboursement — [numéro de commande]".
+    <h2>2. Hébergement</h2>
+    <div class="contact-box">
+      <strong>GitHub Pages</strong>
+      GitHub, Inc.<br>
+      88 Colin P. Kelly Jr. Street<br>
+      San Francisco, CA 94107, États-Unis<br>
+      Site : github.com
+    </div>
 
-Article 5 — Obligations et responsabilités de l'utilisateur
-L'utilisateur s'engage à :
+    <h2>3. Propriété intellectuelle</h2>
+    <p>L'ensemble des éléments constituant le site reprendr.fr (textes, graphismes, logiciels, photographies, images, sons, plans, logos, marques) sont la propriété exclusive de Reprendr. ou font l'objet d'une autorisation d'utilisation. Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation préalable écrite de Reprendr.</p>
 
-Utiliser le service de bonne foi et à des fins légitimes uniquement
-Fournir des informations exactes et vérifiables
-Ne pas utiliser Reprendr. pour initier des démarches abusives, dilatoires ou de mauvaise foi
-Conserver les documents générés et les accusés de réception
-L'utilisateur est seul responsable de l'usage qu'il fait des documents générés par Reprendr. Reprendr. ne pourra être tenu responsable des conséquences découlant d'une utilisation incorrecte ou frauduleuse du service.
+    <h2>4. Limitation de responsabilité</h2>
+    <p>Reprendr. s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site. Toutefois, Reprendr. ne peut garantir l'exactitude, la précision ou l'exhaustivité des informations mises à disposition. Reprendr. décline toute responsabilité pour toute imprécision, inexactitude ou omission portant sur des informations disponibles sur ce site.</p>
 
-Article 6 — Limitation de responsabilité de Reprendr.
-Reprendr. s'engage à mettre en œuvre tous les moyens raisonnables pour assurer la qualité des documents générés et la continuité du service. Toutefois, Reprendr. ne peut garantir :
+    <div class="warning">
+      Ce site ne constitue pas un cabinet d'avocats. Les documents générés par Reprendr. sont des outils d'aide à la rédaction et ne constituent pas un conseil juridique personnalisé au sens de la loi n°71-1130 du 31 décembre 1971. Reprendr. ne garantit pas le résultat des démarches entreprises.
+    </div>
 
-Le résultat des démarches entreprises par l'utilisateur
-La réactivité ou la bonne foi de l'entreprise destinataire
-L'issue favorable de la médiation ou d'une procédure judiciaire
-La disponibilité permanente et sans interruption du service
-La responsabilité de Reprendr. est limitée au montant payé par l'utilisateur pour la prestation concernée, soit au maximum 9,90€.
+    <h2>5. Médiation de la consommation</h2>
+    <p>Conformément aux articles L.616-1 et R.616-1 du Code de la consommation, Reprendr. propose un dispositif de médiation de la consommation. En cas de litige non résolu entre Reprendr. et un client, ce dernier peut recourir gratuitement au médiateur de la consommation compétent.</p>
+  </div>
 
-Article 7 — Dossiers non traitables
-Lorsque le moteur de qualification de Reprendr. détermine qu'un dossier est non recevable (prescription dépassée, entreprise hors juridiction, montant insuffisant, etc.), aucun frais n'est demandé à l'utilisateur. Reprendr. s'engage à expliquer clairement la raison du refus et à proposer des alternatives gratuites.
+  <!-- ===== CGU ===== -->
+  <div class="doc-section" id="cgu">
+    <div class="doc-titre">Conditions Générales d'Utilisation et de Vente</div>
+    <div class="doc-date">En vigueur au 10 septembre 2026</div>
 
-Article 8 — Cabinet partenaire et procédures judiciaires
-Pour les dossiers complexes ou nécessitant une procédure judiciaire, Reprendr. peut orienter l'utilisateur vers un cabinet d'avocats partenaire. Cette orientation est effectuée avec l'accord préalable de l'utilisateur. Les honoraires du cabinet partenaire sont distincts et communiqués avant tout engagement. Reprendr. perçoit une commission de mise en relation dans ce cadre.
+    <div class="highlight">En accédant au site reprendr.fr et en utilisant ses services, vous acceptez sans réserve les présentes Conditions Générales d'Utilisation et de Vente (CGUV). Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser ce service.</div>
 
-Article 9 — Propriété intellectuelle
-Les documents générés par Reprendr. à partir des informations fournies par l'utilisateur appartiennent à l'utilisateur. Reprendr. conserve la propriété intellectuelle de ses algorithmes, modèles de documents, interfaces et marques.
+    <h2>Article 1 — Objet et nature du service</h2>
+    <p>Reprendr. est un service en ligne d'assistance à la rédaction de documents destinés aux consommateurs victimes de prélèvements non consentis, d'abonnements frauduleux ou de pratiques commerciales trompeuses.</p>
+    <p>Reprendr. fournit :</p>
+    <ul>
+      <li>Un diagnostic gratuit de la situation décrite par l'utilisateur</li>
+      <li>Une qualification de la recevabilité du dossier selon des critères objectifs</>
+      <li>La rédaction de documents (lettre de mise en demeure, courrier d'opposition bancaire, formulaire de saisine du médiateur)</li>
+      <li>L'envoi recommandé électronique de la mise en demeure via le prestataire AR24</li>
+      <li>Un suivi automatisé du dossier à J+15 et J+30</li>
+    </ul>
 
-Article 10 — Droit applicable et juridiction compétente
-Les présentes CGUV sont soumises au droit français. En cas de litige non résolu par la médiation, les tribunaux compétents seront ceux du ressort de Nanterre (92), sauf disposition légale contraire applicable au consommateur.
+    <div class="warning">
+      Reprendr. est un prestataire de rédaction documentaire. Reprendr. n'est pas un cabinet d'avocats, ne dispense pas de conseil juridique personnalisé au sens de la loi du 31 décembre 1971, et ne représente pas l'utilisateur devant les juridictions. Les documents générés constituent des outils d'aide à la démarche, pas une garantie de résultat.
+    </div>
 
-Article 11 — Modification des CGUV
-Reprendr. se réserve le droit de modifier les présentes CGUV à tout moment. Les modifications entrent en vigueur dès leur publication sur le site. L'utilisateur est invité à consulter régulièrement cette page.
+    <h2>Article 2 — Accès au service et inscription</h2>
+    <p>L'accès au diagnostic est gratuit et ne nécessite pas de création de compte. L'accès aux documents générés est conditionné au paiement du tarif en vigueur au moment de la commande.</p>
+    <p>L'utilisateur garantit que les informations fournies lors de l'utilisation du service sont exactes, complètes et à jour. Toute fausse déclaration engage la responsabilité exclusive de l'utilisateur.</p>
 
-Politique de confidentialité — RGPD
-En vigueur au 10 septembre 2026
-Reprendr. accorde une importance fondamentale à la protection de vos données personnelles. Cette politique explique quelles données nous collectons, pourquoi, comment nous les utilisons et quels sont vos droits.
-Article 1 — Responsable du traitement
-Responsable du traitement des données
-Reprendr. — Micro-entreprise
-Siège social : Meudon, 92360
-SIRET : 828 819 300 00025
-Email : privacy@reprendr.fr
-Article 2 — Données collectées
-Dans le cadre de l'utilisation du service, Reprendr. collecte les données suivantes :
+    <h2>Article 3 — Tarifs et paiement</h2>
+    <p>Le tarif du dossier complet est de <strong>9,90€ TTC</strong> au moment de la publication des présentes conditions. Ce tarif est susceptible d'évoluer. Le tarif applicable est celui affiché au moment de la commande.</p>
+    <p>Ce tarif inclut :</p>
+    <ul>
+      <li>La lettre de mise en demeure personnalisée</li>
+      <li>L'envoi recommandé électronique (offert — valeur juridique identique au recommandé papier)</li>
+      <li>Le formulaire de signalement DGCCRF pré-rempli</li>
+      <li>Le courrier d'opposition bancaire</li>
+      <li>La saisine du médiateur sectoriel</li>
+      <li>Le suivi automatisé à J+15 et J+30</li>
+    </ul>
+    <p>Le paiement est sécurisé par <strong>Stripe</strong>. Reprendr. ne stocke aucune donnée bancaire. Le paiement est unique — aucun abonnement n'est souscrit par ce biais.</p>
 
-2.1 Données d'identification
-Prénom et nom
-Adresse email
-Ville de résidence
-2.2 Données relatives au litige
-Nom de l'entreprise concernée
-Type de litige déclaré
-Montant mensuel prélevé
-Durée du prélèvement
-Pays de l'entreprise
-Description libre de la situation (optionnel)
-2.3 Données de paiement
-Les données de paiement (numéro de carte, date d'expiration, CVC) sont traitées exclusivement par Stripe et ne sont jamais stockées par Reprendr. Reprendr. reçoit uniquement une confirmation de paiement et un identifiant de transaction.
+    <h2>Article 4 — Droit de rétractation et remboursement</h2>
+    <p>Conformément à l'article L.221-28 du Code de la consommation, le droit de rétractation ne peut être exercé pour les contrats de fourniture de contenu numérique dont l'exécution a commencé avec l'accord préalable exprès du consommateur.</p>
+    <p>Toutefois, Reprendr. s'engage à rembourser intégralement tout utilisateur qui en ferait la demande dans les <strong>7 jours suivant le paiement</strong>, à condition qu'<strong>aucune action n'ait encore été effectuée</strong> depuis le tableau de bord (aucun recommandé envoyé, aucun signalement soumis).</p>
+    <p>Demande de remboursement : contact@reprendr.fr avec l'objet "Remboursement — [numéro de commande]".</p>
 
-2.4 Données de navigation
-Adresse IP (anonymisée)
-Type de navigateur et système d'exploitation
-Pages visitées et durée de visite
-Article 3 — Finalités du traitement
-Les données collectées sont utilisées exclusivement pour :
+    <h2>Article 5 — Obligations et responsabilités de l'utilisateur</h2>
+    <p>L'utilisateur s'engage à :</p>
+    <ul>
+      <li>Utiliser le service de bonne foi et à des fins légitimes uniquement</li>
+      <li>Fournir des informations exactes et vérifiables</li>
+      <li>Ne pas utiliser Reprendr. pour initier des démarches abusives, dilatoires ou de mauvaise foi</li>
+      <li>Conserver les documents générés et les accusés de réception</li>
+    </ul>
+    <p>L'utilisateur est seul responsable de l'usage qu'il fait des documents générés par Reprendr. Reprendr. ne pourra être tenu responsable des conséquences découlant d'une utilisation incorrecte ou frauduleuse du service.</p>
 
-La qualification et le traitement de votre dossier
-La génération des documents personnalisés
-L'envoi du recommandé électronique via AR24
-Le suivi automatisé de votre dossier (J+15, J+30)
-La facturation et la comptabilité
-L'amélioration du service (données agrégées et anonymisées uniquement)
-Article 4 — Base légale des traitements
-Exécution du contrat — traitement nécessaire à la fourniture du service commandé
-Intérêt légitime — amélioration du service, prévention des fraudes
-Obligation légale — conservation des données de facturation (10 ans)
-Article 5 — Durée de conservation
-Données du dossier : 3 ans à compter de la clôture du dossier (durée de prescription des litiges de consommation)
-Données de facturation : 10 ans (obligation comptable légale)
-Données de navigation : 13 mois maximum
-Article 6 — Destinataires des données
-Vos données sont transmises uniquement aux sous-traitants strictement nécessaires à l'exécution du service :
+    <h2>Article 6 — Limitation de responsabilité de Reprendr.</h2>
+    <p>Reprendr. s'engage à mettre en œuvre tous les moyens raisonnables pour assurer la qualité des documents générés et la continuité du service. Toutefois, Reprendr. ne peut garantir :</p>
+    <ul>
+      <li>Le résultat des démarches entreprises par l'utilisateur</li>
+      <li>La réactivité ou la bonne foi de l'entreprise destinataire</li>
+      <li>L'issue favorable de la médiation ou d'une procédure judiciaire</li>
+      <li>La disponibilité permanente et sans interruption du service</li>
+    </ul>
+    <p>La responsabilité de Reprendr. est limitée au montant payé par l'utilisateur pour la prestation concernée, soit au maximum <strong>9,90€</strong>.</p>
 
-AR24 — envoi du recommandé électronique (données nécessaires à l'envoi uniquement)
-Stripe — traitement du paiement (données bancaires uniquement)
-GitHub Pages — hébergement du site
-Reprendr. ne vend jamais vos données à des tiers. Vos données ne sont pas utilisées à des fins publicitaires ou commerciales tierces.
+    <h2>Article 7 — Dossiers non traitables</h2>
+    <p>Lorsque le moteur de qualification de Reprendr. détermine qu'un dossier est non recevable (prescription dépassée, entreprise hors juridiction, montant insuffisant, etc.), aucun frais n'est demandé à l'utilisateur. Reprendr. s'engage à expliquer clairement la raison du refus et à proposer des alternatives gratuites.</p>
 
-Article 7 — Vos droits
-Conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés, vous disposez des droits suivants :
+    <h2>Article 8 — Cabinet partenaire et procédures judiciaires</h2>
+    <p>Pour les dossiers complexes ou nécessitant une procédure judiciaire, Reprendr. peut orienter l'utilisateur vers un cabinet d'avocats partenaire. Cette orientation est effectuée avec l'accord préalable de l'utilisateur. Les honoraires du cabinet partenaire sont distincts et communiqués avant tout engagement. Reprendr. perçoit une commission de mise en relation dans ce cadre.</p>
 
-Droit d'accès — obtenir une copie de vos données personnelles
-Droit de rectification — corriger des données inexactes
-Droit à l'effacement — demander la suppression de vos données (sous réserve des obligations légales de conservation)
-Droit à la portabilité — recevoir vos données dans un format structuré
-Droit d'opposition — vous opposer au traitement de vos données
-Droit à la limitation — demander la suspension temporaire du traitement
-Pour exercer ces droits, contactez-nous à : privacy@reprendr.fr
+    <h2>Article 9 — Propriété intellectuelle</h2>
+    <p>Les documents générés par Reprendr. à partir des informations fournies par l'utilisateur appartiennent à l'utilisateur. Reprendr. conserve la propriété intellectuelle de ses algorithmes, modèles de documents, interfaces et marques.</p>
 
-Nous nous engageons à répondre dans un délai maximum de 30 jours.
+    <h2>Article 10 — Droit applicable et juridiction compétente</h2>
+    <p>Les présentes CGUV sont soumises au droit français. En cas de litige non résolu par la médiation, les tribunaux compétents seront ceux du ressort de Nanterre (92), sauf disposition légale contraire applicable au consommateur.</p>
 
-Article 8 — Réclamation auprès de la CNIL
-Si vous estimez que le traitement de vos données personnelles constitue une violation du RGPD, vous avez le droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :
+    <h2>Article 11 — Modification des CGUV</h2>
+    <p>Reprendr. se réserve le droit de modifier les présentes CGUV à tout moment. Les modifications entrent en vigueur dès leur publication sur le site. L'utilisateur est invité à consulter régulièrement cette page.</p>
+  </div>
 
-CNIL
-3 place de Fontenoy — TSA 80715
-75334 Paris Cedex 07
-cnil.fr
-Article 9 — Cookies
-Le site reprendr.fr utilise uniquement des cookies techniques strictement nécessaires au fonctionnement du service (session utilisateur, panier). Aucun cookie publicitaire ou de traçage tiers n'est utilisé. Aucun consentement préalable n'est requis pour ces cookies.
+  <!-- ===== POLITIQUE DE CONFIDENTIALITÉ ===== -->
+  <div class="doc-section" id="confidentialite">
+    <div class="doc-titre">Politique de confidentialité — RGPD</div>
+    <div class="doc-date">En vigueur au 10 septembre 2026</div>
 
-Article 10 — Sécurité des données
-Reprendr. met en œuvre les mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, divulgation, altération ou destruction. Le site est servi exclusivement en HTTPS. Les accès aux données sont strictement limités aux personnes habilitées.
+    <div class="highlight">Reprendr. accorde une importance fondamentale à la protection de vos données personnelles. Cette politique explique quelles données nous collectons, pourquoi, comment nous les utilisons et quels sont vos droits.</div>
 
-Article 11 — Modification de la politique de confidentialité
-Cette politique peut être mise à jour à tout moment. La date de mise à jour figure en haut de ce document. Nous vous encourageons à la consulter régulièrement.
+    <h2>Article 1 — Responsable du traitement</h2>
+    <div class="contact-box">
+      <strong>Responsable du traitement des données</strong>
+      Reprendr. — Micro-entreprise<br>
+      Siège social : Meudon, 92360<br>
+      SIRET : 828 819 300 00025<br>
+      Email : privacy@reprendr.fr
+    </div>
 
-© 2026 Reprendr. — Tous droits réservés · SIRET 828 819 300 00025 · Meudon (92360)
+    <h2>Article 2 — Données collectées</h2>
+    <p>Dans le cadre de l'utilisation du service, Reprendr. collecte les données suivantes :</p>
+
+    <h3>2.1 Données d'identification</h3>
+    <ul>
+      <li>Prénom et nom</li>
+      <li>Adresse email</li>
+      <li>Ville de résidence</li>
+    </ul>
+
+    <h3>2.2 Données relatives au litige</h3>
+    <ul>
+      <li>Nom de l'entreprise concernée</li>
+      <li>Type de litige déclaré</li>
+      <li>Montant mensuel prélevé</li>
+      <li>Durée du prélèvement</li>
+      <li>Pays de l'entreprise</li>
+      <li>Description libre de la situation (optionnel)</li>
+    </ul>
+
+    <h3>2.3 Données de paiement</h3>
+    <p>Les données de paiement (numéro de carte, date d'expiration, CVC) sont traitées exclusivement par <strong>Stripe</strong> et ne sont jamais stockées par Reprendr. Reprendr. reçoit uniquement une confirmation de paiement et un identifiant de transaction.</p>
+
+    <h3>2.4 Données de navigation</h3>
+    <ul>
+      <li>Adresse IP (anonymisée)</li>
+      <li>Type de navigateur et système d'exploitation</li>
+      <li>Pages visitées et durée de visite</li>
+    </ul>
+
+    <h2>Article 3 — Finalités du traitement</h2>
+    <p>Les données collectées sont utilisées exclusivement pour :</p>
+    <ul>
+      <li>La qualification et le traitement de votre dossier</li>
+      <li>La génération des documents personnalisés</li>
+      <li>L'envoi du recommandé électronique via AR24</li>
+      <li>Le suivi automatisé de votre dossier (J+15, J+30)</li>
+      <li>La facturation et la comptabilité</li>
+      <li>L'amélioration du service (données agrégées et anonymisées uniquement)</li>
+    </ul>
+
+    <h2>Article 4 — Base légale des traitements</h2>
+    <ul>
+      <li><strong>Exécution du contrat</strong> — traitement nécessaire à la fourniture du service commandé</li>
+      <li><strong>Intérêt légitime</strong> — amélioration du service, prévention des fraudes</li>
+      <li><strong>Obligation légale</strong> — conservation des données de facturation (10 ans)</li>
+    </ul>
+
+    <h2>Article 5 — Durée de conservation</h2>
+    <ul>
+      <li>Données du dossier : <strong>3 ans</strong> à compter de la clôture du dossier (durée de prescription des litiges de consommation)</li>
+      <li>Données de facturation : <strong>10 ans</strong> (obligation comptable légale)</li>
+      <li>Données de navigation : <strong>13 mois</strong> maximum</li>
+    </ul>
+
+    <h2>Article 6 — Destinataires des données</h2>
+    <p>Vos données sont transmises uniquement aux sous-traitants strictement nécessaires à l'exécution du service :</p>
+    <ul>
+      <li><strong>AR24</strong> — envoi du recommandé électronique (données nécessaires à l'envoi uniquement)</li>
+      <li><strong>Stripe</strong> — traitement du paiement (données bancaires uniquement)</li>
+      <li><strong>GitHub Pages</strong> — hébergement du site</li>
+    </ul>
+    <p><strong>Reprendr. ne vend jamais vos données à des tiers.</strong> Vos données ne sont pas utilisées à des fins publicitaires ou commerciales tierces.</p>
+
+    <h2>Article 7 — Vos droits</h2>
+    <p>Conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés, vous disposez des droits suivants :</p>
+    <ul>
+      <li><strong>Droit d'accès</strong> — obtenir une copie de vos données personnelles</li>
+      <li><strong>Droit de rectification</strong> — corriger des données inexactes</li>
+      <li><strong>Droit à l'effacement</strong> — demander la suppression de vos données (sous réserve des obligations légales de conservation)</li>
+      <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format structuré</li>
+      <li><strong>Droit d'opposition</strong> — vous opposer au traitement de vos données</li>
+      <li><strong>Droit à la limitation</strong> — demander la suspension temporaire du traitement</li>
+    </ul>
+    <p>Pour exercer ces droits, contactez-nous à : <strong>privacy@reprendr.fr</strong></p>
+    <p>Nous nous engageons à répondre dans un délai maximum de <strong>30 jours</strong>.</p>
+
+    <h2>Article 8 — Réclamation auprès de la CNIL</h2>
+    <p>Si vous estimez que le traitement de vos données personnelles constitue une violation du RGPD, vous avez le droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :</p>
+    <div class="contact-box">
+      <strong>CNIL</strong>
+      3 place de Fontenoy — TSA 80715<br>
+      75334 Paris Cedex 07<br>
+      cnil.fr
+    </div>
+
+    <h2>Article 9 — Cookies</h2>
+    <p>Le site reprendr.fr utilise uniquement des cookies techniques strictement nécessaires au fonctionnement du service (session utilisateur, panier). Aucun cookie publicitaire ou de traçage tiers n'est utilisé. Aucun consentement préalable n'est requis pour ces cookies.</p>
+
+    <h2>Article 10 — Sécurité des données</h2>
+    <p>Reprendr. met en œuvre les mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, divulgation, altération ou destruction. Le site est servi exclusivement en HTTPS. Les accès aux données sont strictement limités aux personnes habilitées.</p>
+
+    <h2>Article 11 — Modification de la politique de confidentialité</h2>
+    <p>Cette politique peut être mise à jour à tout moment. La date de mise à jour figure en haut de ce document. Nous vous encourageons à la consulter régulièrement.</p>
+  </div>
+
+</div>
+
+<footer>© 2026 <span class="re">Re</span><span class="ndr">prendr.</span> — Tous droits réservés · SIRET 828 819 300 00025 · Meudon (92360)</footer>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reprendr. — Mentions légales, CGU & Politique de confidentialité</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#F5F7FA;color:#1A1A2E;line-height:1.7}
+    :root{--blue:#1B3F6E;--red:#E02B2B;--gray:#F5F7FA;--gray2:#E8ECF2;--muted:#5A6478}
+
+    nav{background:#fff;border-bottom:1px solid var(--gray2);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo .re{color:var(--blue);font-size:22px;font-weight:800}
+    .logo .ndr{color:var(--red);font-size:22px;font-weight:800}
+    .back{font-size:13px;color:var(--blue);text-decoration:none;font-weight:600}
+
+    .wrapper{max-width:780px;margin:0 auto;padding:48px 24px 80px}
+
+    .toc{background:#fff;border:1px solid var(--gray2);border-radius:12px;padding:24px 28px;margin-bottom:48px}
+    .toc-titre{font-size:14px;font-weight:700;color:var(--blue);margin-bottom:14px}
+    .toc a{display:block;font-size:13px;color:var(--blue);text-decoration:none;padding:4px 0;border-bottom:1px solid var(--gray);opacity:.8}
+    .toc a:last-child{border:none}
+    .toc a:hover{opacity:1}
+
+    .doc-section{margin-bottom:56px}
+    .doc-titre{font-size:26px;font-weight:800;color:var(--blue);margin-bottom:6px;padding-top:24px;border-top:3px solid var(--red)}
+    .doc-date{font-size:12px;color:var(--muted);margin-bottom:28px}
+
+    h2{font-size:17px;font-weight:700;color:var(--blue);margin:28px 0 10px}
+    h3{font-size:15px;font-weight:600;color:#1A1A2E;margin:20px 0 8px}
+    p{font-size:14px;color:#374151;margin-bottom:12px}
+    ul{margin:8px 0 14px 20px}
+    li{font-size:14px;color:#374151;margin-bottom:6px}
+    strong{color:#1A1A2E}
+
+    .highlight{background:#EEF3FA;border-left:3px solid var(--blue);padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px;color:#374151}
+    .warning{background:#FFF8EE;border-left:3px solid #D97706;padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0;font-size:13px;color:#92400E}
+    .contact-box{background:#F0F4FA;border:1px solid #C5D5EE;border-radius:10px;padding:20px 24px;margin:20px 0;font-size:14px;color:#374151}
+    .contact-box strong{display:block;margin-bottom:8px;color:var(--blue);font-size:15px}
+
+    footer{background:#12294A;color:rgba(255,255,255,.6);text-align:center;padding:20px 32px;font-size:12px}
+    footer .re{color:#fff;font-weight:700}
+    footer .ndr{color:var(--red);font-weight:700}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
+  <a class="back" href="index.html">← Retour au site</a>
+</nav>
+
+<div class="wrapper">
+
+  <div class="toc">
+    <div class="toc-titre">Sommaire</div>
+    <a href="#mentions">1. Mentions légales</a>
+    <a href="#cgu">2. Conditions Générales d'Utilisation et de Vente (CGUV)</a>
+    <a href="#confidentialite">3. Politique de confidentialité — RGPD</a>
+  </div>
+
+  <!-- ===== MENTIONS LÉGALES ===== -->
+  <div class="doc-section" id="mentions">
+    <div class="doc-titre">Mentions légales</div>
+    <div class="doc-date">En vigueur au 10 septembre 2026</div>
+
+    <h2>1. Éditeur du site</h2>
+    <p>Le site <strong>reprendr.fr</strong> est édité par :</p>
+    <div class="contact-box">
+      <strong>Reprendr.</strong>
+      Micro-entreprise enregistrée en France<br>
+      Siège social : Meudon, 92360<br>
+      SIRET : 828 819 300 00025<br>
+      Email : contact@reprendr.fr<br>
+      Directeur de la publication : le titulaire de la micro-entreprise
+    </div>
+
+    <h2>2. Hébergement</h2>
+    <div class="contact-box">
+      <strong>GitHub Pages</strong>
+      GitHub, Inc.<br>
+      88 Colin P. Kelly Jr. Street<br>
+      San Francisco, CA 94107, États-Unis<br>
+      Site : github.com
+    </div>
+
+    <h2>3. Propriété intellectuelle</h2>
+    <p>L'ensemble des éléments constituant le site reprendr.fr (textes, graphismes, logiciels, photographies, images, sons, plans, logos, marques) sont la propriété exclusive de Reprendr. ou font l'objet d'une autorisation d'utilisation. Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation préalable écrite de Reprendr.</p>
+
+    <h2>4. Limitation de responsabilité</h2>
+    <p>Reprendr. s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site. Toutefois, Reprendr. ne peut garantir l'exactitude, la précision ou l'exhaustivité des informations mises à disposition. Reprendr. décline toute responsabilité pour toute imprécision, inexactitude ou omission portant sur des informations disponibles sur ce site.</p>
+
+    <div class="warning">
+      Ce site ne constitue pas un cabinet d'avocats. Les documents générés par Reprendr. sont des outils d'aide à la rédaction et ne constituent pas un conseil juridique personnalisé au sens de la loi n°71-1130 du 31 décembre 1971. Reprendr. ne garantit pas le résultat des démarches entreprises.
+    </div>
+
+    <h2>5. Médiation de la consommation</h2>
+    <p>Conformément aux articles L.616-1 et R.616-1 du Code de la consommation, Reprendr. propose un dispositif de médiation de la consommation. En cas de litige non résolu entre Reprendr. et un client, ce dernier peut recourir gratuitement au médiateur de la consommation compétent.</p>
+  </div>
+
+  <!-- ===== CGU ===== -->
+  <div class="doc-section" id="cgu">
+    <div class="doc-titre">Conditions Générales d'Utilisation et de Vente</div>
+    <div class="doc-date">En vigueur au 10 septembre 2026</div>
+
+    <div class="highlight">En accédant au site reprendr.fr et en utilisant ses services, vous acceptez sans réserve les présentes Conditions Générales d'Utilisation et de Vente (CGUV). Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser ce service.</div>
+
+    <h2>Article 1 — Objet et nature du service</h2>
+    <p>Reprendr. est un service en ligne d'assistance à la rédaction de documents destinés aux consommateurs victimes de prélèvements non consentis, d'abonnements frauduleux ou de pratiques commerciales trompeuses.</p>
+    <p>Reprendr. fournit :</p>
+    <ul>
+      <li>Un diagnostic gratuit de la situation décrite par l'utilisateur</li>
+      <li>Une qualification de la recevabilité du dossier selon des critères objectifs</>
+      <li>La rédaction de documents (lettre de mise en demeure, courrier d'opposition bancaire, formulaire de saisine du médiateur)</li>
+      <li>L'envoi recommandé électronique de la mise en demeure via le prestataire AR24</li>
+      <li>Un suivi automatisé du dossier à J+15 et J+30</li>
+    </ul>
+
+    <div class="warning">
+      Reprendr. est un prestataire de rédaction documentaire. Reprendr. n'est pas un cabinet d'avocats, ne dispense pas de conseil juridique personnalisé au sens de la loi du 31 décembre 1971, et ne représente pas l'utilisateur devant les juridictions. Les documents générés constituent des outils d'aide à la démarche, pas une garantie de résultat.
+    </div>
+
+    <h2>Article 2 — Accès au service et inscription</h2>
+    <p>L'accès au diagnostic est gratuit et ne nécessite pas de création de compte. L'accès aux documents générés est conditionné au paiement du tarif en vigueur au moment de la commande.</p>
+    <p>L'utilisateur garantit que les informations fournies lors de l'utilisation du service sont exactes, complètes et à jour. Toute fausse déclaration engage la responsabilité exclusive de l'utilisateur.</p>
+
+    <h2>Article 3 — Tarifs et paiement</h2>
+    <p>Le tarif du dossier complet est de <strong>9,90€ TTC</strong> au moment de la publication des présentes conditions. Ce tarif est susceptible d'évoluer. Le tarif applicable est celui affiché au moment de la commande.</p>
+    <p>Ce tarif inclut :</p>
+    <ul>
+      <li>La lettre de mise en demeure personnalisée</li>
+      <li>L'envoi recommandé électronique (offert — valeur juridique identique au recommandé papier)</li>
+      <li>Le formulaire de signalement DGCCRF pré-rempli</li>
+      <li>Le courrier d'opposition bancaire</li>
+      <li>La saisine du médiateur sectoriel</li>
+      <li>Le suivi automatisé à J+15 et J+30</li>
+    </ul>
+    <p>Le paiement est sécurisé par <strong>Stripe</strong>. Reprendr. ne stocke aucune donnée bancaire. Le paiement est unique — aucun abonnement n'est souscrit par ce biais.</p>
+
+    <h2>Article 4 — Droit de rétractation et remboursement</h2>
+    <p>Conformément à l'article L.221-28 du Code de la consommation, le droit de rétractation ne peut être exercé pour les contrats de fourniture de contenu numérique dont l'exécution a commencé avec l'accord préalable exprès du consommateur.</p>
+    <p>Toutefois, Reprendr. s'engage à rembourser intégralement tout utilisateur qui en ferait la demande dans les <strong>7 jours suivant le paiement</strong>, à condition qu'<strong>aucune action n'ait encore été effectuée</strong> depuis le tableau de bord (aucun recommandé envoyé, aucun signalement soumis).</p>
+    <p>Demande de remboursement : contact@reprendr.fr avec l'objet "Remboursement — [numéro de commande]".</p>
+
+    <h2>Article 5 — Obligations et responsabilités de l'utilisateur</h2>
+    <p>L'utilisateur s'engage à :</p>
+    <ul>
+      <li>Utiliser le service de bonne foi et à des fins légitimes uniquement</li>
+      <li>Fournir des informations exactes et vérifiables</li>
+      <li>Ne pas utiliser Reprendr. pour initier des démarches abusives, dilatoires ou de mauvaise foi</li>
+      <li>Conserver les documents générés et les accusés de réception</li>
+    </ul>
+    <p>L'utilisateur est seul responsable de l'usage qu'il fait des documents générés par Reprendr. Reprendr. ne pourra être tenu responsable des conséquences découlant d'une utilisation incorrecte ou frauduleuse du service.</p>
+
+    <h2>Article 6 — Limitation de responsabilité de Reprendr.</h2>
+    <p>Reprendr. s'engage à mettre en œuvre tous les moyens raisonnables pour assurer la qualité des documents générés et la continuité du service. Toutefois, Reprendr. ne peut garantir :</p>
+    <ul>
+      <li>Le résultat des démarches entreprises par l'utilisateur</li>
+      <li>La réactivité ou la bonne foi de l'entreprise destinataire</li>
+      <li>L'issue favorable de la médiation ou d'une procédure judiciaire</li>
+      <li>La disponibilité permanente et sans interruption du service</li>
+    </ul>
+    <p>La responsabilité de Reprendr. est limitée au montant payé par l'utilisateur pour la prestation concernée, soit au maximum <strong>9,90€</strong>.</p>
+
+    <h2>Article 7 — Dossiers non traitables</h2>
+    <p>Lorsque le moteur de qualification de Reprendr. détermine qu'un dossier est non recevable (prescription dépassée, entreprise hors juridiction, montant insuffisant, etc.), aucun frais n'est demandé à l'utilisateur. Reprendr. s'engage à expliquer clairement la raison du refus et à proposer des alternatives gratuites.</p>
+
+    <h2>Article 8 — Cabinet partenaire et procédures judiciaires</h2>
+    <p>Pour les dossiers complexes ou nécessitant une procédure judiciaire, Reprendr. peut orienter l'utilisateur vers un cabinet d'avocats partenaire. Cette orientation est effectuée avec l'accord préalable de l'utilisateur. Les honoraires du cabinet partenaire sont distincts et communiqués avant tout engagement. Reprendr. perçoit une commission de mise en relation dans ce cadre.</p>
+
+    <h2>Article 9 — Propriété intellectuelle</h2>
+    <p>Les documents générés par Reprendr. à partir des informations fournies par l'utilisateur appartiennent à l'utilisateur. Reprendr. conserve la propriété intellectuelle de ses algorithmes, modèles de documents, interfaces et marques.</p>
+
+    <h2>Article 10 — Droit applicable et juridiction compétente</h2>
+    <p>Les présentes CGUV sont soumises au droit français. En cas de litige non résolu par la médiation, les tribunaux compétents seront ceux du ressort de Nanterre (92), sauf disposition légale contraire applicable au consommateur.</p>
+
+    <h2>Article 11 — Modification des CGUV</h2>
+    <p>Reprendr. se réserve le droit de modifier les présentes CGUV à tout moment. Les modifications entrent en vigueur dès leur publication sur le site. L'utilisateur est invité à consulter régulièrement cette page.</p>
+  </div>
+
+  <!-- ===== POLITIQUE DE CONFIDENTIALITÉ ===== -->
+  <div class="doc-section" id="confidentialite">
+    <div class="doc-titre">Politique de confidentialité — RGPD</div>
+    <div class="doc-date">En vigueur au 10 septembre 2026</div>
+
+    <div class="highlight">Reprendr. accorde une importance fondamentale à la protection de vos données personnelles. Cette politique explique quelles données nous collectons, pourquoi, comment nous les utilisons et quels sont vos droits.</div>
+
+    <h2>Article 1 — Responsable du traitement</h2>
+    <div class="contact-box">
+      <strong>Responsable du traitement des données</strong>
+      Reprendr. — Micro-entreprise<br>
+      Siège social : Meudon, 92360<br>
+      SIRET : 828 819 300 00025<br>
+      Email : privacy@reprendr.fr
+    </div>
+
+    <h2>Article 2 — Données collectées</h2>
+    <p>Dans le cadre de l'utilisation du service, Reprendr. collecte les données suivantes :</p>
+
+    <h3>2.1 Données d'identification</h3>
+    <ul>
+      <li>Prénom et nom</li>
+      <li>Adresse email</li>
+      <li>Ville de résidence</li>
+    </ul>
+
+    <h3>2.2 Données relatives au litige</h3>
+    <ul>
+      <li>Nom de l'entreprise concernée</li>
+      <li>Type de litige déclaré</li>
+      <li>Montant mensuel prélevé</li>
+      <li>Durée du prélèvement</li>
+      <li>Pays de l'entreprise</li>
+      <li>Description libre de la situation (optionnel)</li>
+    </ul>
+
+    <h3>2.3 Données de paiement</h3>
+    <p>Les données de paiement (numéro de carte, date d'expiration, CVC) sont traitées exclusivement par <strong>Stripe</strong> et ne sont jamais stockées par Reprendr. Reprendr. reçoit uniquement une confirmation de paiement et un identifiant de transaction.</p>
+
+    <h3>2.4 Données de navigation</h3>
+    <ul>
+      <li>Adresse IP (anonymisée)</li>
+      <li>Type de navigateur et système d'exploitation</li>
+      <li>Pages visitées et durée de visite</li>
+    </ul>
+
+    <h2>Article 3 — Finalités du traitement</h2>
+    <p>Les données collectées sont utilisées exclusivement pour :</p>
+    <ul>
+      <li>La qualification et le traitement de votre dossier</li>
+      <li>La génération des documents personnalisés</li>
+      <li>L'envoi du recommandé électronique via AR24</li>
+      <li>Le suivi automatisé de votre dossier (J+15, J+30)</li>
+      <li>La facturation et la comptabilité</li>
+      <li>L'amélioration du service (données agrégées et anonymisées uniquement)</li>
+    </ul>
+
+    <h2>Article 4 — Base légale des traitements</h2>
+    <ul>
+      <li><strong>Exécution du contrat</strong> — traitement nécessaire à la fourniture du service commandé</li>
+      <li><strong>Intérêt légitime</strong> — amélioration du service, prévention des fraudes</li>
+      <li><strong>Obligation légale</strong> — conservation des données de facturation (10 ans)</li>
+    </ul>
+
+    <h2>Article 5 — Durée de conservation</h2>
+    <ul>
+      <li>Données du dossier : <strong>3 ans</strong> à compter de la clôture du dossier (durée de prescription des litiges de consommation)</li>
+      <li>Données de facturation : <strong>10 ans</strong> (obligation comptable légale)</li>
+      <li>Données de navigation : <strong>13 mois</strong> maximum</li>
+    </ul>
+
+    <h2>Article 6 — Destinataires des données</h2>
+    <p>Vos données sont transmises uniquement aux sous-traitants strictement nécessaires à l'exécution du service :</p>
+    <ul>
+      <li><strong>AR24</strong> — envoi du recommandé électronique (données nécessaires à l'envoi uniquement)</li>
+      <li><strong>Stripe</strong> — traitement du paiement (données bancaires uniquement)</li>
+      <li><strong>GitHub Pages</strong> — hébergement du site</li>
+    </ul>
+    <p><strong>Reprendr. ne vend jamais vos données à des tiers.</strong> Vos données ne sont pas utilisées à des fins publicitaires ou commerciales tierces.</p>
+
+    <h2>Article 7 — Vos droits</h2>
+    <p>Conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés, vous disposez des droits suivants :</p>
+    <ul>
+      <li><strong>Droit d'accès</strong> — obtenir une copie de vos données personnelles</li>
+      <li><strong>Droit de rectification</strong> — corriger des données inexactes</li>
+      <li><strong>Droit à l'effacement</strong> — demander la suppression de vos données (sous réserve des obligations légales de conservation)</li>
+      <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format structuré</li>
+      <li><strong>Droit d'opposition</strong> — vous opposer au traitement de vos données</li>
+      <li><strong>Droit à la limitation</strong> — demander la suspension temporaire du traitement</li>
+    </ul>
+    <p>Pour exercer ces droits, contactez-nous à : <strong>privacy@reprendr.fr</strong></p>
+    <p>Nous nous engageons à répondre dans un délai maximum de <strong>30 jours</strong>.</p>
+
+    <h2>Article 8 — Réclamation auprès de la CNIL</h2>
+    <p>Si vous estimez que le traitement de vos données personnelles constitue une violation du RGPD, vous avez le droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :</p>
+    <div class="contact-box">
+      <strong>CNIL</strong>
+      3 place de Fontenoy — TSA 80715<br>
+      75334 Paris Cedex 07<br>
+      cnil.fr
+    </div>
+
+    <h2>Article 9 — Cookies</h2>
+    <p>Le site reprendr.fr utilise uniquement des cookies techniques strictement nécessaires au fonctionnement du service (session utilisateur, panier). Aucun cookie publicitaire ou de traçage tiers n'est utilisé. Aucun consentement préalable n'est requis pour ces cookies.</p>
+
+    <h2>Article 10 — Sécurité des données</h2>
+    <p>Reprendr. met en œuvre les mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, divulgation, altération ou destruction. Le site est servi exclusivement en HTTPS. Les accès aux données sont strictement limités aux personnes habilitées.</p>
+
+    <h2>Article 11 — Modification de la politique de confidentialité</h2>
+    <p>Cette politique peut être mise à jour à tout moment. La date de mise à jour figure en haut de ce document. Nous vous encourageons à la consulter régulièrement.</p>
+  </div>
+
+</div>
+
+<footer>© 2026 <span class="re">Re</span><span class="ndr">prendr.</span> — Tous droits réservés · SIRET 828 819 300 00025 · Meudon (92360)</footer>
+
+</body>
+</html>
