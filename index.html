@@ -841,6 +841,8 @@ function afficherVerdict(r, total, col, entreprise) {
 }
 
 // ===== DASHBOARD =====
+var SUPABASE_URL = 'https://scbcixelfodadmjtpjqh.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYmNpeGVsZm9kYWRtanRwanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzE1ODMsImV4cCI6MjEwNDcwNzU4M30.ggZ9UBoqbnrENdb9Mn5VHamo68Jsn2NUzOZ0a0DbABk';
 var nbActions = 0;
 function doAction(n){
   document.getElementById('ab'+n).textContent='✓ Effectué';
