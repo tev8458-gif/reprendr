@@ -662,8 +662,37 @@ function goSynthese() {
 }
 
 // ===== QUALIFICATION =====
+async function sauvegarderDossier(data) {
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/dossiers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(data)
+    });
+  } catch(e) {
+    console.log('Supabase error:', e);
+  }
+}
+
 function lancerAnalyse() {
-  afficher('vueQualification');
+  sauvegarderDossier({
+  nom: document.getElementById('f_nom').value,
+  email: document.getElementById('f_email').value,
+  ville: document.getElementById('f_ville').value,
+  entreprise: document.getElementById('f_entreprise').value,
+  type_litige: typeSelected,
+  montant: parseFloat(document.getElementById('f_montant').value)||0,
+  duree: document.getElementById('f_duree').value,
+  pays: document.getElementById('f_pays').value,
+  contact: contactSelected,
+  contexte: document.getElementById('f_contexte').value
+});
+afficher('vueQualification');
   setTimeout(analyser, 1800);
 }
 
