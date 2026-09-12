@@ -662,6 +662,54 @@ function goSynthese() {
 }
 
 // ===== QUALIFICATION =====
+async function sauvegarderVerdict(verdict, score, titre, analyse) {
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/dossiers?id=eq.' + dernierDossierId, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      },
+      body: JSON.stringify({verdict: verdict, score: score})
+    });
+  } catch(e) {
+    console.log('Verdict save error:', e);
+  }
+}
+
+async function sauvegarderVerdict(verdict, score, titre, analyse) {
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/dossiers?id=eq.' + dernierDossierId, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      },
+      body: JSON.stringify({verdict: verdict, score: score})
+    });
+  } catch(e) {
+    console.log('Verdict save error:', e);
+  }
+}
+
+async function sauvegarderVerdict(verdict, score, titre, analyse) {
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/dossiers?id=eq.' + dernierDossierId, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      },
+      body: JSON.stringify({verdict: verdict, score: score})
+    });
+  } catch(e) {
+    console.log('Verdict save error:', e);
+  }
+}
+
 async function sauvegarderDossier(data) {
   try {
     await fetch(SUPABASE_URL + '/rest/v1/dossiers', {
@@ -670,12 +718,17 @@ async function sauvegarderDossier(data) {
         'Content-Type': 'application/json',
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer': 'return=minimal'
+        'Prefer': 'return=representation'
       },
       body: JSON.stringify(data)
     });
   } catch(e) {
     console.log('Supabase error:', e);
+  }
+}
+
+async function sauvegarderVerdict2(id, verdict, score) {
+  dernierDossierId = id;
   }
 }
 
@@ -837,6 +890,7 @@ function analyser() {
 }
 
 function afficherVerdict(r, total, col, entreprise) {
+  sauvegarderVerdict(r.verdict, r.score, r.titre, r.analyse);
   document.getElementById('qLoader').style.display='none';
   var emoji = col==='vert'?'✅':col==='orange'?'⚠️':'🚫';
   var critHtml = r.criteres.map(function(c){return '<div class="critere"><span style="flex-shrink:0">'+c.icon+'</span><span>'+c.texte+'</span></div>';}).join('');
@@ -872,7 +926,7 @@ function afficherVerdict(r, total, col, entreprise) {
 // ===== DASHBOARD =====
 var SUPABASE_URL = 'https://scbcixelfodadmjtpjqh.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYmNpeGVsZm9kYWRtanRwanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzE1ODMsImV4cCI6MjEwNDcwNzU4M30.ggZ9UBoqbnrENdb9Mn5VHamo68Jsn2NUzOZ0a0DbABk';
-var nbActions = 0;
+var nbActions = 0; var dernierDossierId = null;
 function doAction(n){
   document.getElementById('ab'+n).textContent='✓ Effectué';
   document.getElementById('ab'+n).className='btn-action done';
