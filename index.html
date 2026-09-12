@@ -743,7 +743,9 @@ function lancerAnalyse() {
   duree: document.getElementById('f_duree').value,
   pays: document.getElementById('f_pays').value,
   contact: contactSelected,
-  contexte: document.getElementById('f_contexte').value
+  contexte: document.getElementById('f_contexte').value,
+verdict: 'en_attente',
+score: 0
 });
 afficher('vueQualification');
   setTimeout(analyser, 1800);
