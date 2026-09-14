@@ -947,6 +947,16 @@ var SUPABASE_FUNCTION_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYmNpeGVsZm9kYWRtanRwanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzE1ODMsImV4cCI6MjEwNDcwNzU4M30.ggZ9UBoqbnrENdb9Mn5VHamo68Jsn2NUzOZ0a0DbABk';
 var nbActions = 0; var dernierDossierId = null;
 function doAction(n){
+  var colonnes = {1:'action_mise_en_demeure', 2:'action_dgccrf', 3:'action_banque', 4:'action_mediateur'};
+  if(dernierDossierId && colonnes[n]){
+    var patch = {};
+    patch[colonnes[n]] = new Date().toISOString();
+    fetch(SUPABASE_URL+'/rest/v1/dossiers?id=eq.'+dernierDossierId, {
+      method:'PATCH',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY},
+      body:JSON.stringify(patch)
+    });
+  }
   document.getElementById('ab'+n).textContent='✓ Effectué';
   document.getElementById('ab'+n).className='btn-action done';
   document.getElementById('ab'+n).disabled=true;
