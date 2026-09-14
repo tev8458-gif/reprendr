@@ -948,6 +948,7 @@ var SUPABASE_URL = 'https://scbcixelfodadmjtpjqh.supabase.co';
 var SUPABASE_FUNCTION_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/send-confirmation-email';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYmNpeGVsZm9kYWRtanRwanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzE1ODMsImV4cCI6MjEwNDcwNzU4M30.ggZ9UBoqbnrENdb9Mn5VHamo68Jsn2NUzOZ0a0DbABk';
 var nbActions = 0; var dernierDossierId = null;
+if(window.location.search.includes('paiement=ok')){afficher('vueDashboard');}
 function doAction(n){ try {
   var colonnes = {1:'action_mise_en_demeure', 2:'action_dgccrf', 3:'action_banque', 4:'action_mediateur'};
   if(dernierDossierId && colonnes[n]){
