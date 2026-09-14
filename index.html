@@ -710,6 +710,18 @@ async function sauvegarderVerdict(verdict, score, titre, analyse) {
   }
 }
 
+async function envoyerEmailConfirmation(data) {
+  try {
+    await fetch(SUPABASE_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  } catch(e) {
+    console.log('Email error:', e);
+  }
+}
+
 async function sauvegarderDossier(data) {
   try {
     await fetch(SUPABASE_URL + '/rest/v1/dossiers', {
@@ -732,7 +744,14 @@ async function sauvegarderVerdict2(id, verdict, score) {
 }
 
 function lancerAnalyse() {
-  sauvegarderDossier({
+  envoyerEmailConfirmation({
+  email: document.getElementById('f_email').value,
+  prenom: document.getElementById('f_nom').value,
+  type_litige: typeSelected,
+  montant: parseFloat(document.getElementById('f_montant').value)||0,
+  adversaire: document.getElementById('f_entreprise').value
+});
+sauvegarderDossier({
   nom: document.getElementById('f_nom').value,
   email: document.getElementById('f_email').value,
   ville: document.getElementById('f_ville').value,
@@ -924,6 +943,7 @@ function afficherVerdict(r, total, col, entreprise) {
 
 // ===== DASHBOARD =====
 var SUPABASE_URL = 'https://scbcixelfodadmjtpjqh.supabase.co';
+var SUPABASE_FUNCTION_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/send-confirmation-email';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYmNpeGVsZm9kYWRtanRwanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzE1ODMsImV4cCI6MjEwNDcwNzU4M30.ggZ9UBoqbnrENdb9Mn5VHamo68Jsn2NUzOZ0a0DbABk';
 var nbActions = 0; var dernierDossierId = null;
 function doAction(n){
