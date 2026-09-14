@@ -724,7 +724,7 @@ async function envoyerEmailConfirmation(data) {
 
 async function sauvegarderDossier(data) {
   try {
-    await fetch(SUPABASE_URL + '/rest/v1/dossiers', {
+    var rep = await fetch(SUPABASE_URL + '/rest/v1/dossiers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -734,6 +734,8 @@ async function sauvegarderDossier(data) {
       },
       body: JSON.stringify(data)
     });
+    var json = await rep.json();
+    if(json && json[0] && json[0].id) { dernierDossierId = json[0].id; }
   } catch(e) {
     console.log('Supabase error:', e);
   }
