@@ -296,8 +296,15 @@
     <p style="font-size:14px;color:var(--muted)">L'entreprise est légalement tenue de répondre sous 90 jours (loi Hamon, 17 mars 2014). Entièrement gratuit pour vous.</p>
   </div>
 </div>
-</div>
-</div>
+
+<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;"></p>
+
+<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;"></p>
+
+<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;"></p>
+
+<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic"></p>
+<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic"></p>
 <p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic">Reprendr. maximise vos chances de succès en actionnant simultanément tous les recours légaux à votre disposition. Les résultats dépendent de la nature du litige et de la réponse de l'entreprise concernée. Nous ne pouvons garantir un remboursement dans tous les cas.</p>
 <div id="comment" style="text-align:center;margin-bottom:60px;scroll-margin-top:80px">
   <div class="section-title" style="text-align:center">Comment ça marche ?</div>
@@ -340,7 +347,7 @@
 </div>
 
 <!-- ========== VUE : DIAGNOSTIC ========== -->
-<div id="vueDiagnostic" style="display:none;width:100%;min-height:100vh">
+<div id="vueDiagnostic" style="display:none">
   <nav class="nav">
     <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
     <span style="font-size:13px;color:var(--muted)">Diagnostic gratuit</span>
@@ -596,15 +603,9 @@
 // ===== NAVIGATION =====
 function afficher(id) {
   ['vueAccueil','vueDiagnostic','vueQualification','vueDashboard'].forEach(function(v){
-    var el = document.getElementById(v);
-    el.style.display = 'none';
-    el.style.position = 'absolute';
-    el.style.top = '-9999px';
+    document.getElementById(v).style.display = 'none';
   });
-  var cible = document.getElementById(id);
-  cible.style.position = 'relative';
-  cible.style.top = '0';
-  cible.style.display = 'block';
+  document.getElementById(id).style.display = 'block';
   window.scrollTo(0,0);
 }
 
