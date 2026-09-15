@@ -595,11 +595,16 @@
 <script>
 // ===== NAVIGATION =====
 function afficher(id) {
-
   ['vueAccueil','vueDiagnostic','vueQualification','vueDashboard'].forEach(function(v){
-    document.getElementById(v).style.display = 'none';
+    var el = document.getElementById(v);
+    el.style.display = 'none';
+    el.style.position = 'absolute';
+    el.style.top = '-9999px';
   });
-  document.getElementById(id).style.display = 'block';
+  var cible = document.getElementById(id);
+  cible.style.position = 'relative';
+  cible.style.top = '0';
+  cible.style.display = 'block';
   window.scrollTo(0,0);
 }
 
