@@ -473,7 +473,7 @@
         <input class="stripe-input" placeholder="Jean Dupont">
         <div class="stripe-securite">🔒 Paiement sécurisé par Stripe · Vos données bancaires ne sont jamais stockées par <strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span></div>
       </div>
-      <button class="btn-payer" onclick="window.open('https://buy.stripe.com/test_dRm8wO0GI8O5dBjfwAeUU00','_blank')">Payer 9,90€ et accéder à mon dossier →</button>
+      <button class="btn-payer" onclick="window.open('https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200','_blank')">Payer 9,90€ et accéder à mon dossier →</button>
       <div class="<a href="legal.html" style="color:var(--muted)"><a href="legal.html" style="color:var(--muted)"><a href="legal.html" style="color:var(--muted)">cgu</a>-note">En procédant, vous acceptez nos <a href="legal.html"><A HREF="legal.html" STYLE="COLOR:VAR(--MUTED)"><a href="legal.html" style="color:var(--muted)">CGU</a> et notre <a href="legal.html#confidentialite"><a href="legal.html#confidentialite" style="color:var(--muted)"><a href="legal.html#confidentialite" style="color:var(--muted)">Politique de confidentialité</a></a></a>.<br>Satisfait ou remboursé 7 jours si aucune action effectuée · Paiement unique · Aucun abonnement</div>
     </div>
   </div>
@@ -917,9 +917,9 @@ function afficherVerdict(r, total, col, entreprise) {
   var altHtml = r.alternatives.length?'<div class="alt-box"><div class="alt-titre">Ce que vous pouvez faire</div>'+r.alternatives.map(function(a){return '<div class="alt-item">'+a+'</div>';}).join('')+'</div>':'';
   var montantHtml = col!=='rouge'?'<div class="montant-box">💰 Montant potentiel à récupérer : <strong>~'+total+'€</strong></div>':'';
   var btnHtml = col==='vert'
-    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick=\"window.open(\'https://buy.stripe.com/test_dRm8wO0GI8O5dBjfwAeUU00\',\'_blank\')\"}>Constituer mon dossier complet — 9,90€ →</button>'
+    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick=\"window.open(\'https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200\',\'_blank\')\"}>Constituer mon dossier complet — 9,90€ →</button>'
     :col==='orange'
-    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick=\"window.open(\'https://buy.stripe.com/test_dRm8wO0GI8O5dBjfwAeUU00\',\'_blank\')\"}>Constituer le dossier malgré tout — 9,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
+    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick=\"window.open(\'https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200\',\'_blank\')\"}>Constituer le dossier malgré tout — 9,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
     :'<div class="gratuit-note">🤝 <strong>Aucun frais ne vous est demandé.</strong><br>Reprendr ne constitue pas de dossier sans issue réelle — c\'est notre engagement d\'honnêteté.</div>';
 
   document.getElementById('qResultat').innerHTML =
