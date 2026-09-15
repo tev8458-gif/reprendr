@@ -567,7 +567,7 @@
 <script>
 // ===== NAVIGATION =====
 function afficher(id) {
-  ['vueAccueil','vueDiagnostic','vueQualification','vuePaiement','vueDashboard'].forEach(function(v){
+  ['vueAccueil','vueDiagnostic','vueQualification','vueDashboard'].forEach(function(v){
     document.getElementById(v).style.display = 'none';
   });
   document.getElementById(id).style.display = 'block';
@@ -917,9 +917,9 @@ function afficherVerdict(r, total, col, entreprise) {
   var altHtml = r.alternatives.length?'<div class="alt-box"><div class="alt-titre">Ce que vous pouvez faire</div>'+r.alternatives.map(function(a){return '<div class="alt-item">'+a+'</div>';}).join('')+'</div>':'';
   var montantHtml = col!=='rouge'?'<div class="montant-box">💰 Montant potentiel à récupérer : <strong>~'+total+'€</strong></div>':'';
   var btnHtml = col==='vert'
-    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick="afficher(\'vuePaiement\')">Constituer mon dossier complet — 9,90€ →</button>'
+    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick="window.open('https://buy.stripe.com/test_dRm8wO0GI8O5dBjfwAeUU00','_blank')">Constituer mon dossier complet — 9,90€ →</button>'
     :col==='orange'
-    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick="afficher(\'vuePaiement\')">Constituer le dossier malgré tout — 9,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
+    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick="window.open('https://buy.stripe.com/test_dRm8wO0GI8O5dBjfwAeUU00','_blank')">Constituer le dossier malgré tout — 9,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
     :'<div class="gratuit-note">🤝 <strong>Aucun frais ne vous est demandé.</strong><br>Reprendr ne constitue pas de dossier sans issue réelle — c\'est notre engagement d\'honnêteté.</div>';
 
   document.getElementById('qResultat').innerHTML =
