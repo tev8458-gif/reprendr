@@ -608,7 +608,7 @@ function resetDossier() {
   document.querySelectorAll('.choice-btn').forEach(function(b){ b.classList.remove('selected'); });
   document.querySelectorAll('input[type=text], input[type=email], input[type=number], select, textarea').forEach(function(f){ f.value = ''; });
   afficher('vueDiagnostic');
-  afficher('dstep1');
+  goDstep(1);
 }
 
 function afficher(id) {
