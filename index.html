@@ -611,7 +611,8 @@ function genererPDFMiseEnDemeure() {
   var ville = session.ville || 'Paris';
   var entreprise = session.entreprise || 'l\'entreprise';
   var montant = session.montant || '';
-  var type_litige = session.type_litige || 'abonnement non consenti';
+  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
+  var type_litige = tL[session.type_litige] || session.type_litige || 'abonnement non consenti';
   var contexte = session.contexte || '';
   var date = new Date().toLocaleDateString('fr-FR');
 
@@ -628,9 +629,13 @@ function genererPDFMiseEnDemeure() {
   doc.text('et remboursement des sommes indûment prélevées', 20, 69);
   doc.setFont('helvetica', 'normal');
   doc.text('', 20, 76);
-  var corps = 'J\'ai été victime d\'un ' + type_litige + ' de la part de votre société' + (montant ? ', pour un montant de ' + montant + '€' : '') + '.' + (contexte ? ' ' + contexte : '') + '\n\nConformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
-  var lignes = doc.splitTextToSize(corps, 170);
-  doc.text(lignes, 20, 83);
+  var intro = 'J\'ai été victime d\'un ' + type_litige + ' de la part de votre société' + (montant ? ', pour un montant de ' + montant + '€' : '') + '.' + (contexte ? ' ' + contexte : '');
+  var corps = 'Conformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
+  var lignesIntro = doc.splitTextToSize(intro, 170);
+  doc.text(lignesIntro, 20, 83);
+  var yCorps = 83 + (lignesIntro.length * 7);
+  var lignesCorps = doc.splitTextToSize(corps, 170);
+  doc.text(lignesCorps, 20, yCorps + 7);
   doc.text('', 20, 120);
   doc.text('Dans l\'attente de votre réponse, je me réserve le droit de saisir', 20, 127);
   doc.text('la DGCCRF et le médiateur sectoriel compétent.', 20, 134);
@@ -638,7 +643,6 @@ function genererPDFMiseEnDemeure() {
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, 148);
   doc.text('', 20, 155);
   doc.text(nom, 20, 162);
-  doc.text(ville + ', le ' + date, 120, 162);
 
   doc.save('mise-en-demeure-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
 }
