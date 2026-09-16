@@ -631,18 +631,19 @@ function genererPDFMiseEnDemeure() {
   doc.text('', 20, 76);
   var intro = 'J\'ai été victime d\'un ' + type_litige + ' de la part de votre société' + (montant ? ', pour un montant de ' + montant + '€' : '') + '.' + (contexte ? ' ' + contexte : '');
   var corps = 'Conformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
-  var lignesIntro = doc.splitTextToSize(intro, 170);
+   var lignesIntro = doc.splitTextToSize(intro, 170);
   doc.text(lignesIntro, 20, 83);
-  var yCorps = 83 + (lignesIntro.length * 7);
+  var y = 83 + (lignesIntro.length * 7) + 10;
   var lignesCorps = doc.splitTextToSize(corps, 170);
-  doc.text(lignesCorps, 20, yCorps + 7);
-  doc.text('', 20, 120);
-  doc.text('Dans l\'attente de votre réponse, je me réserve le droit de saisir', 20, 127);
-  doc.text('la DGCCRF et le médiateur sectoriel compétent.', 20, 134);
-  doc.text('', 20, 141);
-  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, 148);
-  doc.text('', 20, 155);
-  doc.text(nom, 20, 162);
+  doc.text(lignesCorps, 20, y);
+  y = y + (lignesCorps.length * 7) + 10;
+  var suite = 'Dans l\'attente de votre réponse, je me réserve le droit de saisir la DGCCRF et le médiateur sectoriel compétent.';
+  var lignesSuite = doc.splitTextToSize(suite, 170);
+  doc.text(lignesSuite, 20, y);
+  y = y + (lignesSuite.length * 7) + 10;
+  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
+  y = y + 14;
+  doc.text(nom, 20, y);
 
   doc.save('mise-en-demeure-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
 }
