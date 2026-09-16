@@ -233,6 +233,7 @@
       .stripe-row{grid-template-columns:1fr}
     }
   </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -539,7 +540,7 @@
             <div class="action-badge offert">🎁 Recommandé électronique offert</div>
             <div class="doc-apercu"><strong>Aperçu du document généré</strong><span id="nomUser">Jean Dupont</span><br>Paris<br><br>À l'attention du Service Juridique<br><span id="dashEntreprise2">l'entreprise</span><br><br><strong>Objet : Mise en demeure — Résiliation d'abonnement non consenti et remboursement des sommes indûment prélevées</strong><br><br>Conformément à l'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l'abonnement concerné, sous 15 jours à compter de la réception du présent courrier...</div>
             <div class="action-desc">Votre lettre est rédigée et adressée. L'envoi recommandé électronique génère un accusé de réception ayant valeur juridique — sans nécessité de se rendre à La Poste ni de faire la queue.</div>
-            <button class="btn-action primary" id="ab1" onclick="doAction(1)">Envoyer en recommandé électronique →</button>
+            <button class="btn-action primary" id="ab1" onclick="genererPDFMiseEnDemeure();doAction(1)">Envoyer en recommandé électronique →</button>
           </div>
         </div>
       </div>
@@ -602,6 +603,41 @@
 
 <script>
 // ===== NAVIGATION =====
+function genererPDFMiseEnDemeure() {
+  var { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+  var nom = document.getElementById('f_nom') ? document.getElementById('f_nom').value : document.getElementById('nomUser').textContent;
+  var ville = document.getElementById('f_ville') ? document.getElementById('f_ville').value : 'Paris';
+  var entreprise = document.getElementById('dashEntreprise2') ? document.getElementById('dashEntreprise2').textContent : 'l\'entreprise';
+  var date = new Date().toLocaleDateString('fr-FR');
+
+  doc.setFont('helvetica');
+  doc.setFontSize(11);
+  doc.text(nom, 20, 20);
+  doc.text(ville + ', le ' + date, 20, 27);
+  doc.text('', 20, 34);
+  doc.text('À l\'attention du Service Juridique', 20, 41);
+  doc.text(entreprise, 20, 48);
+  doc.text('', 20, 55);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Objet : Mise en demeure — Résiliation d\'abonnement non consenti', 20, 62);
+  doc.text('et remboursement des sommes indûment prélevées', 20, 69);
+  doc.setFont('helvetica', 'normal');
+  doc.text('', 20, 76);
+  var corps = 'Conformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
+  var lignes = doc.splitTextToSize(corps, 170);
+  doc.text(lignes, 20, 83);
+  doc.text('', 20, 120);
+  doc.text('Dans l\'attente de votre réponse, je me réserve le droit de saisir', 20, 127);
+  doc.text('la DGCCRF et le médiateur sectoriel compétent.', 20, 134);
+  doc.text('', 20, 141);
+  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, 148);
+  doc.text('', 20, 155);
+  doc.text(nom, 20, 162);
+
+  doc.save('mise-en-demeure-reprendr.pdf');
+}
+
 function resetDossier() {
   typeSelected = null;
   contactSelected = null;
