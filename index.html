@@ -606,9 +606,13 @@
 function genererPDFMiseEnDemeure() {
   var { jsPDF } = window.jspdf;
   var doc = new jsPDF();
-  var nom = document.getElementById('f_nom') ? document.getElementById('f_nom').value : document.getElementById('nomUser').textContent;
-  var ville = document.getElementById('f_ville') ? document.getElementById('f_ville').value : 'Paris';
-  var entreprise = document.getElementById('dashEntreprise2') ? document.getElementById('dashEntreprise2').textContent : 'l\'entreprise';
+  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
+  var nom = session.nom || 'Le soussigné';
+  var ville = session.ville || 'Paris';
+  var entreprise = session.entreprise || 'l\'entreprise';
+  var montant = session.montant || '';
+  var type_litige = session.type_litige || 'abonnement non consenti';
+  var contexte = session.contexte || '';
   var date = new Date().toLocaleDateString('fr-FR');
 
   doc.setFont('helvetica');
@@ -624,7 +628,7 @@ function genererPDFMiseEnDemeure() {
   doc.text('et remboursement des sommes indûment prélevées', 20, 69);
   doc.setFont('helvetica', 'normal');
   doc.text('', 20, 76);
-  var corps = 'Conformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
+  var corps = 'J\'ai été victime d\'un ' + type_litige + ' de la part de votre société' + (montant ? ', pour un montant de ' + montant + '€' : '') + '.' + (contexte ? ' ' + contexte : '') + '\n\nConformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
   var lignes = doc.splitTextToSize(corps, 170);
   doc.text(lignes, 20, 83);
   doc.text('', 20, 120);
@@ -634,8 +638,9 @@ function genererPDFMiseEnDemeure() {
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, 148);
   doc.text('', 20, 155);
   doc.text(nom, 20, 162);
+  doc.text(ville + ', le ' + date, 120, 162);
 
-  doc.save('mise-en-demeure-reprendr.pdf');
+  doc.save('mise-en-demeure-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
 }
 
 function resetDossier() {
@@ -834,7 +839,7 @@ function lancerAnalyse() {
   montant: parseFloat(document.getElementById('f_montant').value)||0,
   adversaire: document.getElementById('f_entreprise').value
 });
-sauvegarderDossier({
+var dossierSession = {
   nom: document.getElementById('f_nom').value,
   email: document.getElementById('f_email').value,
   ville: document.getElementById('f_ville').value,
@@ -844,8 +849,10 @@ sauvegarderDossier({
   duree: document.getElementById('f_duree').value,
   pays: document.getElementById('f_pays').value,
   contact: contactSelected,
-  contexte: document.getElementById('f_contexte').value, verdict: 'orange', score: 0
-});
+  contexte: document.getElementById('f_contexte').value
+};
+sessionStorage.setItem('reprendr_dossier', JSON.stringify(dossierSession));
+sauvegarderDossier(Object.assign({}, dossierSession, {verdict: 'orange', score: 0}));
 afficher('vueQualification');
   setTimeout(analyser, 1800);
 }
