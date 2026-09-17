@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -158,8 +159,8 @@
     .stripe-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .stripe-securite{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);margin-top:8px}
     .btn-payer{width:100%;background:var(--blue);color:#fff;border:none;padding:16px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer}
-    .<a href="legal.html" style="color:var(--muted)">cgu</a>-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6}
-    .<a href="legal.html" style="color:var(--muted)">cgu</a>-note a{color:var(--blue);text-decoration:underline;cursor:pointer}
+    .cgu-note{text-align:center;font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6}
+    .cgu-note a{color:var(--blue);text-decoration:underline;cursor:pointer}
 
     /* DASHBOARD */
     .dashboard-header{text-align:center;padding:4px 0 24px}
@@ -224,13 +225,82 @@
     footer .re{color:#fff;font-weight:700}
     footer .ndr{color:var(--red);font-weight:700}
 
+    /* ===== FORMULAIRE COMPLEMENTAIRE ===== */
+    .compl-wrapper{max-width:640px;margin:0 auto;padding:40px 24px 60px}
+
+    /* Barre de progression sticky */
+    .compl-progress-bar{background:#fff;border-bottom:1px solid var(--gray2);padding:16px 24px;position:sticky;top:56px;z-index:90}
+    .compl-progress-inner{max-width:640px;margin:0 auto}
+    .compl-progress-track{height:4px;background:var(--gray2);border-radius:4px;overflow:hidden;margin-bottom:8px}
+    .compl-progress-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .4s ease}
+    .compl-progress-label{font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+    .compl-progress-label span{font-weight:600;color:var(--blue)}
+
+    /* Accordéon blocs */
+    .compl-bloc{background:#fff;border:1.5px solid var(--gray2);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+    .compl-bloc.open{border-color:var(--blue)}
+    .compl-bloc.complete{border-color:#2E7D52}
+    .compl-bloc-header{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;user-select:none}
+    .compl-bloc-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;transition:all .2s}
+    .compl-bloc-num.todo{background:var(--gray2);color:var(--muted)}
+    .compl-bloc-num.active{background:var(--blue);color:#fff}
+    .compl-bloc-num.done{background:#2E7D52;color:#fff}
+    .compl-bloc-info{flex:1}
+    .compl-bloc-titre{font-size:15px;font-weight:700;color:#1A1A2E}
+    .compl-bloc-resume{font-size:12px;color:var(--muted);margin-top:2px;display:none}
+    .compl-bloc.complete .compl-bloc-resume{display:block}
+    .compl-bloc-chevron{font-size:18px;color:var(--muted);transition:transform .25s;flex-shrink:0}
+    .compl-bloc.open .compl-bloc-chevron{transform:rotate(180deg)}
+    .compl-bloc-body{padding:0 20px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s}
+    .compl-bloc.open .compl-bloc-body{max-height:1200px;padding:0 20px 24px}
+
+    /* Champs dans l'accordéon */
+    .compl-field{margin-bottom:18px}
+    .compl-field label{display:block;font-size:13px;font-weight:600;color:#1A1A2E;margin-bottom:6px}
+    .compl-field input,.compl-field select,.compl-field textarea{width:100%;padding:10px 14px;border:1.5px solid var(--gray2);border-radius:8px;font-size:14px;color:#1A1A2E;background:#fff;outline:none;font-family:inherit;transition:border-color .2s}
+    .compl-field input:focus,.compl-field select:focus,.compl-field textarea:focus{border-color:var(--blue)}
+    .compl-field .hint{font-size:12px;color:var(--muted);margin-top:5px}
+    .compl-field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+    /* Checkboxes canal */
+    .canal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .canal-btn{background:var(--gray);border:1.5px solid var(--gray2);border-radius:8px;padding:9px 14px;font-size:13px;font-weight:500;color:#1A1A2E;cursor:pointer;text-align:left;transition:all .15s}
+    .canal-btn.selected{border-color:var(--blue);background:#EEF3FA;font-weight:600;color:var(--blue)}
+
+    /* Montant calculé */
+    .montant-calcule{background:#F0FBF4;border:1px solid #C6E8D3;border-radius:8px;padding:12px 16px;font-size:13px;color:#1B5E3A;margin-top:4px;font-weight:600}
+    .montant-calcule span{font-size:18px;font-weight:800}
+
+    /* Bouton valider bloc */
+    .btn-valider-bloc{width:100%;background:var(--blue);color:#fff;border:none;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .2s}
+    .btn-valider-bloc:disabled{background:#B0BEC5;cursor:not-allowed}
+
+    /* Note PJ */
+    .pj-note{background:var(--gray);border:1.5px dashed #C8CDD6;border-radius:10px;padding:20px;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
+
+    /* Bouton final */
+    .btn-acceder-dossier{width:100%;background:var(--blue);color:#fff;border:none;padding:16px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-acceder-dossier:disabled{background:#B0BEC5;cursor:not-allowed}
+    .compl-footer-note{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6}
+
+    /* Relance tentative */
+    .relance-bloc{border:1px solid var(--gray2);border-radius:8px;padding:14px;margin-top:10px}
+    .relance-titre{font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px}
+    .btn-ajouter-relance{background:none;border:1.5px dashed #C8CDD6;border-radius:8px;width:100%;padding:10px;font-size:13px;color:var(--muted);cursor:pointer;margin-top:8px;transition:all .2s}
+    .btn-ajouter-relance:hover{border-color:var(--blue);color:var(--blue)}
+
     /* RESPONSIVE */
-    @media(max-width:600px){.hero{background:linear-gradient(rgba(27,63,110,0.65),rgba(27,63,110,0.65)),url('hero-mobile.png') center/cover no-repeat;padding:48px 20px 60px}.hero h1{font-size:32px}.hero-sub{font-size:15px}.hero-stats{flex-direction:column;align-items:center}.trust{grid-template-columns:repeat(2,1fr)}
-      .trust{grid-template-columns:repeat(2,1fr)}
+    @media(max-width:600px){
+      .hero{background:linear-gradient(rgba(27,63,110,0.65),rgba(27,63,110,0.65)),url('hero-mobile.png') center/cover no-repeat;padding:48px 20px 60px}
+      .hero h1{font-size:32px}
+      .hero-sub{font-size:15px}
       .hero-stats{flex-direction:column;align-items:center}
+      .trust{grid-template-columns:repeat(2,1fr)}
       .choice-grid{grid-template-columns:1fr}
       .choice-grid-3{grid-template-columns:1fr}
       .stripe-row{grid-template-columns:1fr}
+      .compl-field-row{grid-template-columns:1fr}
+      .canal-grid{grid-template-columns:1fr}
     }
   </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -274,57 +344,49 @@
   <div class="how" id="comment-inclus">
     <div class="how-inner">
       <div class="section-title" style="text-align:center">Ce qui est inclus dans votre dossier à 9,90€</div>
-<p style="text-align:center;font-size:16px;color:var(--muted);max-width:600px;margin:-10px auto 30px">Le diagnostic de votre réclamation est entièrement gratuit. Les 9,90€ ne sont demandés que si votre dossier est recevable et que vous souhaitez passer à l'action.</p>
-<div style="max-width:700px;margin:0 auto 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 20px">
-  <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-    <div style="font-size:24px;margin-bottom:8px">📄</div>
-    <h4 style="color:var(--blue);margin-bottom:8px">Lettre de mise en demeure</h4>
-    <p style="font-size:14px;color:var(--muted)">Rédigée selon les articles L.121-1 du Code de la consommation. <strong>Envoi en recommandé électronique inclus</strong> — valeur juridique identique au recommandé postal.</p>
-  </div>
-  <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-    <div style="font-size:24px;margin-bottom:8px">🏛️</div>
-    <h4 style="color:var(--blue);margin-bottom:8px">Signalement DGCCRF</h4>
-    <p style="font-size:14px;color:var(--muted)">Pré-rempli et soumis via SignalConso.gouv.fr — crée un dossier administratif officiel qui renforce considérablement votre position.</p>
-  </div>
-  <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-    <div style="font-size:24px;margin-bottom:8px">🏦</div>
-    <h4 style="color:var(--blue);margin-bottom:8px">Courrier bancaire</h4>
-    <p style="font-size:14px;color:var(--muted)">Conforme au Règlement SEPA UE n°260/2012. Votre banque est tenue de bloquer tout prélèvement futur de l'entreprise concernée.</p>
-  </div>
-  <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-    <div style="font-size:24px;margin-bottom:8px">⚖️</div>
-    <h4 style="color:var(--blue);margin-bottom:8px">Saisine du médiateur sectoriel</h4>
-    <p style="font-size:14px;color:var(--muted)">L'entreprise est légalement tenue de répondre sous 90 jours (loi Hamon, 17 mars 2014). Entièrement gratuit pour vous.</p>
-  </div>
-</div>
-
-<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;"></p>
-
-<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;"></p>
-
-<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;"></p>
-
-<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic"></p>
-<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic"></p>
-<p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic">Reprendr. maximise vos chances de succès en actionnant simultanément tous les recours légaux à votre disposition. Les résultats dépendent de la nature du litige et de la réponse de l'entreprise concernée. Nous ne pouvons garantir un remboursement dans tous les cas.</p>
-<div id="comment" style="text-align:center;margin-bottom:60px;scroll-margin-top:80px">
-  <div class="section-title" style="text-align:center">Comment ça marche ?</div>
-      <p class="section-sub" style="text-align:center">Diagnostic gratuit. 5 minutes. Un dossier complet pour agir.</p>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <h4>Décrivez votre situation</h4>
-          <p>En quelques questions guidées, sans jargon juridique.</p>
+      <p style="text-align:center;font-size:16px;color:var(--muted);max-width:600px;margin:-10px auto 30px">Le diagnostic de votre réclamation est entièrement gratuit. Les 9,90€ ne sont demandés que si votre dossier est recevable et que vous souhaitez passer à l'action.</p>
+      <div style="max-width:700px;margin:0 auto 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 20px">
+        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
+          <div style="font-size:24px;margin-bottom:8px">📄</div>
+          <h4 style="color:var(--blue);margin-bottom:8px">Lettre de mise en demeure</h4>
+          <p style="font-size:14px;color:var(--muted)">Rédigée selon les articles L.121-1 du Code de la consommation. <strong>Envoi en recommandé électronique inclus</strong> — valeur juridique identique au recommandé postal.</p>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <h4><span style="color:var(--blue);font-weight:700">Re</span><span style="color:var(--red);font-weight:700">prendr.</span> analyse</h4>
-          <p>Notre IA évalue la recevabilité de votre dossier et vous indique clairement vos chances de succès.</p>
+        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
+          <div style="font-size:24px;margin-bottom:8px">🏛️</div>
+          <h4 style="color:var(--blue);margin-bottom:8px">Signalement DGCCRF</h4>
+          <p style="font-size:14px;color:var(--muted)">Pré-rempli et soumis via SignalConso.gouv.fr — crée un dossier administratif officiel qui renforce considérablement votre position.</p>
         </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <h4>Votre dossier est prêt</h4>
-          <p>Accédez à vos 4 actions juridiques en un clic. Recommandé électronique inclus. 9,90€.</p>
+        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
+          <div style="font-size:24px;margin-bottom:8px">🏦</div>
+          <h4 style="color:var(--blue);margin-bottom:8px">Courrier bancaire</h4>
+          <p style="font-size:14px;color:var(--muted)">Conforme au Règlement SEPA UE n°260/2012. Votre banque est tenue de bloquer tout prélèvement futur de l'entreprise concernée.</p>
+        </div>
+        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
+          <div style="font-size:24px;margin-bottom:8px">⚖️</div>
+          <h4 style="color:var(--blue);margin-bottom:8px">Saisine du médiateur sectoriel</h4>
+          <p style="font-size:14px;color:var(--muted)">L'entreprise est légalement tenue de répondre sous 90 jours (loi Hamon, 17 mars 2014). Entièrement gratuit pour vous.</p>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic">Reprendr. maximise vos chances de succès en actionnant simultanément tous les recours légaux à votre disposition. Les résultats dépendent de la nature du litige et de la réponse de l'entreprise concernée. Nous ne pouvons garantir un remboursement dans tous les cas.</p>
+      <div id="comment" style="text-align:center;margin-bottom:60px;scroll-margin-top:80px">
+        <div class="section-title" style="text-align:center">Comment ça marche ?</div>
+        <p class="section-sub" style="text-align:center">Diagnostic gratuit. 5 minutes. Un dossier complet pour agir.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h4>Décrivez votre situation</h4>
+            <p>En quelques questions guidées, sans jargon juridique.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h4><span style="color:var(--blue);font-weight:700">Re</span><span style="color:var(--red);font-weight:700">prendr.</span> analyse</h4>
+            <p>Notre IA évalue la recevabilité de votre dossier et vous indique clairement vos chances de succès.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h4>Votre dossier est prêt</h4>
+            <p>Accédez à vos 4 actions juridiques en un clic. Recommandé électronique inclus. 9,90€.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -344,10 +406,9 @@
     <button class="btn-on-blue" onclick="afficher('vueDiagnostic')">Déposer mon dossier gratuitement</button>
   </div>
 
-<footer>© 2026 <span class="re">Re</span><span class="ndr">prendr.</span> · <a href="legal.html#mentions" style="color:rgba(255,255,255,.6)">Mentions légales</a> · <a href="legal.html#cgu" style="color:rgba(255,255,255,.6)">CGU</a> · <a href="legal.html#confidentialite" style="color:rgba(255,255,255,.6)">Politique de confidentialité</a> · <a href="mailto:contact@reprendr.fr" style="color:rgba(255,255,255,.6)">Contact</a> — Ce service ne constitue pas un conseil juridique.</footer>
+  <footer>© 2026 <span class="re">Re</span><span class="ndr">prendr.</span> · <a href="legal.html#mentions" style="color:rgba(255,255,255,.6)">Mentions légales</a> · <a href="legal.html#cgu" style="color:rgba(255,255,255,.6)">CGU</a> · <a href="legal.html#confidentialite" style="color:rgba(255,255,255,.6)">Politique de confidentialité</a> · <a href="mailto:contact@reprendr.fr" style="color:rgba(255,255,255,.6)">Contact</a> — Ce service ne constitue pas un conseil juridique.</footer>
 </div>
 
-</div>
 <!-- ========== VUE : DIAGNOSTIC ========== -->
 <div id="vueDiagnostic" style="display:none">
   <nav class="nav">
@@ -511,8 +572,248 @@
         <div class="stripe-securite">🔒 Paiement sécurisé par Stripe · Vos données bancaires ne sont jamais stockées par <strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span></div>
       </div>
       <button class="btn-payer" onclick="window.open('https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200','_blank')">Payer 9,90€ et accéder à mon dossier →</button>
-      <div class="<a href="legal.html" style="color:var(--muted)"><a href="legal.html" style="color:var(--muted)"><a href="legal.html" style="color:var(--muted)">cgu</a>-note">En procédant, vous acceptez nos <a href="legal.html"><A HREF="legal.html" STYLE="COLOR:VAR(--MUTED)"><a href="legal.html" style="color:var(--muted)">CGU</a> et notre <a href="legal.html#confidentialite"><a href="legal.html#confidentialite" style="color:var(--muted)"><a href="legal.html#confidentialite" style="color:var(--muted)">Politique de confidentialité</a></a></a>.<br>Satisfait ou remboursé 7 jours si aucune action effectuée · Paiement unique · Aucun abonnement</div>
+      <div class="cgu-note">En procédant, vous acceptez nos <a href="legal.html">CGU</a> et notre <a href="legal.html#confidentialite">Politique de confidentialité</a>.<br>Satisfait ou remboursé 7 jours si aucune action effectuée · Paiement unique · Aucun abonnement</div>
     </div>
+  </div>
+</div>
+
+<!-- ========== VUE : FORMULAIRE COMPLEMENTAIRE (post-paiement) ========== -->
+<div id="vueComplementaire" style="display:none">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
+    <span style="font-size:13px;color:var(--muted)">Compléter le dossier</span>
+  </nav>
+
+  <!-- Barre de progression sticky -->
+  <div class="compl-progress-bar">
+    <div class="compl-progress-inner">
+      <div class="compl-progress-track">
+        <div class="compl-progress-fill" id="complProgressFill" style="width:0%"></div>
+      </div>
+      <div class="compl-progress-label">
+        <span id="complProgressTxt">0 bloc sur 5 complété</span>
+        <span id="complProgressPct">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="compl-wrapper">
+    <div style="margin-bottom:28px">
+      <div style="font-size:22px;font-weight:800;color:var(--blue);margin-bottom:6px">Complétez votre dossier</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.6">Ces informations permettent de personnaliser vos lettres et de contextualiser votre dossier pour le médiateur et la DGCCRF. Plus votre dossier est précis, plus il est solide.</div>
+    </div>
+
+    <!-- BLOC 1 : Identité -->
+    <div class="compl-bloc open" id="cbloc1">
+      <div class="compl-bloc-header" onclick="toggleBloc(1)">
+        <div class="compl-bloc-num active" id="cbnum1">1</div>
+        <div class="compl-bloc-info">
+          <div class="compl-bloc-titre">Vos coordonnées complètes</div>
+          <div class="compl-bloc-resume" id="cbresum1"></div>
+        </div>
+        <div class="compl-bloc-chevron">⌄</div>
+      </div>
+      <div class="compl-bloc-body" id="cbbody1">
+        <div class="compl-field-row">
+          <div class="compl-field">
+            <label>Prénom</label>
+            <input type="text" id="cp_prenom" placeholder="Jean" oninput="checkCompl1()">
+          </div>
+          <div class="compl-field">
+            <label>Nom</label>
+            <input type="text" id="cp_nom" placeholder="Dupont" oninput="checkCompl1()">
+          </div>
+        </div>
+        <div class="compl-field">
+          <label>Adresse postale</label>
+          <input type="text" id="cp_adresse" placeholder="12 rue de la Paix" oninput="checkCompl1()">
+        </div>
+        <div class="compl-field-row">
+          <div class="compl-field">
+            <label>Code postal</label>
+            <input type="text" id="cp_cp" placeholder="75001" maxlength="5" oninput="checkCompl1()">
+          </div>
+          <div class="compl-field">
+            <label>Ville</label>
+            <input type="text" id="cp_ville" placeholder="Paris" oninput="checkCompl1()">
+          </div>
+        </div>
+        <div class="compl-field-row">
+          <div class="compl-field">
+            <label>Email</label>
+            <input type="email" id="cp_email" placeholder="jean@email.fr" oninput="checkCompl1()">
+          </div>
+          <div class="compl-field">
+            <label>Téléphone</label>
+            <input type="tel" id="cp_tel" placeholder="06 12 34 56 78" oninput="checkCompl1()">
+          </div>
+        </div>
+        <button class="btn-valider-bloc" id="cbtn1" onclick="validerBloc(1)" disabled>Valider →</button>
+      </div>
+    </div>
+
+    <!-- BLOC 2 : Le contrat -->
+    <div class="compl-bloc" id="cbloc2">
+      <div class="compl-bloc-header" onclick="toggleBloc(2)">
+        <div class="compl-bloc-num todo" id="cbnum2">2</div>
+        <div class="compl-bloc-info">
+          <div class="compl-bloc-titre">Le contrat / l'abonnement</div>
+          <div class="compl-bloc-resume" id="cbresum2"></div>
+        </div>
+        <div class="compl-bloc-chevron">⌄</div>
+      </div>
+      <div class="compl-bloc-body" id="cbbody2">
+        <div class="compl-field">
+          <label>Date de souscription</label>
+          <input type="date" id="cp_date_souscription" onchange="checkCompl2()">
+          <div class="hint">Date à laquelle l'abonnement a démarré</div>
+        </div>
+        <div class="compl-field">
+          <label>Montant prélevé par mois (€)</label>
+          <input type="number" id="cp_montant_mensuel" placeholder="Ex : 9,99" min="0.01" step="0.01" oninput="checkCompl2();majMontantTotal()">
+        </div>
+        <div class="compl-field">
+          <label>Référence contrat ou numéro client <span style="color:var(--muted);font-weight:400">(si connu)</span></label>
+          <input type="text" id="cp_ref_contrat" placeholder="Ex : ABC-123456">
+        </div>
+        <div class="compl-field">
+          <label>Mode de souscription</label>
+          <select id="cp_mode_souscription" onchange="checkCompl2()">
+            <option value="">Sélectionnez…</option>
+            <option value="en_magasin">En magasin</option>
+            <option value="en_ligne">En ligne</option>
+            <option value="par_telephone">Par téléphone</option>
+            <option value="lors_achat">Lors d'un achat (ajouté automatiquement)</option>
+          </select>
+        </div>
+        <button class="btn-valider-bloc" id="cbtn2" onclick="validerBloc(2)" disabled>Valider →</button>
+      </div>
+    </div>
+
+    <!-- BLOC 3 : Tentatives de résiliation -->
+    <div class="compl-bloc" id="cbloc3">
+      <div class="compl-bloc-header" onclick="toggleBloc(3)">
+        <div class="compl-bloc-num todo" id="cbnum3">3</div>
+        <div class="compl-bloc-info">
+          <div class="compl-bloc-titre">Tentatives de résiliation</div>
+          <div class="compl-bloc-resume" id="cbresum3"></div>
+        </div>
+        <div class="compl-bloc-chevron">⌄</div>
+      </div>
+      <div class="compl-bloc-body" id="cbbody3">
+        <!-- Tentative 1 -->
+        <div class="relance-bloc" id="tentative1">
+          <div class="relance-titre">1ère tentative</div>
+          <div class="compl-field">
+            <label>Date</label>
+            <input type="date" id="cp_date_tentative1" onchange="checkCompl3()">
+          </div>
+          <div class="compl-field">
+            <label>Canal utilisé</label>
+            <div class="canal-grid" id="canal1Grid">
+              <button class="canal-btn" onclick="selCanal(1,'telephone',this)">📞 Téléphone</button>
+              <button class="canal-btn" onclick="selCanal(1,'email',this)">📧 Email</button>
+              <button class="canal-btn" onclick="selCanal(1,'espace_client',this)">💻 Espace client</button>
+              <button class="canal-btn" onclick="selCanal(1,'courrier',this)">✉️ Courrier</button>
+            </div>
+          </div>
+          <div class="compl-field">
+            <label>Réponse obtenue</label>
+            <select id="cp_reponse1" onchange="checkCompl3()">
+              <option value="">Sélectionnez…</option>
+              <option value="refus_explicite">Refus explicite</option>
+              <option value="pas_de_reponse">Pas de réponse</option>
+              <option value="promesse_non_tenue">Promesse non tenue</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tentative 2 (optionnel) -->
+        <div class="relance-bloc" id="tentative2" style="display:none">
+          <div class="relance-titre">2ème tentative</div>
+          <div class="compl-field">
+            <label>Date</label>
+            <input type="date" id="cp_date_tentative2">
+          </div>
+          <div class="compl-field">
+            <label>Canal utilisé</label>
+            <div class="canal-grid" id="canal2Grid">
+              <button class="canal-btn" onclick="selCanal(2,'telephone',this)">📞 Téléphone</button>
+              <button class="canal-btn" onclick="selCanal(2,'email',this)">📧 Email</button>
+              <button class="canal-btn" onclick="selCanal(2,'espace_client',this)">💻 Espace client</button>
+              <button class="canal-btn" onclick="selCanal(2,'courrier',this)">✉️ Courrier</button>
+            </div>
+          </div>
+          <div class="compl-field">
+            <label>Réponse obtenue</label>
+            <select id="cp_reponse2">
+              <option value="">Sélectionnez…</option>
+              <option value="refus_explicite">Refus explicite</option>
+              <option value="pas_de_reponse">Pas de réponse</option>
+              <option value="promesse_non_tenue">Promesse non tenue</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-ajouter-relance" id="btnAjouterTentative" onclick="afficherTentative2()">+ Ajouter une 2ème tentative</button>
+        <button class="btn-valider-bloc" id="cbtn3" onclick="validerBloc(3)" disabled style="margin-top:16px">Valider →</button>
+      </div>
+    </div>
+
+    <!-- BLOC 4 : Prélèvements contestés -->
+    <div class="compl-bloc" id="cbloc4">
+      <div class="compl-bloc-header" onclick="toggleBloc(4)">
+        <div class="compl-bloc-num todo" id="cbnum4">4</div>
+        <div class="compl-bloc-info">
+          <div class="compl-bloc-titre">Prélèvements contestés</div>
+          <div class="compl-bloc-resume" id="cbresum4"></div>
+        </div>
+        <div class="compl-bloc-chevron">⌄</div>
+      </div>
+      <div class="compl-bloc-body" id="cbbody4">
+        <div class="compl-field">
+          <label>Date du dernier prélèvement</label>
+          <input type="date" id="cp_date_dernier_prelevement" onchange="checkCompl4();majMontantTotal()">
+        </div>
+        <div class="compl-field">
+          <label>Nombre de mois contestés</label>
+          <input type="number" id="cp_nb_mois" placeholder="Ex : 8" min="1" oninput="checkCompl4();majMontantTotal()">
+          <div class="hint">Nombre de prélèvements que vous souhaitez récupérer</div>
+        </div>
+        <div id="montantTotalCalc" style="display:none" class="montant-calcule">
+          Montant total réclamé : <span id="montantTotalVal">—</span>
+        </div>
+        <button class="btn-valider-bloc" id="cbtn4" onclick="validerBloc(4)" disabled>Valider →</button>
+      </div>
+    </div>
+
+    <!-- BLOC 5 : Pièces jointes -->
+    <div class="compl-bloc" id="cbloc5">
+      <div class="compl-bloc-header" onclick="toggleBloc(5)">
+        <div class="compl-bloc-num todo" id="cbnum5">5</div>
+        <div class="compl-bloc-info">
+          <div class="compl-bloc-titre">Pièces justificatives</div>
+          <div class="compl-bloc-resume" id="cbresum5">Optionnel — disponible prochainement</div>
+        </div>
+        <div class="compl-bloc-chevron">⌄</div>
+      </div>
+      <div class="compl-bloc-body" id="cbbody5">
+        <div class="pj-note">
+          📎 <strong>Bientôt disponible</strong><br>
+          L'upload de pièces jointes (relevé bancaire, email de refus, bon de commande) sera disponible prochainement. En attendant, conservez ces documents — ils vous seront utiles si la procédure évolue vers une médiation ou un recours judiciaire.
+        </div>
+        <button class="btn-valider-bloc" onclick="validerBloc(5)" style="background:var(--muted)">Continuer sans pièces jointes →</button>
+      </div>
+    </div>
+
+    <!-- Bouton final -->
+    <button class="btn-acceder-dossier" id="btnAccederDossier" onclick="afficher('vueDashboard')" disabled>
+      <span>Accéder à mon dossier complet</span>
+      <span style="font-size:18px">→</span>
+    </button>
+    <div class="compl-footer-note">Votre dossier est enregistré. Complétez les blocs à votre rythme — vous pouvez revenir à tout moment.</div>
   </div>
 </div>
 
@@ -603,161 +904,8 @@
 
 <script>
 // ===== NAVIGATION =====
-function genererPDFMediateur() {
-  var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
-  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
-  var nom = session.nom || 'Le soussigné';
-  var ville = session.ville || 'Paris';
-  var entreprise = session.entreprise || 'l\'entreprise';
-  var montant = session.montant || '';
-  var type_litige = session.type_litige || '';
-  var contexte = session.contexte || '';
-  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
-  var litige = tL[type_litige] || type_litige || 'litige commercial';
-  var date = new Date().toLocaleDateString('fr-FR');
-
-  doc.setFont('helvetica');
-  doc.setFontSize(11);
-  doc.text(nom, 20, 20);
-  doc.text(ville + ', le ' + date, 20, 27);
-  doc.text('', 20, 34);
-  doc.text('Au Médiateur de la consommation compétent', 20, 41);
-  doc.text('', 20, 48);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Saisine du médiateur — Litige avec ' + entreprise, 20, 55);
-  doc.setFont('helvetica', 'normal');
-  doc.text('', 20, 62);
-
-  var intro = 'Je me permets de vous saisir dans le cadre d\'un litige qui m\'oppose à la société ' + entreprise + ' concernant un cas de ' + litige + (montant ? ', pour un montant de ' + montant + '€' : '') + '.';
-  var lignesIntro = doc.splitTextToSize(intro, 170);
-  doc.text(lignesIntro, 20, 69);
-  var y = 69 + (lignesIntro.length * 7) + 7;
-
-  if(contexte) {
-    var lignesContexte = doc.splitTextToSize(contexte, 170);
-    doc.text(lignesContexte, 20, y);
-    y = y + (lignesContexte.length * 7) + 7;
-  }
-
-  var corps = 'Malgré mes démarches auprès du service client de la société ' + entreprise + ', ce litige n\'a pas pu être résolu à l\'amiable. Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin de trouver une solution amiable à ce différend.';
-  var lignesCorps = doc.splitTextToSize(corps, 170);
-  doc.text(lignesCorps, 20, y);
-  y = y + (lignesCorps.length * 7) + 7;
-
-  var suite = 'Je reste à votre disposition pour tout renseignement complémentaire et vous adresse ci-joint les pièces justificatives disponibles.';
-  var lignesSuite = doc.splitTextToSize(suite, 170);
-  doc.text(lignesSuite, 20, y);
-  y = y + (lignesSuite.length * 7) + 14;
-
-  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y = y + 14;
-  doc.text(nom, 20, y);
-
-  doc.save('saisine-mediateur-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
-}
-
-function genererPDFBanque() {
-  var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
-  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
-  var nom = session.nom || 'Le soussigné';
-  var ville = session.ville || 'Paris';
-  var entreprise = session.entreprise || 'l\'entreprise';
-  var montant = session.montant || '';
-  var date = new Date().toLocaleDateString('fr-FR');
-
-  doc.setFont('helvetica');
-  doc.setFontSize(11);
-  doc.text(nom, 20, 20);
-  doc.text(ville + ', le ' + date, 20, 27);
-  doc.text('', 20, 34);
-  doc.text('À l\'attention du Service Clientèle', 20, 41);
-  doc.text('Ma banque / Mon établissement de paiement', 20, 48);
-  doc.text('', 20, 55);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Demande de blocage de prélèvement SEPA — Créancier : ' + entreprise, 20, 62);
-  doc.setFont('helvetica', 'normal');
-  doc.text('', 20, 69);
-
-  var intro = 'Je vous contacte afin de vous demander de bloquer immédiatement tout prélèvement SEPA émanant de la société ' + entreprise + (montant ? ', d\'un montant de ' + montant + '€ par mois' : '') + ', sur mon compte bancaire.';
-  var lignesIntro = doc.splitTextToSize(intro, 170);
-  doc.text(lignesIntro, 20, 76);
-  var y = 76 + (lignesIntro.length * 7) + 7;
-
-  var corps = 'Conformément au Règlement européen SEPA n°260/2012, je dispose du droit de révoquer à tout moment mon autorisation de prélèvement. Je vous demande donc de bloquer sans délai tout futur prélèvement de ce créancier et de me rembourser les prélèvements effectués sans mon consentement éclairé.';
-  var lignesCorps = doc.splitTextToSize(corps, 170);
-  doc.text(lignesCorps, 20, y);
-  y = y + (lignesCorps.length * 7) + 7;
-
-  var suite = 'Je vous remercie de bien vouloir traiter cette demande dans les meilleurs délais et de m\'adresser une confirmation écrite du blocage effectué.';
-  var lignesSuite = doc.splitTextToSize(suite, 170);
-  doc.text(lignesSuite, 20, y);
-  y = y + (lignesSuite.length * 7) + 14;
-
-  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y = y + 14;
-  doc.text(nom, 20, y);
-
-  doc.save('courrier-bancaire-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
-}
-
-function genererPDFMiseEnDemeure() {
-  var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
-  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
-  var nom = session.nom || 'Le soussigné';
-  var ville = session.ville || 'Paris';
-  var entreprise = session.entreprise || 'l\'entreprise';
-  var montant = session.montant || '';
-  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
-  var type_litige = tL[session.type_litige] || session.type_litige || 'abonnement non consenti';
-  var contexte = session.contexte || '';
-  var date = new Date().toLocaleDateString('fr-FR');
-
-  doc.setFont('helvetica');
-  doc.setFontSize(11);
-  doc.text(nom, 20, 20);
-  doc.text(ville + ', le ' + date, 20, 27);
-  doc.text('', 20, 34);
-  doc.text('À l\'attention du Service Juridique', 20, 41);
-  doc.text(entreprise, 20, 48);
-  doc.text('', 20, 55);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Mise en demeure — Résiliation d\'abonnement non consenti', 20, 62);
-  doc.text('et remboursement des sommes indûment prélevées', 20, 69);
-  doc.setFont('helvetica', 'normal');
-  doc.text('', 20, 76);
-  var intro = 'J\'ai été victime d\'un ' + type_litige + ' de la part de votre société' + (montant ? ', pour un montant de ' + montant + '€' : '') + '.' + (contexte ? ' ' + contexte : '');
-  var corps = 'Conformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
-   var lignesIntro = doc.splitTextToSize(intro, 170);
-  doc.text(lignesIntro, 20, 83);
-  var y = 83 + (lignesIntro.length * 7) + 10;
-  var lignesCorps = doc.splitTextToSize(corps, 170);
-  doc.text(lignesCorps, 20, y);
-  y = y + (lignesCorps.length * 7) + 10;
-  var suite = 'Dans l\'attente de votre réponse, je me réserve le droit de saisir la DGCCRF et le médiateur sectoriel compétent.';
-  var lignesSuite = doc.splitTextToSize(suite, 170);
-  doc.text(lignesSuite, 20, y);
-  y = y + (lignesSuite.length * 7) + 10;
-  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y = y + 14;
-  doc.text(nom, 20, y);
-
-  doc.save('mise-en-demeure-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
-}
-
-function resetDossier() {
-  typeSelected = null;
-  contactSelected = null;
-  document.querySelectorAll('.choice-btn').forEach(function(b){ b.classList.remove('selected'); });
-  document.querySelectorAll('input[type=text], input[type=email], input[type=number], select, textarea').forEach(function(f){ f.value = ''; });
-  afficher('vueDiagnostic');
-  goDstep(1);
-}
-
 function afficher(id) {
-  ['vueAccueil','vueDiagnostic','vueQualification','vueDashboard'].forEach(function(v){
+  ['vueAccueil','vueDiagnostic','vueQualification','vueDashboard','vueComplementaire'].forEach(function(v){
     document.getElementById(v).style.display = 'none';
   });
   document.getElementById(id).style.display = 'block';
@@ -852,52 +1000,20 @@ function goSynthese() {
 }
 
 // ===== QUALIFICATION =====
-async function sauvegarderVerdict(verdict, score, titre, analyse) {
-  try {
-    await fetch(SUPABASE_URL + '/rest/v1/dossiers?id=eq.' + dernierDossierId, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      },
-      body: JSON.stringify({verdict: verdict, score: score})
-    });
-  } catch(e) {
-    console.log('Verdict save error:', e);
-  }
-}
+var SUPABASE_URL = 'https://scbcixelfodadmjtpjqh.supabase.co';
+var SUPABASE_FUNCTION_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/send-confirmation-email';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYmNpeGVsZm9kYWRtanRwanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzE1ODMsImV4cCI6MjEwNDcwNzU4M30.ggZ9UBoqbnrENdb9Mn5VHamo68Jsn2NUzOZ0a0DbABk';
+var nbActions = 0;
+var dernierDossierId = null;
 
-async function sauvegarderVerdict(verdict, score, titre, analyse) {
+async function sauvegarderVerdict(verdict, score) {
   try {
     await fetch(SUPABASE_URL + '/rest/v1/dossiers?id=eq.' + dernierDossierId, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      },
+      headers: {'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY},
       body: JSON.stringify({verdict: verdict, score: score})
     });
-  } catch(e) {
-    console.log('Verdict save error:', e);
-  }
-}
-
-async function sauvegarderVerdict(verdict, score, titre, analyse) {
-  try {
-    await fetch(SUPABASE_URL + '/rest/v1/dossiers?id=eq.' + dernierDossierId, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      },
-      body: JSON.stringify({verdict: verdict, score: score})
-    });
-  } catch(e) {
-    console.log('Verdict save error:', e);
-  }
+  } catch(e) { console.log('Verdict save error:', e); }
 }
 
 async function envoyerEmailConfirmation(data) {
@@ -907,57 +1023,44 @@ async function envoyerEmailConfirmation(data) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-  } catch(e) {
-    console.log('Email error:', e);
-  }
+  } catch(e) { console.log('Email error:', e); }
 }
 
 async function sauvegarderDossier(data) {
   try {
     var rep = await fetch(SUPABASE_URL + '/rest/v1/dossiers', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer': 'return=representation'
-      },
+      headers: {'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Prefer':'return=representation'},
       body: JSON.stringify(data)
     });
     var json = await rep.json();
     if(json && json[0] && json[0].id) { dernierDossierId = json[0].id; }
-  } catch(e) {
-    console.log('Supabase error:', e);
-  }
-}
-
-async function sauvegarderVerdict2(id, verdict, score) {
-  dernierDossierId = id;
+  } catch(e) { console.log('Supabase error:', e); }
 }
 
 function lancerAnalyse() {
   envoyerEmailConfirmation({
-  email: document.getElementById('f_email').value,
-  prenom: document.getElementById('f_nom').value,
-  type_litige: typeSelected,
-  montant: parseFloat(document.getElementById('f_montant').value)||0,
-  adversaire: document.getElementById('f_entreprise').value
-});
-var dossierSession = {
-  nom: document.getElementById('f_nom').value,
-  email: document.getElementById('f_email').value,
-  ville: document.getElementById('f_ville').value,
-  entreprise: document.getElementById('f_entreprise').value,
-  type_litige: typeSelected,
-  montant: parseFloat(document.getElementById('f_montant').value)||0,
-  duree: document.getElementById('f_duree').value,
-  pays: document.getElementById('f_pays').value,
-  contact: contactSelected,
-  contexte: document.getElementById('f_contexte').value
-};
-sessionStorage.setItem('reprendr_dossier', JSON.stringify(dossierSession));
-sauvegarderDossier(Object.assign({}, dossierSession, {verdict: 'orange', score: 0}));
-afficher('vueQualification');
+    email: document.getElementById('f_email').value,
+    prenom: document.getElementById('f_nom').value,
+    type_litige: typeSelected,
+    montant: parseFloat(document.getElementById('f_montant').value)||0,
+    adversaire: document.getElementById('f_entreprise').value
+  });
+  var dossierSession = {
+    nom: document.getElementById('f_nom').value,
+    email: document.getElementById('f_email').value,
+    ville: document.getElementById('f_ville').value,
+    entreprise: document.getElementById('f_entreprise').value,
+    type_litige: typeSelected,
+    montant: parseFloat(document.getElementById('f_montant').value)||0,
+    duree: document.getElementById('f_duree').value,
+    pays: document.getElementById('f_pays').value,
+    contact: contactSelected,
+    contexte: document.getElementById('f_contexte').value
+  };
+  sessionStorage.setItem('reprendr_dossier', JSON.stringify(dossierSession));
+  sauvegarderDossier(Object.assign({}, dossierSession, {verdict: 'orange', score: 0}));
+  afficher('vueQualification');
   setTimeout(analyser, 1800);
 }
 
@@ -972,10 +1075,9 @@ function analyser() {
 
   var points = 0, criteres = [], raisons = [], alternatives = [];
 
-  // Prescription
   if(duree==='plus3ans'){
     criteres.push({icon:'❌',texte:'Prescription : le délai légal de 3 ans est probablement dépassé.'});
-    raisons.push('Le délai de prescription de 3 ans est vraisemblablement dépassé. Vous ne pouvez plus agir juridiquement sur les sommes les plus anciennes.');
+    raisons.push('Le délai de prescription de 3 ans est vraisemblablement dépassé.');
     alternatives.push('Contactez UFC-Que Choisir ou 60 Millions de Consommateurs pour une intervention gratuite.');
     alternatives.push('Signalez la pratique sur SignalConso.gouv.fr pour protéger d\'autres consommateurs.');
   } else if(duree==='plus1an'){
@@ -986,11 +1088,10 @@ function analyser() {
     points+=15;
   }
 
-  // Juridiction
   if(pays==='hors_ue'){
     criteres.push({icon:'❌',texte:'Juridiction : entreprise hors UE — une mise en demeure française a très peu de portée.'});
     raisons.push('L\'entreprise est établie hors de l\'Union européenne. Le droit français ne s\'applique pas directement.');
-    alternatives.push('Contactez votre banque pour bloquer les prélèvements SEPA futurs — c\'est votre recours le plus efficace.');
+    alternatives.push('Contactez votre banque pour bloquer les prélèvements SEPA futurs.');
     alternatives.push('Signalez sur la plateforme européenne ODR : ec.europa.eu/consumers/odr');
   } else if(pays==='ue'){
     criteres.push({icon:'⚠️',texte:'Juridiction : entreprise UE — recours possible via la plateforme ODR européenne.'});
@@ -1001,7 +1102,6 @@ function analyser() {
     points+=15;
   }
 
-  // Vice du consentement
   if(type==='abonnement_cache'){
     criteres.push({icon:'✅',texte:'Vice du consentement : pratique commerciale trompeuse caractérisée (art. L.121-1 Code conso) — terrain juridique solide.'});
     points+=20;
@@ -1020,7 +1120,6 @@ function analyser() {
     points+=8;
   }
 
-  // Montant
   if(montant<5){
     criteres.push({icon:'❌',texte:'Montant : inférieur à 5€/mois — trop faible pour justifier une procédure formelle.'});
     raisons.push('Le montant mensuel est trop faible pour justifier économiquement une mise en demeure.');
@@ -1033,16 +1132,14 @@ function analyser() {
     points+=12;
   }
 
-  // Preuves
   if(contexte.includes('relevé')||contexte.includes('achat')||contexte.includes('facture')||contexte.includes('email')){
-    criteres.push({icon:'✅',texte:'Preuves : des éléments documentaires sont mentionnés — munissez-vous de votre relevé bancaire faisant apparaître le ou les prélèvements litigieux.'});
+    criteres.push({icon:'✅',texte:'Preuves : des éléments documentaires sont mentionnés — munissez-vous de votre relevé bancaire.'});
     points+=12;
   } else {
-    criteres.push({icon:'⚠️',texte:'Preuves : munissez-vous de votre relevé bancaire faisant apparaître le ou les prélèvements litigieux, ainsi que du bon de commande initial.'});
+    criteres.push({icon:'⚠️',texte:'Preuves : munissez-vous de votre relevé bancaire faisant apparaître le ou les prélèvements litigieux.'});
     points+=6;
   }
 
-  // Démarches préalables
   if(contact==='oui_refuse'){
     criteres.push({icon:'✅',texte:'Démarches préalables : refus explicite documenté — positionne idéalement le dossier pour une mise en demeure.'});
     points+=12;
@@ -1054,7 +1151,6 @@ function analyser() {
     points+=5;
   }
 
-  // Solvabilité
   var ens = entreprise.toLowerCase();
   var grandes = ['fnac','sfr','orange','free','bouygues','amazon','google','apple','netflix','spotify','gym','basic','direct','canal','darty','boulanger','leclerc','carrefour','sncf','edf','engie'];
   if(grandes.some(function(n){return ens.includes(n);})){
@@ -1084,11 +1180,11 @@ function analyser() {
   } else if(points>=70){
     verdict='vert'; score=Math.min(92,points);
     titre='Dossier solide — mise en demeure recevable';
-    analyse='Votre situation présente les éléments caractéristiques d\'une pratique commerciale trompeuse au sens du Code de la consommation. La mise en demeure est pleinement justifiée et a de fortes chances d\'aboutir. Nous pouvons constituer votre dossier immédiatement.';
+    analyse='Votre situation présente les éléments caractéristiques d\'une pratique commerciale trompeuse au sens du Code de la consommation. La mise en demeure est pleinement justifiée et a de fortes chances d\'aboutir.';
   } else if(points>=45){
     verdict='orange'; score=Math.min(55,points);
     titre='Dossier incertain — recevable avec réserves';
-    analyse='Votre situation est recevable mais présente des points de fragilité. Nous pouvons préparer la mise en demeure en vous informant des risques, ou vous orienter vers un cabinet partenaire pour une analyse plus approfondie.';
+    analyse='Votre situation est recevable mais présente des points de fragilité. Nous pouvons préparer la mise en demeure en vous informant des risques.';
     alternatives.push('Rassemblez bon de commande, relevé bancaire et échanges écrits avant de lancer la démarche.');
   } else {
     verdict='orange'; score=Math.min(38,points);
@@ -1102,16 +1198,16 @@ function analyser() {
 }
 
 function afficherVerdict(r, total, col, entreprise) {
-  sauvegarderVerdict(r.verdict, r.score, r.titre, r.analyse);
+  sauvegarderVerdict(r.verdict, r.score);
   document.getElementById('qLoader').style.display='none';
   var emoji = col==='vert'?'✅':col==='orange'?'⚠️':'🚫';
   var critHtml = r.criteres.map(function(c){return '<div class="critere"><span style="flex-shrink:0">'+c.icon+'</span><span>'+c.texte+'</span></div>';}).join('');
   var altHtml = r.alternatives.length?'<div class="alt-box"><div class="alt-titre">Ce que vous pouvez faire</div>'+r.alternatives.map(function(a){return '<div class="alt-item">'+a+'</div>';}).join('')+'</div>':'';
   var montantHtml = col!=='rouge'?'<div class="montant-box">💰 Montant potentiel à récupérer : <strong>~'+total+'€</strong></div>':'';
   var btnHtml = col==='vert'
-    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick=\"window.open(\'https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200\',\'_blank\')\"}>Constituer mon dossier complet — 9,90€ →</button>'
+    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick="window.open(\'https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200\',\'_blank\')">Constituer mon dossier complet — 9,90€ →</button>'
     :col==='orange'
-    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick=\"window.open(\'https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200\',\'_blank\')\"}>Constituer le dossier malgré tout — 9,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
+    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick="window.open(\'https://buy.stripe.com/14A28q1Tx0iNbiCcsQcV200\',\'_blank\')">Constituer le dossier malgré tout — 9,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
     :'<div class="gratuit-note">🤝 <strong>Aucun frais ne vous est demandé.</strong><br>Reprendr ne constitue pas de dossier sans issue réelle — c\'est notre engagement d\'honnêteté.</div>';
 
   document.getElementById('qResultat').innerHTML =
@@ -1128,47 +1224,55 @@ function afficherVerdict(r, total, col, entreprise) {
   setTimeout(function(){var el=document.getElementById('cFill');if(el)el.style.width=r.score+'%';},100);
   window.scrollTo(0,0);
 
-  // Prépare le dashboard
   var ent = document.getElementById('f_entreprise').value||'l\'entreprise';
   document.querySelectorAll('#dashEntreprise,#dashEntreprise2').forEach(function(el){el.textContent=ent;});
   var nom = document.getElementById('f_nom').value||'';
   if(nom) document.getElementById('nomUser').textContent=nom;
 }
 
+function resetDossier() {
+  typeSelected = null;
+  contactSelected = null;
+  document.querySelectorAll('.choice-btn').forEach(function(b){ b.classList.remove('selected'); });
+  document.querySelectorAll('input[type=text], input[type=email], input[type=number], select, textarea').forEach(function(f){ f.value = ''; });
+  afficher('vueDiagnostic');
+  goDstep(1);
+}
+
 // ===== DASHBOARD =====
-var SUPABASE_URL = 'https://scbcixelfodadmjtpjqh.supabase.co';
-var SUPABASE_FUNCTION_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/send-confirmation-email';
-var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYmNpeGVsZm9kYWRtanRwanFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxMzE1ODMsImV4cCI6MjEwNDcwNzU4M30.ggZ9UBoqbnrENdb9Mn5VHamo68Jsn2NUzOZ0a0DbABk';
-var nbActions = 0; var dernierDossierId = null;
-if(window.location.search.includes('paiement=ok')){afficher('vueDashboard');}
-function doAction(n){ try {
-  var colonnes = {1:'action_mise_en_demeure', 2:'action_dgccrf', 3:'action_banque', 4:'action_mediateur'};
-  if(dernierDossierId && colonnes[n]){
-    var patch = {};
-    patch[colonnes[n]] = new Date().toISOString();
-    fetch(SUPABASE_URL+'/rest/v1/dossiers?id=eq.'+dernierDossierId, {
-      method:'PATCH',
-      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY},
-      body:JSON.stringify(patch)
-    });
-  }
-  document.getElementById('ab'+n).textContent='✓ Effectué';
-  document.getElementById('ab'+n).className='btn-action done';
-  document.getElementById('ab'+n).disabled=true;
-  document.getElementById('ac'+n).className='action-card done';
-  document.getElementById('an'+n).className='action-num done';
-  document.getElementById('an'+n).textContent='✓';
-  nbActions++;
-  var pct=Math.round((nbActions/4)*100);
-  document.getElementById('pgFill').style.width=pct+'%';
-  document.getElementById('pgLabel').textContent=nbActions+' action'+(nbActions>1?'s':'')+' sur 4 effectuée'+(nbActions>1?'s':'');
-  var s=n+1;
-  if(s<=4){
-    document.getElementById('ac'+s).className='action-card active';
-    document.getElementById('an'+s).className='action-num active';
-    document.getElementById('ab'+s).disabled=false;
-    document.getElementById('ab'+s).style.opacity='1';
-  }
+if(window.location.search.includes('paiement=ok')){
+  afficher('vueComplementaire');
+}
+
+function doAction(n) {
+  try {
+    var colonnes = {1:'action_mise_en_demeure', 2:'action_dgccrf', 3:'action_banque', 4:'action_mediateur'};
+    if(dernierDossierId && colonnes[n]){
+      var patch = {};
+      patch[colonnes[n]] = new Date().toISOString();
+      fetch(SUPABASE_URL+'/rest/v1/dossiers?id=eq.'+dernierDossierId, {
+        method:'PATCH',
+        headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY},
+        body:JSON.stringify(patch)
+      });
+    }
+    document.getElementById('ab'+n).textContent='✓ Effectué';
+    document.getElementById('ab'+n).className='btn-action done';
+    document.getElementById('ab'+n).disabled=true;
+    document.getElementById('ac'+n).className='action-card done';
+    document.getElementById('an'+n).className='action-num done';
+    document.getElementById('an'+n).textContent='✓';
+    nbActions++;
+    var pct=Math.round((nbActions/4)*100);
+    document.getElementById('pgFill').style.width=pct+'%';
+    document.getElementById('pgLabel').textContent=nbActions+' action'+(nbActions>1?'s':'')+' sur 4 effectuée'+(nbActions>1?'s':'');
+    var s=n+1;
+    if(s<=4){
+      document.getElementById('ac'+s).className='action-card active';
+      document.getElementById('an'+s).className='action-num active';
+      document.getElementById('ab'+s).disabled=false;
+      document.getElementById('ab'+s).style.opacity='1';
+    }
   } catch(e){ console.log('doAction error:',e); }
   if(nbActions===4){setTimeout(function(){document.getElementById('recapFinal').style.display='block';window.scrollTo(0,document.body.scrollHeight);},400);}
 }
@@ -1176,6 +1280,384 @@ function doAction(n){ try {
 function fmtCarte(input){
   var v=input.value.replace(/\D/g,'').substring(0,16);
   input.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+// ===== FORMULAIRE COMPLEMENTAIRE =====
+var canalSelected = {1: null, 2: null};
+var blocsValides = {1:false, 2:false, 3:false, 4:false, 5:false};
+var nbBlocsValides = 0;
+
+function toggleBloc(n) {
+  var bloc = document.getElementById('cbloc'+n);
+  var estOuvert = bloc.classList.contains('open');
+  // Fermer tous
+  for(var i=1;i<=5;i++){
+    document.getElementById('cbloc'+i).classList.remove('open');
+  }
+  // Ouvrir si était fermé
+  if(!estOuvert) bloc.classList.add('open');
+}
+
+function majProgressionCompl() {
+  var nb = Object.values(blocsValides).filter(Boolean).length;
+  var pct = Math.round((nb/5)*100);
+  document.getElementById('complProgressFill').style.width = pct+'%';
+  document.getElementById('complProgressTxt').textContent = nb+' bloc'+(nb>1?'s':'')+' sur 5 complété'+(nb>1?'s':'');
+  document.getElementById('complProgressPct').textContent = pct+'%';
+  document.getElementById('btnAccederDossier').disabled = nb < 4; // PJ optionnel
+}
+
+function validerBloc(n) {
+  var bloc = document.getElementById('cbloc'+n);
+  bloc.classList.add('complete');
+  bloc.classList.remove('open');
+  document.getElementById('cbnum'+n).className = 'compl-bloc-num done';
+  document.getElementById('cbnum'+n).textContent = '✓';
+  blocsValides[n] = true;
+  majProgressionCompl();
+  // Ouvrir le suivant automatiquement
+  if(n < 5 && !blocsValides[n+1]) {
+    setTimeout(function(){ toggleBloc(n+1); }, 200);
+  }
+  // Sauvegarder dans sessionStorage
+  sauvegarderDossierCompl();
+}
+
+function sauvegarderDossierCompl() {
+  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
+  var compl = {
+    prenom: document.getElementById('cp_prenom').value,
+    nom_compl: document.getElementById('cp_nom').value,
+    adresse: document.getElementById('cp_adresse').value,
+    code_postal: document.getElementById('cp_cp').value,
+    ville_compl: document.getElementById('cp_ville').value,
+    email_compl: document.getElementById('cp_email').value,
+    telephone: document.getElementById('cp_tel').value,
+    date_souscription: document.getElementById('cp_date_souscription').value,
+    montant_mensuel: document.getElementById('cp_montant_mensuel').value,
+    ref_contrat: document.getElementById('cp_ref_contrat').value,
+    mode_souscription: document.getElementById('cp_mode_souscription').value,
+    date_tentative1: document.getElementById('cp_date_tentative1').value,
+    canal_tentative1: canalSelected[1],
+    reponse_tentative1: document.getElementById('cp_reponse1').value,
+    date_tentative2: document.getElementById('cp_date_tentative2').value,
+    canal_tentative2: canalSelected[2],
+    reponse_tentative2: document.getElementById('cp_reponse2').value,
+    date_dernier_prelevement: document.getElementById('cp_date_dernier_prelevement').value,
+    nb_mois: document.getElementById('cp_nb_mois').value
+  };
+  Object.assign(session, compl);
+  sessionStorage.setItem('reprendr_dossier', JSON.stringify(session));
+}
+
+function selCanal(tentative, val, btn) {
+  document.querySelectorAll('#canal'+tentative+'Grid .canal-btn').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  canalSelected[tentative] = val;
+  if(tentative===1) checkCompl3();
+}
+
+function afficherTentative2() {
+  document.getElementById('tentative2').style.display = 'block';
+  document.getElementById('btnAjouterTentative').style.display = 'none';
+}
+
+// Checks validation
+function checkCompl1() {
+  var p = document.getElementById('cp_prenom').value.trim();
+  var n = document.getElementById('cp_nom').value.trim();
+  var a = document.getElementById('cp_adresse').value.trim();
+  var cp = document.getElementById('cp_cp').value.trim();
+  var v = document.getElementById('cp_ville').value.trim();
+  var e = document.getElementById('cp_email').value.trim();
+  var ok = p.length>1 && n.length>1 && a.length>3 && cp.length===5 && v.length>1 && e.includes('@');
+  document.getElementById('cbtn1').disabled = !ok;
+  if(ok) document.getElementById('cbresum1').textContent = p+' '+n+' · '+v+' ('+cp+')';
+}
+
+function checkCompl2() {
+  var d = document.getElementById('cp_date_souscription').value;
+  var m = document.getElementById('cp_montant_mensuel').value;
+  var mo = document.getElementById('cp_mode_souscription').value;
+  var ok = d && m>0 && mo;
+  document.getElementById('cbtn2').disabled = !ok;
+  if(ok){
+    var modeL = {'en_magasin':'En magasin','en_ligne':'En ligne','par_telephone':'Par téléphone','lors_achat':'Ajouté lors d\'un achat'};
+    document.getElementById('cbresum2').textContent = m+'€/mois · '+modeL[mo]+' · depuis le '+new Date(d).toLocaleDateString('fr-FR');
+  }
+}
+
+function checkCompl3() {
+  var d1 = document.getElementById('cp_date_tentative1').value;
+  var r1 = document.getElementById('cp_reponse1').value;
+  var ok = d1 && canalSelected[1] && r1;
+  document.getElementById('cbtn3').disabled = !ok;
+  if(ok){
+    var repL={'refus_explicite':'Refus','pas_de_reponse':'Sans réponse','promesse_non_tenue':'Promesse non tenue','autre':'Autre'};
+    document.getElementById('cbresum3').textContent = '1 tentative · '+repL[r1];
+  }
+}
+
+function checkCompl4() {
+  var d = document.getElementById('cp_date_dernier_prelevement').value;
+  var m = document.getElementById('cp_nb_mois').value;
+  var ok = d && m>0;
+  document.getElementById('cbtn4').disabled = !ok;
+  if(ok) document.getElementById('cbresum4').textContent = m+' mois contestés · dernier prélèvement le '+new Date(d).toLocaleDateString('fr-FR');
+}
+
+function majMontantTotal() {
+  var mensuel = parseFloat(document.getElementById('cp_montant_mensuel').value)||0;
+  var mois = parseInt(document.getElementById('cp_nb_mois').value)||0;
+  if(mensuel>0 && mois>0){
+    var total = (mensuel*mois).toFixed(2);
+    document.getElementById('montantTotalCalc').style.display = 'block';
+    document.getElementById('montantTotalVal').textContent = total+'€';
+  } else {
+    document.getElementById('montantTotalCalc').style.display = 'none';
+  }
+}
+
+// Pré-remplir depuis sessionStorage si disponible
+window.addEventListener('load', function(){
+  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
+  if(session.email) {
+    // Pré-remplir email et ville si déjà saisis au diagnostic
+    if(session.email) document.getElementById('cp_email').value = session.email;
+    if(session.ville) document.getElementById('cp_ville').value = session.ville;
+    if(session.montant) document.getElementById('cp_montant_mensuel').value = session.montant;
+    // Pré-remplir prénom/nom depuis le champ nom complet
+    if(session.nom) {
+      var parts = session.nom.split(' ');
+      if(parts.length>=2){
+        document.getElementById('cp_prenom').value = parts[0];
+        document.getElementById('cp_nom').value = parts.slice(1).join(' ');
+      } else {
+        document.getElementById('cp_prenom').value = session.nom;
+      }
+    }
+    checkCompl1();
+  }
+});
+
+// ===== PDF GENERATION =====
+function getDossierComplet() {
+  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
+  return session;
+}
+
+function genererPDFMediateur() {
+  var { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+  var s = getDossierComplet();
+
+  var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
+  var adresseComplete = [s.adresse, s.code_postal, s.ville_compl || s.ville].filter(Boolean).join(', ');
+  var ville = s.ville_compl || s.ville || 'Paris';
+  var entreprise = s.entreprise || 'l\'entreprise';
+  var montant = s.montant_mensuel || s.montant || '';
+  var type_litige = s.type_litige || '';
+  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
+  var litige = tL[type_litige] || type_litige || 'litige commercial';
+  var date = new Date().toLocaleDateString('fr-FR');
+
+  var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'lors d\'un achat (ajout automatique)'};
+  var modeStr = s.mode_souscription ? ' via '+modeL[s.mode_souscription] : '';
+  var dateSousc = s.date_souscription ? ' le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
+
+  var repL = {'refus_explicite':'a explicitement refusé de procéder à la résiliation','pas_de_reponse':'n\'a pas répondu à ma demande','promesse_non_tenue':'a fait une promesse non tenue','autre':'n\'a pas donné suite'};
+  var canal1L = {'telephone':'par téléphone','email':'par email','espace_client':'via l\'espace client','courrier':'par courrier'};
+  var tentativeStr = '';
+  if(s.date_tentative1){
+    tentativeStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté l\'entreprise '+(s.canal_tentative1?canal1L[s.canal_tentative1]:'')+' afin de demander la résiliation. La société '+(s.reponse_tentative1?repL[s.reponse_tentative1]:'n\'a pas répondu')+'.';
+  }
+  if(s.date_tentative2){
+    tentativeStr += ' Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande '+(s.canal_tentative2?canal1L[s.canal_tentative2]:'')+'. La société '+(s.reponse_tentative2?repL[s.reponse_tentative2]:'n\'a toujours pas répondu')+'.';
+  }
+
+  var nbMois = s.nb_mois || '';
+  var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
+  var montantTotalStr = montantTotal > 0 ? montantTotal.toFixed(2)+'€' : '';
+
+  var dernierPrel = s.date_dernier_prelevement ? 'Le dernier prélèvement a eu lieu le '+new Date(s.date_dernier_prelevement).toLocaleDateString('fr-FR')+'. ' : '';
+
+  doc.setFont('helvetica');
+  doc.setFontSize(11);
+  doc.text(nomComplet, 20, 20);
+  if(adresseComplete) doc.text(adresseComplete, 20, 27);
+  if(s.telephone) doc.text(s.telephone, 20, 34);
+  if(s.email_compl || s.email) doc.text(s.email_compl || s.email, 20, 41);
+  doc.text(ville+', le '+date, 20, 50);
+  doc.text('', 20, 57);
+  doc.text('Au Médiateur de la consommation compétent', 20, 64);
+  doc.text('', 20, 71);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Objet : Saisine du médiateur — Litige avec '+entreprise, 20, 78);
+  doc.setFont('helvetica', 'normal');
+  doc.text('', 20, 85);
+
+  var y = 92;
+  // Exposé des faits
+  doc.setFont('helvetica', 'bold');
+  doc.text('Exposé des faits', 20, y);
+  doc.setFont('helvetica', 'normal');
+  y += 9;
+
+  var faits = 'J\'ai souscrit un abonnement auprès de la société '+entreprise+dateSousc+modeStr
+    +(montant ? ', pour un montant de '+montant+'€ par mois' : '')+'.'
+    +(s.ref_contrat ? ' Référence contrat : '+s.ref_contrat+'.' : '');
+  var lignesFaits = doc.splitTextToSize(faits, 170);
+  doc.text(lignesFaits, 20, y);
+  y += lignesFaits.length * 7 + 5;
+
+  if(tentativeStr){
+    var lignesTentative = doc.splitTextToSize(tentativeStr, 170);
+    doc.text(lignesTentative, 20, y);
+    y += lignesTentative.length * 7 + 5;
+  }
+
+  if(dernierPrel || nbMois){
+    var prejudiceStr = dernierPrel + (nbMois ? 'Je conteste '+nbMois+' prélèvement'+(nbMois>1?'s':'')+' indus'+(montantTotalStr?' pour un montant total de '+montantTotalStr:'')+'.' : '');
+    var lignesPrejudice = doc.splitTextToSize(prejudiceStr, 170);
+    doc.text(lignesPrejudice, 20, y);
+    y += lignesPrejudice.length * 7 + 7;
+  }
+
+  // Démarches amiables
+  doc.setFont('helvetica', 'bold');
+  doc.text('Démarches amiables tentées', 20, y);
+  doc.setFont('helvetica', 'normal');
+  y += 9;
+  var demarches = 'Malgré mes démarches auprès du service client de la société '+entreprise+', ce litige n\'a pas pu être résolu à l\'amiable.';
+  var lignesDemarches = doc.splitTextToSize(demarches, 170);
+  doc.text(lignesDemarches, 20, y);
+  y += lignesDemarches.length * 7 + 7;
+
+  // Demande au médiateur
+  doc.setFont('helvetica', 'bold');
+  doc.text('Demande', 20, y);
+  doc.setFont('helvetica', 'normal');
+  y += 9;
+  var demande = 'Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin d\'obtenir :'
+    +'\n- La résiliation immédiate de l\'abonnement concerné'
+    +(montantTotalStr ? '\n- Le remboursement des prélèvements indus pour un montant de '+montantTotalStr : '');
+  var lignesDemande = doc.splitTextToSize(demande, 170);
+  doc.text(lignesDemande, 20, y);
+  y += lignesDemande.length * 7 + 10;
+
+  var suite = 'Je reste à votre disposition pour tout renseignement complémentaire et vous adresse ci-joint les pièces justificatives disponibles.';
+  var lignesSuite = doc.splitTextToSize(suite, 170);
+  doc.text(lignesSuite, 20, y);
+  y += lignesSuite.length * 7 + 14;
+  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
+  y += 14;
+  doc.text(nomComplet, 20, y);
+
+  doc.save('saisine-mediateur-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
+}
+
+function genererPDFBanque() {
+  var { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+  var s = getDossierComplet();
+
+  var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
+  var adresseComplete = [s.adresse, s.code_postal, s.ville_compl || s.ville].filter(Boolean).join(', ');
+  var ville = s.ville_compl || s.ville || 'Paris';
+  var entreprise = s.entreprise || 'l\'entreprise';
+  var montant = s.montant_mensuel || s.montant || '';
+  var date = new Date().toLocaleDateString('fr-FR');
+
+  doc.setFont('helvetica');
+  doc.setFontSize(11);
+  doc.text(nomComplet, 20, 20);
+  if(adresseComplete) doc.text(adresseComplete, 20, 27);
+  doc.text(ville+', le '+date, 20, 34);
+  doc.text('', 20, 41);
+  doc.text('À l\'attention du Service Clientèle', 20, 48);
+  doc.text('Ma banque / Mon établissement de paiement', 20, 55);
+  doc.text('', 20, 62);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Objet : Demande de blocage de prélèvement SEPA — Créancier : '+entreprise, 20, 69);
+  doc.setFont('helvetica', 'normal');
+  doc.text('', 20, 76);
+
+  var intro = 'Je vous contacte afin de vous demander de bloquer immédiatement tout prélèvement SEPA émanant de la société '+entreprise+(montant ? ', d\'un montant de '+montant+'€ par mois' : '')+', sur mon compte bancaire.';
+  var lignesIntro = doc.splitTextToSize(intro, 170);
+  doc.text(lignesIntro, 20, 83);
+  var y = 83 + (lignesIntro.length * 7) + 7;
+
+  var corps = 'Conformément au Règlement européen SEPA n°260/2012, je dispose du droit de révoquer à tout moment mon autorisation de prélèvement. Je vous demande donc de bloquer sans délai tout futur prélèvement de ce créancier et de me rembourser les prélèvements effectués sans mon consentement éclairé.';
+  var lignesCorps = doc.splitTextToSize(corps, 170);
+  doc.text(lignesCorps, 20, y);
+  y = y + (lignesCorps.length * 7) + 7;
+
+  var suite = 'Je vous remercie de bien vouloir traiter cette demande dans les meilleurs délais et de m\'adresser une confirmation écrite du blocage effectué.';
+  var lignesSuite = doc.splitTextToSize(suite, 170);
+  doc.text(lignesSuite, 20, y);
+  y = y + (lignesSuite.length * 7) + 14;
+
+  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
+  y = y + 14;
+  doc.text(nomComplet, 20, y);
+
+  doc.save('courrier-bancaire-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
+}
+
+function genererPDFMiseEnDemeure() {
+  var { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+  var s = getDossierComplet();
+
+  var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
+  var adresseComplete = [s.adresse, s.code_postal, s.ville_compl || s.ville].filter(Boolean).join(', ');
+  var ville = s.ville_compl || s.ville || 'Paris';
+  var entreprise = s.entreprise || 'l\'entreprise';
+  var montant = s.montant_mensuel || s.montant || '';
+  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
+  var type_litige = tL[s.type_litige] || s.type_litige || 'abonnement non consenti';
+  var date = new Date().toLocaleDateString('fr-FR');
+
+  doc.setFont('helvetica');
+  doc.setFontSize(11);
+  doc.text(nomComplet, 20, 20);
+  if(adresseComplete) doc.text(adresseComplete, 20, 27);
+  doc.text(ville+', le '+date, 20, 34);
+  doc.text('', 20, 41);
+  doc.text('À l\'attention du Service Juridique', 20, 48);
+  doc.text(entreprise, 20, 55);
+  doc.text('', 20, 62);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Objet : Mise en demeure — Résiliation d\'abonnement non consenti', 20, 69);
+  doc.text('et remboursement des sommes indûment prélevées', 20, 76);
+  doc.setFont('helvetica', 'normal');
+  doc.text('', 20, 83);
+
+  var dateSousc = s.date_souscription ? ' souscrit le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
+  var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'lors d\'un achat (ajout automatique)'};
+  var modeStr = s.mode_souscription ? ' ('+modeL[s.mode_souscription]+')' : '';
+
+  var intro = 'J\'ai été victime d\'un '+type_litige+' de la part de votre société'+dateSousc+modeStr+(montant ? ', pour un montant de '+montant+'€ par mois' : '')+'.';
+  var nbMois = s.nb_mois || '';
+  var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
+  var montantTotalStr = montantTotal > 0 ? ' (soit '+montantTotal.toFixed(2)+'€ au total pour '+nbMois+' mois)' : '';
+
+  var corps = 'Conformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé'+montantTotalStr+' et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
+  var lignesIntro = doc.splitTextToSize(intro, 170);
+  doc.text(lignesIntro, 20, 90);
+  var y = 90 + (lignesIntro.length * 7) + 10;
+  var lignesCorps = doc.splitTextToSize(corps, 170);
+  doc.text(lignesCorps, 20, y);
+  y = y + (lignesCorps.length * 7) + 10;
+  var suite = 'Dans l\'attente de votre réponse, je me réserve le droit de saisir la DGCCRF et le médiateur sectoriel compétent.';
+  var lignesSuite = doc.splitTextToSize(suite, 170);
+  doc.text(lignesSuite, 20, y);
+  y = y + (lignesSuite.length * 7) + 10;
+  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
+  y = y + 14;
+  doc.text(nomComplet, 20, y);
+
+  doc.save('mise-en-demeure-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
 }
 </script>
 </body>
