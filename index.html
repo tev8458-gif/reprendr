@@ -565,7 +565,7 @@
             <div class="action-badge gratuit">Gratuit</div>
             <div class="action-desc">Ce courrier est valable auprès de toute banque française ou européenne, conformément au Règlement SEPA (UE n°260/2012). Il contient l'identifiant créancier SEPA (ICS) permettant à votre banque de bloquer tout prélèvement futur.</div>
             <div class="banque-note">⚠️ La procédure varie selon votre banque. Le PDF inclut les instructions pour BNP, Crédit Agricole, Société Générale, LCL, La Banque Postale, Boursorama, Revolut et N26.</div>
-            <button class="btn-action secondary" id="ab3" onclick="doAction(3)" disabled>Télécharger le courrier PDF + instructions →</button>
+            <button class="btn-action secondary" id="ab3" onclick="genererPDFBanque();doAction(3)" disabled>Télécharger le courrier PDF + instructions →</button>
           </div>
         </div>
       </div>
@@ -603,6 +603,51 @@
 
 <script>
 // ===== NAVIGATION =====
+function genererPDFBanque() {
+  var { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
+  var nom = session.nom || 'Le soussigné';
+  var ville = session.ville || 'Paris';
+  var entreprise = session.entreprise || 'l\'entreprise';
+  var montant = session.montant || '';
+  var date = new Date().toLocaleDateString('fr-FR');
+
+  doc.setFont('helvetica');
+  doc.setFontSize(11);
+  doc.text(nom, 20, 20);
+  doc.text(ville + ', le ' + date, 20, 27);
+  doc.text('', 20, 34);
+  doc.text('À l\'attention du Service Clientèle', 20, 41);
+  doc.text('Ma banque / Mon établissement de paiement', 20, 48);
+  doc.text('', 20, 55);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Objet : Demande de blocage de prélèvement SEPA — Créancier : ' + entreprise, 20, 62);
+  doc.setFont('helvetica', 'normal');
+  doc.text('', 20, 69);
+
+  var intro = 'Je vous contacte afin de vous demander de bloquer immédiatement tout prélèvement SEPA émanant de la société ' + entreprise + (montant ? ', d\'un montant de ' + montant + '€ par mois' : '') + ', sur mon compte bancaire.';
+  var lignesIntro = doc.splitTextToSize(intro, 170);
+  doc.text(lignesIntro, 20, 76);
+  var y = 76 + (lignesIntro.length * 7) + 7;
+
+  var corps = 'Conformément au Règlement européen SEPA n°260/2012, je dispose du droit de révoquer à tout moment mon autorisation de prélèvement. Je vous demande donc de bloquer sans délai tout futur prélèvement de ce créancier et de me rembourser les prélèvements effectués sans mon consentement éclairé.';
+  var lignesCorps = doc.splitTextToSize(corps, 170);
+  doc.text(lignesCorps, 20, y);
+  y = y + (lignesCorps.length * 7) + 7;
+
+  var suite = 'Je vous remercie de bien vouloir traiter cette demande dans les meilleurs délais et de m\'adresser une confirmation écrite du blocage effectué.';
+  var lignesSuite = doc.splitTextToSize(suite, 170);
+  doc.text(lignesSuite, 20, y);
+  y = y + (lignesSuite.length * 7) + 14;
+
+  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
+  y = y + 14;
+  doc.text(nom, 20, y);
+
+  doc.save('courrier-bancaire-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
+}
+
 function genererPDFMiseEnDemeure() {
   var { jsPDF } = window.jspdf;
   var doc = new jsPDF();
