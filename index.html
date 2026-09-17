@@ -577,7 +577,7 @@
             <div class="action-titre">Saisine du médiateur sectoriel</div>
             <div class="action-badge legal">⚖️ Légalement obligatoire pour l'entreprise</div>
             <div class="action-desc">La médiation de la consommation est entièrement gratuite pour vous. L'entreprise est légalement tenue d'y répondre sous 90 jours (loi Hamon, 17 mars 2014). Votre formulaire est pré-rempli.</div>
-            <button class="btn-action secondary" id="ab4" onclick="doAction(4)" disabled>Accéder au formulaire médiateur →</button>
+            <button class="btn-action secondary" id="ab4" onclick="genererPDFMediateur();doAction(4)" disabled>Télécharger la saisine du médiateur →</button>
           </div>
         </div>
       </div>
@@ -603,6 +603,60 @@
 
 <script>
 // ===== NAVIGATION =====
+function genererPDFMediateur() {
+  var { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+  var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
+  var nom = session.nom || 'Le soussigné';
+  var ville = session.ville || 'Paris';
+  var entreprise = session.entreprise || 'l\'entreprise';
+  var montant = session.montant || '';
+  var type_litige = session.type_litige || '';
+  var contexte = session.contexte || '';
+  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
+  var litige = tL[type_litige] || type_litige || 'litige commercial';
+  var date = new Date().toLocaleDateString('fr-FR');
+
+  doc.setFont('helvetica');
+  doc.setFontSize(11);
+  doc.text(nom, 20, 20);
+  doc.text(ville + ', le ' + date, 20, 27);
+  doc.text('', 20, 34);
+  doc.text('Au Médiateur de la consommation compétent', 20, 41);
+  doc.text('', 20, 48);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Objet : Saisine du médiateur — Litige avec ' + entreprise, 20, 55);
+  doc.setFont('helvetica', 'normal');
+  doc.text('', 20, 62);
+
+  var intro = 'Je me permets de vous saisir dans le cadre d\'un litige qui m\'oppose à la société ' + entreprise + ' concernant un cas de ' + litige + (montant ? ', pour un montant de ' + montant + '€' : '') + '.';
+  var lignesIntro = doc.splitTextToSize(intro, 170);
+  doc.text(lignesIntro, 20, 69);
+  var y = 69 + (lignesIntro.length * 7) + 7;
+
+  if(contexte) {
+    var lignesContexte = doc.splitTextToSize(contexte, 170);
+    doc.text(lignesContexte, 20, y);
+    y = y + (lignesContexte.length * 7) + 7;
+  }
+
+  var corps = 'Malgré mes démarches auprès du service client de la société ' + entreprise + ', ce litige n\'a pas pu être résolu à l\'amiable. Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin de trouver une solution amiable à ce différend.';
+  var lignesCorps = doc.splitTextToSize(corps, 170);
+  doc.text(lignesCorps, 20, y);
+  y = y + (lignesCorps.length * 7) + 7;
+
+  var suite = 'Je reste à votre disposition pour tout renseignement complémentaire et vous adresse ci-joint les pièces justificatives disponibles.';
+  var lignesSuite = doc.splitTextToSize(suite, 170);
+  doc.text(lignesSuite, 20, y);
+  y = y + (lignesSuite.length * 7) + 14;
+
+  doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
+  y = y + 14;
+  doc.text(nom, 20, y);
+
+  doc.save('saisine-mediateur-' + entreprise.replace(/\s+/g,'-').toLowerCase() + '.pdf');
+}
+
 function genererPDFBanque() {
   var { jsPDF } = window.jspdf;
   var doc = new jsPDF();
