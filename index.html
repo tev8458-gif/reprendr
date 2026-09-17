@@ -1486,27 +1486,31 @@ function genererPDFMediateur() {
   var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'coché par défaut lors d\'un achat en ligne','inconnu':'par une voie non explicitement choisie'};
   var modeStr = s.mode_souscription && modeL[s.mode_souscription] ? ', '+modeL[s.mode_souscription] : '';
 
-  // Exposé des faits adapté par type de litige
+  // Exposé des faits adapté par type de litige — qualification assurance affinitaire
   var faitParType = {
-    'abonnement_cache': 'À l\'occasion d\'un achat auprès de la société '+entreprise+dateSousc+modeStr+', un abonnement à '+montant+'€ par mois a été souscrit dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation — les modalités de cet abonnement n\'ayant pas été portées à ma connaissance de manière claire et compréhensible préalablement à la souscription.',
-    'resiliation_refus': 'J\'ai souscrit un abonnement auprès de la société '+entreprise+dateSousc+modeStr+', d\'un montant de '+montant+'€ par mois. Cet abonnement, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription, n\'a pu être résilié malgré mes demandes répétées, en violation des dispositions de la loi Pouvoir d\'achat du 16 août 2022.',
-    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation — aucun consentement explicite et éclairé n\'ayant été recueilli préalablement à ces prélèvements.',
-    'frais_non_autorises': 'Des frais de '+montant+'€ par mois ont été prélevés sur mon compte bancaire par la société '+entreprise+dateSousc+' sans autorisation préalable de ma part, dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.',
-    'autre': 'Une pratique commerciale de la société '+entreprise+dateSousc+' a conduit à des prélèvements de '+montant+'€ par mois dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
+    'abonnement_cache': 'À l\'occasion d\'un achat auprès de la société '+entreprise+dateSousc+modeStr+', un contrat d\'assurance affinitaire à '+montant+'€ par mois a été souscrit dans des conditions ne permettant pas un consentement libre et éclairé au sens des articles L.111-1 et L.121-1 du Code de la consommation. Les caractéristiques essentielles de ce contrat — notamment ses conditions de résiliation — ne m\'ont pas été communiquées de manière claire et compréhensible préalablement à la souscription. Je relève en outre que cette assurance fait doublon avec la garantie légale de conformité de deux ans imposée par les articles L.217-1 et suivants du Code de la consommation, ce qui constitue une pratique commerciale trompeuse par omission au sens de l\'article L.121-2 du même code.',
+    'resiliation_refus': 'J\'ai souscrit'+dateSousc+modeStr+' un contrat d\'assurance affinitaire auprès de la société '+entreprise+', d\'un montant de '+montant+'€ par mois, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription. Ce contrat n\'a pu être résilié malgré mes demandes répétées, en violation de l\'article L.113-12 du Code des assurances, de la loi Pouvoir d\'achat du 16 août 2022, et des dispositions relatives aux assurances affinitaires issues de la directive européenne sur la distribution d\'assurances (DDA, 2018).',
+    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' sans que j\'aie donné mon consentement explicite et éclairé à la souscription d\'un quelconque contrat, en violation des articles L.111-1 et L.121-1 du Code de la consommation et de la réglementation applicable aux assurances affinitaires.',
+    'frais_non_autorises': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' sans autorisation préalable de ma part et sans information précontractuelle suffisante, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation.',
+    'autre': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
   };
   var faits = faitParType[s.type_litige] || faitParType['autre'];
-  if(s.ref_contrat) faits += ' Références : '+s.ref_contrat+'.';
+  if(s.ref_contrat) faits += ' Références du contrat : '+s.ref_contrat+'.';
 
-  // Démarches amiables détaillées
+  // Démarches amiables — bug corrigé : texte "Autre" intégré proprement dans la phrase
   var canalL = {'telephone':'par téléphone','email':'par email','espace_client_en_ligne':'via mon espace client en ligne','courrier':'par courrier postal','en_magasin':'sur le lieu de vente','chat':'via le chat du service client'};
-  var repL = {'refus_explicite':'a opposé un refus explicite','pas_de_reponse':'n\'a pas répondu dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue','autre':''};
+  var repL = {'refus_explicite':'a opposé un refus explicite à ma demande','pas_de_reponse':'n\'a pas répondu dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue'};
   var tentativesStr = '';
   if(s.date_tentative1) {
-    var r1 = s.reponse_tentative1 === 'autre' && s.autre_reponse1 ? s.autre_reponse1 : (repL[s.reponse_tentative1] || 'n\'a pas donné suite');
-    tentativesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté le service client de la société '+entreprise+(s.canal_tentative1 ? ' '+canalL[s.canal_tentative1] : '')+' afin de demander la résiliation et le remboursement des sommes indûment prélevées. La société '+r1+'.';
+    var r1 = (s.reponse_tentative1 === 'autre' && s.autre_reponse1)
+      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse1+' »'
+      : (repL[s.reponse_tentative1] || 'n\'a pas donné suite à ma demande');
+    tentativesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté le service client de la société '+entreprise+(s.canal_tentative1 ? ' '+canalL[s.canal_tentative1] : '')+' afin de demander la résiliation immédiate du contrat et le remboursement des sommes indûment prélevées. La société '+r1+'.';
   }
   if(s.date_tentative2) {
-    var r2 = s.reponse_tentative2 === 'autre' && s.autre_reponse2 ? s.autre_reponse2 : (repL[s.reponse_tentative2] || 'n\'a toujours pas donné suite');
+    var r2 = (s.reponse_tentative2 === 'autre' && s.autre_reponse2)
+      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse2+' »'
+      : (repL[s.reponse_tentative2] || 'n\'a toujours pas donné suite à ma demande');
     tentativesStr += (tentativesStr ? ' ' : '')+'Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande'+(s.canal_tentative2 ? ' '+canalL[s.canal_tentative2] : '')+'. La société '+r2+'.';
   }
   if(!tentativesStr) tentativesStr = 'Malgré mes démarches auprès du service client de la société '+entreprise+', ce litige n\'a pas pu être résolu à l\'amiable.';
@@ -1553,7 +1557,7 @@ function genererPDFMediateur() {
   doc.setFont('helvetica', 'bold');
   doc.text('Demande', 20, y); y += 9;
   doc.setFont('helvetica', 'normal');
-  var demande = 'Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin d\'obtenir :\n- La résiliation immédiate de l\'abonnement concerné'+(montantTotalStr ? '\n- Le remboursement des prélèvements indus pour un montant de '+montantTotalStr : '');
+  var demande = 'Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin d\'obtenir :\n- La résiliation immédiate du contrat et la cessation de tout prélèvement afférent'+(montantTotalStr ? '\n- Le remboursement des prélèvements indûment effectués pour un montant de '+montantTotalStr : '');
   var lignesDemande = doc.splitTextToSize(demande, 170);
   doc.text(lignesDemande, 20, y);
   y += lignesDemande.length * 7 + 10;
@@ -1580,37 +1584,36 @@ function genererPDFBanque() {
   var entreprise = s.entreprise || 'l\'entreprise';
   var montant = s.montant_mensuel || s.montant || '';
   var date = new Date().toLocaleDateString('fr-FR');
+  var typeContrat = s.type_litige === 'abonnement_cache' ? 'contrat d\'assurance affinitaire' : 'prélèvement';
 
   doc.setFont('helvetica');
   doc.setFontSize(11);
   doc.text(nomComplet, 20, 20);
   if(adresseComplete) doc.text(adresseComplete, 20, 27);
   doc.text(ville+', le '+date, 20, 34);
-  doc.text('', 20, 41);
   doc.text('À l\'attention du Service Clientèle', 20, 48);
   doc.text('Ma banque / Mon établissement de paiement', 20, 55);
-  doc.text('', 20, 62);
   doc.setFont('helvetica', 'bold');
   doc.text('Objet : Révocation de mandat de prélèvement SEPA — Créancier : '+entreprise, 20, 69);
   doc.setFont('helvetica', 'normal');
 
   var y = 83;
-  var intro = 'Je me permets de vous adresser ce courrier afin de vous informer que je conteste les prélèvements opérés par la société '+entreprise+(montant ? ' ('+montant+'€ par mois)' : '')+' sur mon compte, et vous demande de révoquer le mandat de prélèvement SEPA correspondant avec effet immédiat.';
+  var intro = 'Je me permets de vous adresser ce courrier afin de contester les prélèvements opérés sur mon compte par la société '+entreprise+(montant ? ' ('+montant+'€ par mois)' : '')+' au titre d\'un '+typeContrat+' dont les conditions ne m\'ont pas été clairement communiquées et dont je n\'ai pu obtenir la résiliation malgré mes démarches. Je vous demande de révoquer le mandat de prélèvement SEPA correspondant avec effet immédiat.';
   var lignesIntro = doc.splitTextToSize(intro, 170);
   doc.text(lignesIntro, 20, y);
   y += lignesIntro.length * 7 + 7;
 
-  var fondement = 'Conformément au Règlement européen n°260/2012 relatif aux virements et prélèvements en euros (dit Règlement SEPA), je dispose du droit de révoquer à tout moment et sans justification mon autorisation de prélèvement. Cette révocation prend effet immédiatement à compter de la réception du présent courrier.';
+  var fondement = 'Conformément au Règlement européen n°260/2012 relatif aux virements et prélèvements en euros (Règlement SEPA), je dispose du droit de révoquer à tout moment et sans justification mon autorisation de prélèvement. Cette révocation prend effet immédiatement à compter de la réception du présent courrier.';
   var lignesFondement = doc.splitTextToSize(fondement, 170);
   doc.text(lignesFondement, 20, y);
   y += lignesFondement.length * 7 + 7;
 
-  var demande = 'Je vous demande en conséquence :\n- De bloquer sans délai tout futur prélèvement émanant du créancier '+entreprise+'.\n- De me confirmer par écrit la prise en compte de cette révocation dans les meilleurs délais.';
+  var demande = 'Je vous demande en conséquence de bien vouloir :\n- Bloquer sans délai tout futur prélèvement SEPA émanant du créancier '+entreprise+'.\n- Me communiquer l\'identifiant créancier SEPA (ICS) associé à ce prélèvement ainsi qu\'une copie de la ligne correspondante sur mon relevé de compte, afin de me permettre d\'identifier formellement le créancier dans mes recours en cours.\n- Me confirmer par écrit la prise en compte de cette révocation dans les meilleurs délais.';
   var lignesDemande = doc.splitTextToSize(demande, 170);
   doc.text(lignesDemande, 20, y);
   y += lignesDemande.length * 7 + 7;
 
-  var note = 'Je précise que la demande de remboursement des prélèvements indûment effectués fait l\'objet d\'un recours distinct directement auprès de la société '+entreprise+'.';
+  var note = 'Je précise que la demande de remboursement des prélèvements indûment effectués fait l\'objet d\'un recours distinct directement auprès de la société '+entreprise+', ainsi que d\'une saisine du médiateur de la consommation compétent.';
   var lignesNote = doc.splitTextToSize(note, 170);
   doc.text(lignesNote, 20, y);
   y += lignesNote.length * 7 + 14;
@@ -1641,26 +1644,30 @@ function genererPDFMiseEnDemeure() {
   var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'coché par défaut lors d\'un achat en ligne','inconnu':'par une voie que je n\'ai pas expressément choisie'};
   var modeStr = s.mode_souscription && modeL[s.mode_souscription] ? ', '+modeL[s.mode_souscription] : '';
 
-  // Introduction adaptée par type de litige
+  // Introduction adaptée par type de litige — qualification contrat assurance affinitaire
   var introParType = {
-    'abonnement_cache': 'À l\'occasion d\'un achat auprès de votre société'+dateSousc+modeStr+', un abonnement à '+montant+'€ par mois a été souscrit à mon insu, dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation — les modalités de cet abonnement n\'ayant pas été portées à ma connaissance de manière claire et compréhensible préalablement à la souscription.',
-    'resiliation_refus': 'J\'ai souscrit un abonnement auprès de votre société'+dateSousc+modeStr+', d\'un montant de '+montant+'€ par mois. Malgré mes demandes répétées de résiliation, votre société a refusé ou ignoré mes démarches, en violation de l\'article L.221-28 du Code de la consommation et de la loi Pouvoir d\'achat du 16 août 2022 imposant un droit de résiliation simplifié et sans obstacle.',
-    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' sans que j\'aie donné mon consentement explicite à une quelconque souscription, en violation du principe de consentement préalable et éclairé imposé par l\'article L.121-1 du Code de la consommation.',
-    'frais_non_autorises': 'Des frais de '+montant+'€ par mois ont été prélevés sur mon compte bancaire'+dateSousc+' sans autorisation préalable de ma part, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation — le consentement explicite du consommateur étant une condition légale impérative pour tout prélèvement.',
-    'autre': 'Une pratique commerciale de votre société'+dateSousc+' a conduit à des prélèvements de '+montant+'€ par mois dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
+    'abonnement_cache': 'À l\'occasion d\'un achat auprès de votre société'+dateSousc+modeStr+', un contrat d\'assurance affinitaire à '+montant+'€ par mois a été souscrit dans des conditions ne permettant pas un consentement libre et éclairé au sens des articles L.111-1 et L.121-1 du Code de la consommation — les caractéristiques essentielles de ce contrat, notamment ses conditions de résiliation, n\'ayant pas été portées à ma connaissance de manière claire et compréhensible préalablement à la souscription. Je relève en outre que cette assurance fait doublon avec la garantie légale de conformité de deux ans imposée par les articles L.217-1 et suivants du Code de la consommation, ce qui constitue une pratique commerciale trompeuse par omission.',
+    'resiliation_refus': 'J\'ai souscrit'+dateSousc+modeStr+' un contrat d\'assurance affinitaire auprès de votre société, d\'un montant de '+montant+'€ par mois, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription. Malgré mes demandes répétées de résiliation, votre société a refusé ou ignoré mes démarches, en violation de l\'article L.221-28 du Code de la consommation, de la loi Pouvoir d\'achat du 16 août 2022 imposant un droit de résiliation simplifié, et de l\'article L.113-12 du Code des assurances garantissant le droit de résiliation à l\'échéance annuelle.',
+    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' sans que j\'aie donné mon consentement explicite et éclairé à la souscription d\'un quelconque contrat, en violation du principe de consentement préalable imposé par l\'article L.121-1 du Code de la consommation et par la réglementation applicable aux assurances affinitaires.',
+    'frais_non_autorises': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' sans autorisation préalable de ma part au titre d\'un contrat dont l\'existence et les caractéristiques ne m\'ont pas été communiquées, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation.',
+    'autre': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
   };
   var intro = introParType[s.type_litige] || introParType['autre'];
 
-  // Rappel des démarches passées
+  // Rappel des démarches — bug corrigé : texte "Autre" intégré proprement dans la phrase
   var canalL = {'telephone':'par téléphone','email':'par email','espace_client_en_ligne':'via mon espace client en ligne','courrier':'par courrier postal','en_magasin':'sur le lieu de vente','chat':'via le chat de votre service client'};
-  var repL = {'refus_explicite':'a opposé un refus explicite à ma demande','pas_de_reponse':'n\'a pas répondu à ma demande dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue','autre':''};
+  var repL = {'refus_explicite':'a opposé un refus explicite à ma demande','pas_de_reponse':'n\'a pas répondu à ma demande dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue'};
   var demarchesStr = '';
   if(s.date_tentative1) {
-    var rep1 = s.reponse_tentative1 === 'autre' && s.autre_reponse1 ? s.autre_reponse1 : (repL[s.reponse_tentative1] || 'n\'a pas résolu ma demande');
-    demarchesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté votre service client '+(s.canal_tentative1 ? canalL[s.canal_tentative1] : '')+' afin de demander la résiliation de cet abonnement et le remboursement des sommes prélevées. Votre société '+rep1+'.';
+    var rep1 = (s.reponse_tentative1 === 'autre' && s.autre_reponse1)
+      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse1+' »'
+      : (repL[s.reponse_tentative1] || 'n\'a pas résolu ma demande');
+    demarchesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté votre service client '+(s.canal_tentative1 ? canalL[s.canal_tentative1] : '')+' afin de demander la résiliation immédiate de ce contrat et le remboursement des sommes indûment prélevées. Votre société '+rep1+'.';
   }
   if(s.date_tentative2) {
-    var rep2 = s.reponse_tentative2 === 'autre' && s.autre_reponse2 ? s.autre_reponse2 : (repL[s.reponse_tentative2] || 'n\'a toujours pas résolu ma demande');
+    var rep2 = (s.reponse_tentative2 === 'autre' && s.autre_reponse2)
+      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse2+' »'
+      : (repL[s.reponse_tentative2] || 'n\'a toujours pas résolu ma demande');
     demarchesStr += (demarchesStr ? ' ' : '')+'Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande '+(s.canal_tentative2 ? canalL[s.canal_tentative2] : '')+'. Votre société '+rep2+'.';
   }
   if(!demarchesStr) demarchesStr = 'Malgré mes démarches auprès de votre service client, ce litige n\'a pu être résolu à l\'amiable.';
@@ -1688,7 +1695,7 @@ function genererPDFMiseEnDemeure() {
   y += lignesDemarches.length * 7 + 8;
 
   // Mise en demeure formelle
-  var corps = 'En l\'absence de règlement amiable, je vous mets formellement en demeure, dans un délai de 15 jours à compter de la réception du présent courrier, de :\n- Procéder à la résiliation immédiate de l\'abonnement concerné.\n- Rembourser l\'intégralité des sommes indûment prélevées'+montantTotalStr+'.\n\nPassé ce délai, et sans réponse satisfaisante de votre part, je me réserve le droit de saisir la DGCCRF, le médiateur sectoriel compétent, et le cas échéant d\'engager toute procédure judiciaire appropriée.';
+  var corps = 'En l\'absence de règlement amiable, je vous mets formellement en demeure, dans un délai de 15 jours à compter de la réception du présent courrier, de :\n- Procéder à la résiliation immédiate du contrat concerné et à la cessation de tout prélèvement afférent.\n- Rembourser l\'intégralité des sommes indûment prélevées'+montantTotalStr+'.\n\nPassé ce délai sans réponse satisfaisante de votre part, je me réserve le droit de saisir la DGCCRF, l\'Autorité de contrôle prudentiel et de résolution (ACPR), le médiateur sectoriel compétent, et le cas échéant d\'engager toute procédure judiciaire appropriée.';
   var lignesCorps = doc.splitTextToSize(corps, 170);
   doc.text(lignesCorps, 20, y);
   y += lignesCorps.length * 7 + 14;
