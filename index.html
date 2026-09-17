@@ -673,17 +673,19 @@
           <input type="number" id="cp_montant_mensuel" placeholder="Ex : 9,99" min="0.01" step="0.01" oninput="checkCompl2();majMontantTotal()">
         </div>
         <div class="compl-field">
-          <label>Référence contrat ou numéro client <span style="color:var(--muted);font-weight:400">(si connu)</span></label>
-          <input type="text" id="cp_ref_contrat" placeholder="Ex : ABC-123456">
+          <label>Vos références à rappeler <span style="color:var(--muted);font-weight:400">(si connu)</span></label>
+          <input type="text" id="cp_ref_contrat" placeholder="Ex : n° achat, contrat, client…">
+          <div class="hint">Numéro de commande, de contrat, de client ou de dossier figurant sur vos documents</div>
         </div>
         <div class="compl-field">
-          <label>Mode de souscription</label>
+          <label>Voie de souscription</label>
           <select id="cp_mode_souscription" onchange="checkCompl2()">
             <option value="">Sélectionnez…</option>
-            <option value="en_magasin">En magasin</option>
-            <option value="en_ligne">En ligne</option>
+            <option value="en_magasin">En magasin / sur le lieu de vente</option>
+            <option value="en_ligne">En ligne (site web)</option>
             <option value="par_telephone">Par téléphone</option>
-            <option value="lors_achat">Lors d'un achat (ajouté automatiquement)</option>
+            <option value="lors_achat">Coché par défaut lors d'un achat en ligne</option>
+            <option value="inconnu">Je ne sais pas comment cet abonnement a été souscrit</option>
           </select>
         </div>
         <button class="btn-valider-bloc" id="cbtn2" onclick="validerBloc(2)" disabled>Valider →</button>
@@ -709,23 +711,29 @@
             <input type="date" id="cp_date_tentative1" onchange="checkCompl3()">
           </div>
           <div class="compl-field">
-            <label>Canal utilisé</label>
+            <label>Voie de contact utilisée</label>
             <div class="canal-grid" id="canal1Grid">
               <button class="canal-btn" onclick="selCanal(1,'telephone',this)">📞 Téléphone</button>
               <button class="canal-btn" onclick="selCanal(1,'email',this)">📧 Email</button>
-              <button class="canal-btn" onclick="selCanal(1,'espace_client',this)">💻 Espace client</button>
-              <button class="canal-btn" onclick="selCanal(1,'courrier',this)">✉️ Courrier</button>
+              <button class="canal-btn" onclick="selCanal(1,'espace_client_en_ligne',this)">💻 Espace client en ligne</button>
+              <button class="canal-btn" onclick="selCanal(1,'courrier',this)">✉️ Courrier postal</button>
+              <button class="canal-btn" onclick="selCanal(1,'en_magasin',this)">🏪 Sur le lieu de vente</button>
+              <button class="canal-btn" onclick="selCanal(1,'chat',this)">💬 Chat / messagerie</button>
             </div>
           </div>
           <div class="compl-field">
             <label>Réponse obtenue</label>
-            <select id="cp_reponse1" onchange="checkCompl3()">
+            <select id="cp_reponse1" onchange="showAutreReponse(1);checkCompl3()">
               <option value="">Sélectionnez…</option>
               <option value="refus_explicite">Refus explicite</option>
               <option value="pas_de_reponse">Pas de réponse</option>
               <option value="promesse_non_tenue">Promesse non tenue</option>
               <option value="autre">Autre</option>
             </select>
+          </div>
+          <div class="compl-field" id="autreReponse1Div" style="display:none">
+            <label>Précisez la réponse obtenue</label>
+            <textarea id="cp_autre_reponse1" placeholder="Ex : Le service client m'a renvoyé vers un formulaire en ligne non fonctionnel…" oninput="checkCompl3()"></textarea>
           </div>
         </div>
 
@@ -737,23 +745,29 @@
             <input type="date" id="cp_date_tentative2">
           </div>
           <div class="compl-field">
-            <label>Canal utilisé</label>
+            <label>Voie de contact utilisée</label>
             <div class="canal-grid" id="canal2Grid">
               <button class="canal-btn" onclick="selCanal(2,'telephone',this)">📞 Téléphone</button>
               <button class="canal-btn" onclick="selCanal(2,'email',this)">📧 Email</button>
-              <button class="canal-btn" onclick="selCanal(2,'espace_client',this)">💻 Espace client</button>
-              <button class="canal-btn" onclick="selCanal(2,'courrier',this)">✉️ Courrier</button>
+              <button class="canal-btn" onclick="selCanal(2,'espace_client_en_ligne',this)">💻 Espace client en ligne</button>
+              <button class="canal-btn" onclick="selCanal(2,'courrier',this)">✉️ Courrier postal</button>
+              <button class="canal-btn" onclick="selCanal(2,'en_magasin',this)">🏪 Sur le lieu de vente</button>
+              <button class="canal-btn" onclick="selCanal(2,'chat',this)">💬 Chat / messagerie</button>
             </div>
           </div>
           <div class="compl-field">
             <label>Réponse obtenue</label>
-            <select id="cp_reponse2">
+            <select id="cp_reponse2" onchange="showAutreReponse(2)">
               <option value="">Sélectionnez…</option>
               <option value="refus_explicite">Refus explicite</option>
               <option value="pas_de_reponse">Pas de réponse</option>
               <option value="promesse_non_tenue">Promesse non tenue</option>
               <option value="autre">Autre</option>
             </select>
+          </div>
+          <div class="compl-field" id="autreReponse2Div" style="display:none">
+            <label>Précisez la réponse obtenue</label>
+            <textarea id="cp_autre_reponse2" placeholder="Ex : On m'a promis un rappel qui n'est jamais venu…"></textarea>
           </div>
         </div>
 
@@ -1340,9 +1354,11 @@ function sauvegarderDossierCompl() {
     date_tentative1: document.getElementById('cp_date_tentative1').value,
     canal_tentative1: canalSelected[1],
     reponse_tentative1: document.getElementById('cp_reponse1').value,
+    autre_reponse1: document.getElementById('cp_autre_reponse1').value,
     date_tentative2: document.getElementById('cp_date_tentative2').value,
     canal_tentative2: canalSelected[2],
     reponse_tentative2: document.getElementById('cp_reponse2').value,
+    autre_reponse2: document.getElementById('cp_autre_reponse2').value,
     date_dernier_prelevement: document.getElementById('cp_date_dernier_prelevement').value,
     nb_mois: document.getElementById('cp_nb_mois').value
   };
@@ -1360,6 +1376,11 @@ function selCanal(tentative, val, btn) {
 function afficherTentative2() {
   document.getElementById('tentative2').style.display = 'block';
   document.getElementById('btnAjouterTentative').style.display = 'none';
+}
+
+function showAutreReponse(n) {
+  var val = document.getElementById('cp_reponse'+n).value;
+  document.getElementById('autreReponse'+n+'Div').style.display = val === 'autre' ? 'block' : 'none';
 }
 
 // Checks validation
@@ -1456,31 +1477,45 @@ function genererPDFMediateur() {
   var ville = s.ville_compl || s.ville || 'Paris';
   var entreprise = s.entreprise || 'l\'entreprise';
   var montant = s.montant_mensuel || s.montant || '';
-  var type_litige = s.type_litige || '';
-  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
-  var litige = tL[type_litige] || type_litige || 'litige commercial';
   var date = new Date().toLocaleDateString('fr-FR');
-
-  var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'lors d\'un achat (ajout automatique)'};
-  var modeStr = s.mode_souscription ? ' via '+modeL[s.mode_souscription] : '';
-  var dateSousc = s.date_souscription ? ' le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
-
-  var repL = {'refus_explicite':'a explicitement refusé de procéder à la résiliation','pas_de_reponse':'n\'a pas répondu à ma demande','promesse_non_tenue':'a fait une promesse non tenue','autre':'n\'a pas donné suite'};
-  var canal1L = {'telephone':'par téléphone','email':'par email','espace_client':'via l\'espace client','courrier':'par courrier'};
-  var tentativeStr = '';
-  if(s.date_tentative1){
-    tentativeStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté l\'entreprise '+(s.canal_tentative1?canal1L[s.canal_tentative1]:'')+' afin de demander la résiliation. La société '+(s.reponse_tentative1?repL[s.reponse_tentative1]:'n\'a pas répondu')+'.';
-  }
-  if(s.date_tentative2){
-    tentativeStr += ' Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande '+(s.canal_tentative2?canal1L[s.canal_tentative2]:'')+'. La société '+(s.reponse_tentative2?repL[s.reponse_tentative2]:'n\'a toujours pas répondu')+'.';
-  }
-
   var nbMois = s.nb_mois || '';
   var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
   var montantTotalStr = montantTotal > 0 ? montantTotal.toFixed(2)+'€' : '';
 
-  var dernierPrel = s.date_dernier_prelevement ? 'Le dernier prélèvement a eu lieu le '+new Date(s.date_dernier_prelevement).toLocaleDateString('fr-FR')+'. ' : '';
+  var dateSousc = s.date_souscription ? ' le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
+  var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'coché par défaut lors d\'un achat en ligne','inconnu':'par une voie non explicitement choisie'};
+  var modeStr = s.mode_souscription && modeL[s.mode_souscription] ? ', '+modeL[s.mode_souscription] : '';
 
+  // Exposé des faits adapté par type de litige
+  var faitParType = {
+    'abonnement_cache': 'À l\'occasion d\'un achat auprès de la société '+entreprise+dateSousc+modeStr+', un abonnement à '+montant+'€ par mois a été souscrit dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation — les modalités de cet abonnement n\'ayant pas été portées à ma connaissance de manière claire et compréhensible préalablement à la souscription.',
+    'resiliation_refus': 'J\'ai souscrit un abonnement auprès de la société '+entreprise+dateSousc+modeStr+', d\'un montant de '+montant+'€ par mois. Cet abonnement, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription, n\'a pu être résilié malgré mes demandes répétées, en violation des dispositions de la loi Pouvoir d\'achat du 16 août 2022.',
+    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation — aucun consentement explicite et éclairé n\'ayant été recueilli préalablement à ces prélèvements.',
+    'frais_non_autorises': 'Des frais de '+montant+'€ par mois ont été prélevés sur mon compte bancaire par la société '+entreprise+dateSousc+' sans autorisation préalable de ma part, dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.',
+    'autre': 'Une pratique commerciale de la société '+entreprise+dateSousc+' a conduit à des prélèvements de '+montant+'€ par mois dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
+  };
+  var faits = faitParType[s.type_litige] || faitParType['autre'];
+  if(s.ref_contrat) faits += ' Références : '+s.ref_contrat+'.';
+
+  // Démarches amiables détaillées
+  var canalL = {'telephone':'par téléphone','email':'par email','espace_client_en_ligne':'via mon espace client en ligne','courrier':'par courrier postal','en_magasin':'sur le lieu de vente','chat':'via le chat du service client'};
+  var repL = {'refus_explicite':'a opposé un refus explicite','pas_de_reponse':'n\'a pas répondu dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue','autre':''};
+  var tentativesStr = '';
+  if(s.date_tentative1) {
+    var r1 = s.reponse_tentative1 === 'autre' && s.autre_reponse1 ? s.autre_reponse1 : (repL[s.reponse_tentative1] || 'n\'a pas donné suite');
+    tentativesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté le service client de la société '+entreprise+(s.canal_tentative1 ? ' '+canalL[s.canal_tentative1] : '')+' afin de demander la résiliation et le remboursement des sommes indûment prélevées. La société '+r1+'.';
+  }
+  if(s.date_tentative2) {
+    var r2 = s.reponse_tentative2 === 'autre' && s.autre_reponse2 ? s.autre_reponse2 : (repL[s.reponse_tentative2] || 'n\'a toujours pas donné suite');
+    tentativesStr += (tentativesStr ? ' ' : '')+'Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande'+(s.canal_tentative2 ? ' '+canalL[s.canal_tentative2] : '')+'. La société '+r2+'.';
+  }
+  if(!tentativesStr) tentativesStr = 'Malgré mes démarches auprès du service client de la société '+entreprise+', ce litige n\'a pas pu être résolu à l\'amiable.';
+
+  var prejudice = '';
+  if(s.date_dernier_prelevement) prejudice += 'Le dernier prélèvement a eu lieu le '+new Date(s.date_dernier_prelevement).toLocaleDateString('fr-FR')+'. ';
+  if(nbMois) prejudice += 'Je conteste '+nbMois+' prélèvement'+(parseInt(nbMois)>1?'s':'')+' indu'+(parseInt(nbMois)>1?'s':'')+(montantTotalStr?' pour un montant total de '+montantTotalStr:'')+'.';
+
+  // Mise en page
   doc.setFont('helvetica');
   doc.setFontSize(11);
   doc.text(nomComplet, 20, 20);
@@ -1488,59 +1523,37 @@ function genererPDFMediateur() {
   if(s.telephone) doc.text(s.telephone, 20, 34);
   if(s.email_compl || s.email) doc.text(s.email_compl || s.email, 20, 41);
   doc.text(ville+', le '+date, 20, 50);
-  doc.text('', 20, 57);
   doc.text('Au Médiateur de la consommation compétent', 20, 64);
-  doc.text('', 20, 71);
   doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Saisine du médiateur — Litige avec '+entreprise, 20, 78);
+  doc.text('Objet : Saisine du médiateur — Information consommateur abusive — Litige avec '+entreprise, 20, 78);
   doc.setFont('helvetica', 'normal');
-  doc.text('', 20, 85);
 
   var y = 92;
-  // Exposé des faits
-  doc.setFont('helvetica', 'bold');
-  doc.text('Exposé des faits', 20, y);
-  doc.setFont('helvetica', 'normal');
-  y += 9;
 
-  var faits = 'J\'ai souscrit un abonnement auprès de la société '+entreprise+dateSousc+modeStr
-    +(montant ? ', pour un montant de '+montant+'€ par mois' : '')+'.'
-    +(s.ref_contrat ? ' Référence contrat : '+s.ref_contrat+'.' : '');
+  doc.setFont('helvetica', 'bold');
+  doc.text('Exposé des faits', 20, y); y += 9;
+  doc.setFont('helvetica', 'normal');
   var lignesFaits = doc.splitTextToSize(faits, 170);
   doc.text(lignesFaits, 20, y);
-  y += lignesFaits.length * 7 + 5;
+  y += lignesFaits.length * 7 + 6;
 
-  if(tentativeStr){
-    var lignesTentative = doc.splitTextToSize(tentativeStr, 170);
-    doc.text(lignesTentative, 20, y);
-    y += lignesTentative.length * 7 + 5;
-  }
-
-  if(dernierPrel || nbMois){
-    var prejudiceStr = dernierPrel + (nbMois ? 'Je conteste '+nbMois+' prélèvement'+(nbMois>1?'s':'')+' indus'+(montantTotalStr?' pour un montant total de '+montantTotalStr:'')+'.' : '');
-    var lignesPrejudice = doc.splitTextToSize(prejudiceStr, 170);
+  if(prejudice) {
+    var lignesPrejudice = doc.splitTextToSize(prejudice, 170);
     doc.text(lignesPrejudice, 20, y);
-    y += lignesPrejudice.length * 7 + 7;
+    y += lignesPrejudice.length * 7 + 6;
   }
 
-  // Démarches amiables
   doc.setFont('helvetica', 'bold');
-  doc.text('Démarches amiables tentées', 20, y);
+  doc.text('Démarches amiables tentées', 20, y); y += 9;
   doc.setFont('helvetica', 'normal');
-  y += 9;
-  var demarches = 'Malgré mes démarches auprès du service client de la société '+entreprise+', ce litige n\'a pas pu être résolu à l\'amiable.';
-  var lignesDemarches = doc.splitTextToSize(demarches, 170);
-  doc.text(lignesDemarches, 20, y);
-  y += lignesDemarches.length * 7 + 7;
+  var lignesTentatives = doc.splitTextToSize(tentativesStr, 170);
+  doc.text(lignesTentatives, 20, y);
+  y += lignesTentatives.length * 7 + 6;
 
-  // Demande au médiateur
   doc.setFont('helvetica', 'bold');
-  doc.text('Demande', 20, y);
+  doc.text('Demande', 20, y); y += 9;
   doc.setFont('helvetica', 'normal');
-  y += 9;
-  var demande = 'Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin d\'obtenir :'
-    +'\n- La résiliation immédiate de l\'abonnement concerné'
-    +(montantTotalStr ? '\n- Le remboursement des prélèvements indus pour un montant de '+montantTotalStr : '');
+  var demande = 'Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin d\'obtenir :\n- La résiliation immédiate de l\'abonnement concerné'+(montantTotalStr ? '\n- Le remboursement des prélèvements indus pour un montant de '+montantTotalStr : '');
   var lignesDemande = doc.splitTextToSize(demande, 170);
   doc.text(lignesDemande, 20, y);
   y += lignesDemande.length * 7 + 10;
@@ -1578,27 +1591,32 @@ function genererPDFBanque() {
   doc.text('Ma banque / Mon établissement de paiement', 20, 55);
   doc.text('', 20, 62);
   doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Demande de blocage de prélèvement SEPA — Créancier : '+entreprise, 20, 69);
+  doc.text('Objet : Révocation de mandat de prélèvement SEPA — Créancier : '+entreprise, 20, 69);
   doc.setFont('helvetica', 'normal');
-  doc.text('', 20, 76);
 
-  var intro = 'Je vous contacte afin de vous demander de bloquer immédiatement tout prélèvement SEPA émanant de la société '+entreprise+(montant ? ', d\'un montant de '+montant+'€ par mois' : '')+', sur mon compte bancaire.';
+  var y = 83;
+  var intro = 'Je me permets de vous adresser ce courrier afin de vous informer que je conteste les prélèvements opérés par la société '+entreprise+(montant ? ' ('+montant+'€ par mois)' : '')+' sur mon compte, et vous demande de révoquer le mandat de prélèvement SEPA correspondant avec effet immédiat.';
   var lignesIntro = doc.splitTextToSize(intro, 170);
-  doc.text(lignesIntro, 20, 83);
-  var y = 83 + (lignesIntro.length * 7) + 7;
+  doc.text(lignesIntro, 20, y);
+  y += lignesIntro.length * 7 + 7;
 
-  var corps = 'Conformément au Règlement européen SEPA n°260/2012, je dispose du droit de révoquer à tout moment mon autorisation de prélèvement. Je vous demande donc de bloquer sans délai tout futur prélèvement de ce créancier et de me rembourser les prélèvements effectués sans mon consentement éclairé.';
-  var lignesCorps = doc.splitTextToSize(corps, 170);
-  doc.text(lignesCorps, 20, y);
-  y = y + (lignesCorps.length * 7) + 7;
+  var fondement = 'Conformément au Règlement européen n°260/2012 relatif aux virements et prélèvements en euros (dit Règlement SEPA), je dispose du droit de révoquer à tout moment et sans justification mon autorisation de prélèvement. Cette révocation prend effet immédiatement à compter de la réception du présent courrier.';
+  var lignesFondement = doc.splitTextToSize(fondement, 170);
+  doc.text(lignesFondement, 20, y);
+  y += lignesFondement.length * 7 + 7;
 
-  var suite = 'Je vous remercie de bien vouloir traiter cette demande dans les meilleurs délais et de m\'adresser une confirmation écrite du blocage effectué.';
-  var lignesSuite = doc.splitTextToSize(suite, 170);
-  doc.text(lignesSuite, 20, y);
-  y = y + (lignesSuite.length * 7) + 14;
+  var demande = 'Je vous demande en conséquence :\n- De bloquer sans délai tout futur prélèvement émanant du créancier '+entreprise+'.\n- De me confirmer par écrit la prise en compte de cette révocation dans les meilleurs délais.';
+  var lignesDemande = doc.splitTextToSize(demande, 170);
+  doc.text(lignesDemande, 20, y);
+  y += lignesDemande.length * 7 + 7;
+
+  var note = 'Je précise que la demande de remboursement des prélèvements indûment effectués fait l\'objet d\'un recours distinct directement auprès de la société '+entreprise+'.';
+  var lignesNote = doc.splitTextToSize(note, 170);
+  doc.text(lignesNote, 20, y);
+  y += lignesNote.length * 7 + 14;
 
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y = y + 14;
+  y += 14;
   doc.text(nomComplet, 20, y);
 
   doc.save('courrier-bancaire-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
@@ -1614,47 +1632,69 @@ function genererPDFMiseEnDemeure() {
   var ville = s.ville_compl || s.ville || 'Paris';
   var entreprise = s.entreprise || 'l\'entreprise';
   var montant = s.montant_mensuel || s.montant || '';
-  var tL = {'abonnement_cache':'abonnement caché lors d\'un achat','resiliation_refus':'résiliation refusée','prelevement_inconnu':'prélèvement non reconnu','frais_non_autorises':'frais non autorisés','autre':'pratique commerciale abusive'};
-  var type_litige = tL[s.type_litige] || s.type_litige || 'abonnement non consenti';
   var date = new Date().toLocaleDateString('fr-FR');
+  var nbMois = s.nb_mois || '';
+  var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
+  var montantTotalStr = montantTotal > 0 ? ' (soit '+montantTotal.toFixed(2)+'€ au total pour '+nbMois+' mois)' : '';
+
+  var dateSousc = s.date_souscription ? ' le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
+  var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'coché par défaut lors d\'un achat en ligne','inconnu':'par une voie que je n\'ai pas expressément choisie'};
+  var modeStr = s.mode_souscription && modeL[s.mode_souscription] ? ', '+modeL[s.mode_souscription] : '';
+
+  // Introduction adaptée par type de litige
+  var introParType = {
+    'abonnement_cache': 'À l\'occasion d\'un achat auprès de votre société'+dateSousc+modeStr+', un abonnement à '+montant+'€ par mois a été souscrit à mon insu, dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation — les modalités de cet abonnement n\'ayant pas été portées à ma connaissance de manière claire et compréhensible préalablement à la souscription.',
+    'resiliation_refus': 'J\'ai souscrit un abonnement auprès de votre société'+dateSousc+modeStr+', d\'un montant de '+montant+'€ par mois. Malgré mes demandes répétées de résiliation, votre société a refusé ou ignoré mes démarches, en violation de l\'article L.221-28 du Code de la consommation et de la loi Pouvoir d\'achat du 16 août 2022 imposant un droit de résiliation simplifié et sans obstacle.',
+    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' sans que j\'aie donné mon consentement explicite à une quelconque souscription, en violation du principe de consentement préalable et éclairé imposé par l\'article L.121-1 du Code de la consommation.',
+    'frais_non_autorises': 'Des frais de '+montant+'€ par mois ont été prélevés sur mon compte bancaire'+dateSousc+' sans autorisation préalable de ma part, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation — le consentement explicite du consommateur étant une condition légale impérative pour tout prélèvement.',
+    'autre': 'Une pratique commerciale de votre société'+dateSousc+' a conduit à des prélèvements de '+montant+'€ par mois dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
+  };
+  var intro = introParType[s.type_litige] || introParType['autre'];
+
+  // Rappel des démarches passées
+  var canalL = {'telephone':'par téléphone','email':'par email','espace_client_en_ligne':'via mon espace client en ligne','courrier':'par courrier postal','en_magasin':'sur le lieu de vente','chat':'via le chat de votre service client'};
+  var repL = {'refus_explicite':'a opposé un refus explicite à ma demande','pas_de_reponse':'n\'a pas répondu à ma demande dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue','autre':''};
+  var demarchesStr = '';
+  if(s.date_tentative1) {
+    var rep1 = s.reponse_tentative1 === 'autre' && s.autre_reponse1 ? s.autre_reponse1 : (repL[s.reponse_tentative1] || 'n\'a pas résolu ma demande');
+    demarchesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté votre service client '+(s.canal_tentative1 ? canalL[s.canal_tentative1] : '')+' afin de demander la résiliation de cet abonnement et le remboursement des sommes prélevées. Votre société '+rep1+'.';
+  }
+  if(s.date_tentative2) {
+    var rep2 = s.reponse_tentative2 === 'autre' && s.autre_reponse2 ? s.autre_reponse2 : (repL[s.reponse_tentative2] || 'n\'a toujours pas résolu ma demande');
+    demarchesStr += (demarchesStr ? ' ' : '')+'Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande '+(s.canal_tentative2 ? canalL[s.canal_tentative2] : '')+'. Votre société '+rep2+'.';
+  }
+  if(!demarchesStr) demarchesStr = 'Malgré mes démarches auprès de votre service client, ce litige n\'a pu être résolu à l\'amiable.';
 
   doc.setFont('helvetica');
   doc.setFontSize(11);
   doc.text(nomComplet, 20, 20);
   if(adresseComplete) doc.text(adresseComplete, 20, 27);
   doc.text(ville+', le '+date, 20, 34);
-  doc.text('', 20, 41);
   doc.text('À l\'attention du Service Juridique', 20, 48);
   doc.text(entreprise, 20, 55);
-  doc.text('', 20, 62);
   doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Mise en demeure — Résiliation d\'abonnement non consenti', 20, 69);
-  doc.text('et remboursement des sommes indûment prélevées', 20, 76);
+  doc.text('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 20, 69);
   doc.setFont('helvetica', 'normal');
-  doc.text('', 20, 83);
 
-  var dateSousc = s.date_souscription ? ' souscrit le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
-  var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'lors d\'un achat (ajout automatique)'};
-  var modeStr = s.mode_souscription ? ' ('+modeL[s.mode_souscription]+')' : '';
-
-  var intro = 'J\'ai été victime d\'un '+type_litige+' de la part de votre société'+dateSousc+modeStr+(montant ? ', pour un montant de '+montant+'€ par mois' : '')+'.';
-  var nbMois = s.nb_mois || '';
-  var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
-  var montantTotalStr = montantTotal > 0 ? ' (soit '+montantTotal.toFixed(2)+'€ au total pour '+nbMois+' mois)' : '';
-
-  var corps = 'Conformément à l\'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé'+montantTotalStr+' et de résilier immédiatement l\'abonnement concerné, sous 15 jours à compter de la réception du présent courrier.';
+  var y = 83;
+  // Exposé
   var lignesIntro = doc.splitTextToSize(intro, 170);
-  doc.text(lignesIntro, 20, 90);
-  var y = 90 + (lignesIntro.length * 7) + 10;
+  doc.text(lignesIntro, 20, y);
+  y += lignesIntro.length * 7 + 8;
+
+  // Démarches
+  var lignesDemarches = doc.splitTextToSize(demarchesStr, 170);
+  doc.text(lignesDemarches, 20, y);
+  y += lignesDemarches.length * 7 + 8;
+
+  // Mise en demeure formelle
+  var corps = 'En l\'absence de règlement amiable, je vous mets formellement en demeure, dans un délai de 15 jours à compter de la réception du présent courrier, de :\n- Procéder à la résiliation immédiate de l\'abonnement concerné.\n- Rembourser l\'intégralité des sommes indûment prélevées'+montantTotalStr+'.\n\nPassé ce délai, et sans réponse satisfaisante de votre part, je me réserve le droit de saisir la DGCCRF, le médiateur sectoriel compétent, et le cas échéant d\'engager toute procédure judiciaire appropriée.';
   var lignesCorps = doc.splitTextToSize(corps, 170);
   doc.text(lignesCorps, 20, y);
-  y = y + (lignesCorps.length * 7) + 10;
-  var suite = 'Dans l\'attente de votre réponse, je me réserve le droit de saisir la DGCCRF et le médiateur sectoriel compétent.';
-  var lignesSuite = doc.splitTextToSize(suite, 170);
-  doc.text(lignesSuite, 20, y);
-  y = y + (lignesSuite.length * 7) + 10;
+  y += lignesCorps.length * 7 + 14;
+
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y = y + 14;
+  y += 14;
   doc.text(nomComplet, 20, y);
 
   doc.save('mise-en-demeure-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
