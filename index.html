@@ -1482,34 +1482,38 @@ function genererPDFMediateur() {
   var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
   var montantTotalStr = montantTotal > 0 ? montantTotal.toFixed(2)+'€' : '';
 
-  var dateSousc = s.date_souscription ? ' le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
-  var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'coché par défaut lors d\'un achat en ligne','inconnu':'par une voie non explicitement choisie'};
-  var modeStr = s.mode_souscription && modeL[s.mode_souscription] ? ', '+modeL[s.mode_souscription] : '';
+  var modeLS = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'coché par défaut lors d\'un achat en ligne','inconnu':'par une voie non explicitement choisie'};
+  var dateSStr = s.date_souscription ? new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
+  var modeValS = s.mode_souscription && modeLS[s.mode_souscription] ? modeLS[s.mode_souscription] : '';
+  var circonstancesS = '';
+  if(dateSStr && modeValS) circonstancesS = ' le '+dateSStr+', '+modeValS+',';
+  else if(dateSStr) circonstancesS = ' le '+dateSStr+',';
+  else if(modeValS) circonstancesS = ' '+modeValS+',';
 
   // Exposé des faits adapté par type de litige — qualification assurance affinitaire
   var faitParType = {
-    'abonnement_cache': 'À l\'occasion d\'un achat auprès de la société '+entreprise+dateSousc+modeStr+', un contrat d\'assurance affinitaire à '+montant+'€ par mois a été souscrit dans des conditions ne permettant pas un consentement libre et éclairé au sens des articles L.111-1 et L.121-1 du Code de la consommation. Les caractéristiques essentielles de ce contrat — notamment ses conditions de résiliation — ne m\'ont pas été communiquées de manière claire et compréhensible préalablement à la souscription. Je relève en outre que cette assurance fait doublon avec la garantie légale de conformité de deux ans imposée par les articles L.217-1 et suivants du Code de la consommation, ce qui constitue une pratique commerciale trompeuse par omission au sens de l\'article L.121-2 du même code.',
-    'resiliation_refus': 'J\'ai souscrit'+dateSousc+modeStr+' un contrat d\'assurance affinitaire auprès de la société '+entreprise+', d\'un montant de '+montant+'€ par mois, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription. Ce contrat n\'a pu être résilié malgré mes demandes répétées, en violation de l\'article L.113-12 du Code des assurances, de la loi Pouvoir d\'achat du 16 août 2022, et des dispositions relatives aux assurances affinitaires issues de la directive européenne sur la distribution d\'assurances (DDA, 2018).',
-    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' sans que j\'aie donné mon consentement explicite et éclairé à la souscription d\'un quelconque contrat, en violation des articles L.111-1 et L.121-1 du Code de la consommation et de la réglementation applicable aux assurances affinitaires.',
-    'frais_non_autorises': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' sans autorisation préalable de ma part et sans information précontractuelle suffisante, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation.',
-    'autre': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+dateSousc+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
+    'abonnement_cache': 'À l\'occasion d\'un achat auprès de la société '+entreprise+circonstancesS+' un contrat d\'assurance affinitaire à '+montant+'€ par mois a été souscrit dans des conditions ne permettant pas un consentement libre et éclairé au sens des articles L.111-1 et L.121-1 du Code de la consommation. Les caractéristiques essentielles de ce contrat — notamment ses conditions de résiliation — ne m\'ont pas été communiquées de manière claire et compréhensible préalablement à la souscription. Je relève en outre que cette assurance fait doublon avec la garantie légale de conformité de deux ans imposée par les articles L.217-1 et suivants du Code de la consommation, ce qui constitue une pratique commerciale trompeuse par omission au sens de l\'article L.121-2 du même code.',
+    'resiliation_refus': 'J\'ai souscrit'+circonstancesS+' un contrat d\'assurance affinitaire auprès de la société '+entreprise+', d\'un montant de '+montant+'€ par mois, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription. Ce contrat n\'a pu être résilié malgré mes demandes répétées, en violation de l\'article L.113-12 du Code des assurances, de la loi Pouvoir d\'achat du 16 août 2022, et des dispositions relatives aux assurances affinitaires issues de la directive européenne sur la distribution d\'assurances (DDA, 2018).',
+    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+(dateSStr ? ' à compter du '+dateSStr : '')+' sans que j\'aie donné mon consentement explicite et éclairé à la souscription d\'un quelconque contrat, en violation des articles L.111-1 et L.121-1 du Code de la consommation et de la réglementation applicable aux assurances affinitaires.',
+    'frais_non_autorises': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+(dateSStr ? ' à compter du '+dateSStr : '')+' sans autorisation préalable de ma part et sans information précontractuelle suffisante, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation.',
+    'autre': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire par la société '+entreprise+(dateSStr ? ' à compter du '+dateSStr : '')+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
   };
   var faits = faitParType[s.type_litige] || faitParType['autre'];
   if(s.ref_contrat) faits += ' Références du contrat : '+s.ref_contrat+'.';
 
-  // Démarches amiables — bug corrigé : texte "Autre" intégré proprement dans la phrase
+  // Démarches amiables — citation verbatim introduite par "en substance"
   var canalL = {'telephone':'par téléphone','email':'par email','espace_client_en_ligne':'via mon espace client en ligne','courrier':'par courrier postal','en_magasin':'sur le lieu de vente','chat':'via le chat du service client'};
   var repL = {'refus_explicite':'a opposé un refus explicite à ma demande','pas_de_reponse':'n\'a pas répondu dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue'};
   var tentativesStr = '';
   if(s.date_tentative1) {
     var r1 = (s.reponse_tentative1 === 'autre' && s.autre_reponse1)
-      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse1+' »'
+      ? 'm\'a apporté, en substance, la réponse suivante : « '+s.autre_reponse1+' »'
       : (repL[s.reponse_tentative1] || 'n\'a pas donné suite à ma demande');
     tentativesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté le service client de la société '+entreprise+(s.canal_tentative1 ? ' '+canalL[s.canal_tentative1] : '')+' afin de demander la résiliation immédiate du contrat et le remboursement des sommes indûment prélevées. La société '+r1+'.';
   }
   if(s.date_tentative2) {
     var r2 = (s.reponse_tentative2 === 'autre' && s.autre_reponse2)
-      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse2+' »'
+      ? 'm\'a apporté, en substance, la réponse suivante : « '+s.autre_reponse2+' »'
       : (repL[s.reponse_tentative2] || 'n\'a toujours pas donné suite à ma demande');
     tentativesStr += (tentativesStr ? ' ' : '')+'Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande'+(s.canal_tentative2 ? ' '+canalL[s.canal_tentative2] : '')+'. La société '+r2+'.';
   }
@@ -1584,7 +1588,8 @@ function genererPDFBanque() {
   var entreprise = s.entreprise || 'l\'entreprise';
   var montant = s.montant_mensuel || s.montant || '';
   var date = new Date().toLocaleDateString('fr-FR');
-  var typeContrat = s.type_litige === 'abonnement_cache' ? 'contrat d\'assurance affinitaire' : 'prélèvement';
+  var typeContratL = {'abonnement_cache':'contrat d\'assurance affinitaire','resiliation_refus':'contrat d\'assurance affinitaire','prelevement_inconnu':'contrat','frais_non_autorises':'contrat','autre':'contrat'};
+  var typeContrat = typeContratL[s.type_litige] || 'contrat';
 
   doc.setFont('helvetica');
   doc.setFontSize(11);
@@ -1608,12 +1613,12 @@ function genererPDFBanque() {
   doc.text(lignesFondement, 20, y);
   y += lignesFondement.length * 7 + 7;
 
-  var demande = 'Je vous demande en conséquence de bien vouloir :\n- Bloquer sans délai tout futur prélèvement SEPA émanant du créancier '+entreprise+'.\n- Me communiquer l\'identifiant créancier SEPA (ICS) associé à ce prélèvement ainsi qu\'une copie de la ligne correspondante sur mon relevé de compte, afin de me permettre d\'identifier formellement le créancier dans mes recours en cours.\n- Me confirmer par écrit la prise en compte de cette révocation dans les meilleurs délais.';
+  var demande = 'Je vous demande en conséquence de bien vouloir :\n- Bloquer sans délai tout futur prélèvement SEPA émanant du créancier '+entreprise+'.\n- Me confirmer par écrit la prise en compte de cette révocation dans les meilleurs délais.';
   var lignesDemande = doc.splitTextToSize(demande, 170);
   doc.text(lignesDemande, 20, y);
   y += lignesDemande.length * 7 + 7;
 
-  var note = 'Je précise que la demande de remboursement des prélèvements indûment effectués fait l\'objet d\'un recours distinct directement auprès de la société '+entreprise+', ainsi que d\'une saisine du médiateur de la consommation compétent.';
+  var note = 'Je précise que la demande de remboursement des sommes indûment prélevées fait l\'objet d\'un recours distinct directement auprès de la société '+entreprise+', ainsi que d\'une saisine du médiateur de la consommation compétent. Je joins à ce courrier une copie de mon relevé bancaire faisant apparaître les prélèvements contestés.';
   var lignesNote = doc.splitTextToSize(note, 170);
   doc.text(lignesNote, 20, y);
   y += lignesNote.length * 7 + 14;
@@ -1640,33 +1645,38 @@ function genererPDFMiseEnDemeure() {
   var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
   var montantTotalStr = montantTotal > 0 ? ' (soit '+montantTotal.toFixed(2)+'€ au total pour '+nbMois+' mois)' : '';
 
-  var dateSousc = s.date_souscription ? ' le '+new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
   var modeL = {'en_magasin':'en magasin','en_ligne':'en ligne','par_telephone':'par téléphone','lors_achat':'coché par défaut lors d\'un achat en ligne','inconnu':'par une voie que je n\'ai pas expressément choisie'};
-  var modeStr = s.mode_souscription && modeL[s.mode_souscription] ? ', '+modeL[s.mode_souscription] : '';
+  var dateStr = s.date_souscription ? new Date(s.date_souscription).toLocaleDateString('fr-FR') : '';
+  var modeVal = s.mode_souscription && modeL[s.mode_souscription] ? modeL[s.mode_souscription] : '';
+  // Construit "le JJ/MM/AAAA, en magasin" proprement avec virgules bien placées
+  var circonstances = '';
+  if(dateStr && modeVal) circonstances = ' le '+dateStr+', '+modeVal+',';
+  else if(dateStr) circonstances = ' le '+dateStr+',';
+  else if(modeVal) circonstances = ' '+modeVal+',';
 
   // Introduction adaptée par type de litige — qualification contrat assurance affinitaire
   var introParType = {
-    'abonnement_cache': 'À l\'occasion d\'un achat auprès de votre société'+dateSousc+modeStr+', un contrat d\'assurance affinitaire à '+montant+'€ par mois a été souscrit dans des conditions ne permettant pas un consentement libre et éclairé au sens des articles L.111-1 et L.121-1 du Code de la consommation — les caractéristiques essentielles de ce contrat, notamment ses conditions de résiliation, n\'ayant pas été portées à ma connaissance de manière claire et compréhensible préalablement à la souscription. Je relève en outre que cette assurance fait doublon avec la garantie légale de conformité de deux ans imposée par les articles L.217-1 et suivants du Code de la consommation, ce qui constitue une pratique commerciale trompeuse par omission.',
-    'resiliation_refus': 'J\'ai souscrit'+dateSousc+modeStr+' un contrat d\'assurance affinitaire auprès de votre société, d\'un montant de '+montant+'€ par mois, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription. Malgré mes demandes répétées de résiliation, votre société a refusé ou ignoré mes démarches, en violation de l\'article L.221-28 du Code de la consommation, de la loi Pouvoir d\'achat du 16 août 2022 imposant un droit de résiliation simplifié, et de l\'article L.113-12 du Code des assurances garantissant le droit de résiliation à l\'échéance annuelle.',
-    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' sans que j\'aie donné mon consentement explicite et éclairé à la souscription d\'un quelconque contrat, en violation du principe de consentement préalable imposé par l\'article L.121-1 du Code de la consommation et par la réglementation applicable aux assurances affinitaires.',
-    'frais_non_autorises': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' sans autorisation préalable de ma part au titre d\'un contrat dont l\'existence et les caractéristiques ne m\'ont pas été communiquées, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation.',
-    'autre': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+dateSousc+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
+    'abonnement_cache': 'À l\'occasion d\'un achat auprès de votre société'+circonstances+', un contrat d\'assurance affinitaire à '+montant+'€ par mois a été souscrit dans des conditions ne permettant pas un consentement libre et éclairé au sens des articles L.111-1 et L.121-1 du Code de la consommation — les caractéristiques essentielles de ce contrat, notamment ses conditions de résiliation, n\'ayant pas été portées à ma connaissance de manière claire et compréhensible préalablement à la souscription. Je relève en outre que cette assurance fait doublon avec la garantie légale de conformité de deux ans imposée par les articles L.217-1 et suivants du Code de la consommation, ce qui constitue une pratique commerciale trompeuse par omission au sens de l\'article L.121-2 du même code.',
+    'resiliation_refus': 'J\'ai souscrit'+circonstances+' un contrat d\'assurance affinitaire auprès de votre société, d\'un montant de '+montant+'€ par mois, dont les conditions de résiliation ne m\'ont pas été clairement communiquées lors de la souscription. Malgré mes demandes répétées de résiliation, votre société a refusé ou ignoré mes démarches, en violation de l\'article L.221-28 du Code de la consommation, de la loi Pouvoir d\'achat du 16 août 2022 imposant un droit de résiliation simplifié, et de l\'article L.113-12 du Code des assurances garantissant le droit de résiliation à l\'échéance annuelle.',
+    'prelevement_inconnu': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+(dateStr ? ' à compter du '+dateStr : '')+' sans que j\'aie donné mon consentement explicite et éclairé à la souscription d\'un quelconque contrat, en violation du principe de consentement préalable imposé par l\'article L.121-1 du Code de la consommation et par la réglementation applicable aux assurances affinitaires.',
+    'frais_non_autorises': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+(dateStr ? ' à compter du '+dateStr : '')+' sans autorisation préalable de ma part au titre d\'un contrat dont l\'existence et les caractéristiques ne m\'ont pas été communiquées, constitutifs d\'une pratique commerciale abusive au sens de l\'article L.121-1 du Code de la consommation.',
+    'autre': 'Des prélèvements de '+montant+'€ par mois ont été opérés sur mon compte bancaire'+(dateStr ? ' à compter du '+dateStr : '')+' dans des conditions constitutives d\'une information consommateur insuffisante et abusive au sens des articles L.111-1 et L.121-1 du Code de la consommation.'
   };
   var intro = introParType[s.type_litige] || introParType['autre'];
 
-  // Rappel des démarches — bug corrigé : texte "Autre" intégré proprement dans la phrase
+  // Rappel des démarches — citation verbatim introduite par "en substance"
   var canalL = {'telephone':'par téléphone','email':'par email','espace_client_en_ligne':'via mon espace client en ligne','courrier':'par courrier postal','en_magasin':'sur le lieu de vente','chat':'via le chat de votre service client'};
   var repL = {'refus_explicite':'a opposé un refus explicite à ma demande','pas_de_reponse':'n\'a pas répondu à ma demande dans un délai raisonnable','promesse_non_tenue':'a formulé une promesse qui n\'a pas été tenue'};
   var demarchesStr = '';
   if(s.date_tentative1) {
     var rep1 = (s.reponse_tentative1 === 'autre' && s.autre_reponse1)
-      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse1+' »'
+      ? 'm\'a apporté, en substance, la réponse suivante : « '+s.autre_reponse1+' »'
       : (repL[s.reponse_tentative1] || 'n\'a pas résolu ma demande');
     demarchesStr = 'Le '+new Date(s.date_tentative1).toLocaleDateString('fr-FR')+', j\'ai contacté votre service client '+(s.canal_tentative1 ? canalL[s.canal_tentative1] : '')+' afin de demander la résiliation immédiate de ce contrat et le remboursement des sommes indûment prélevées. Votre société '+rep1+'.';
   }
   if(s.date_tentative2) {
     var rep2 = (s.reponse_tentative2 === 'autre' && s.autre_reponse2)
-      ? 'm\'a apporté la réponse suivante : « '+s.autre_reponse2+' »'
+      ? 'm\'a apporté, en substance, la réponse suivante : « '+s.autre_reponse2+' »'
       : (repL[s.reponse_tentative2] || 'n\'a toujours pas résolu ma demande');
     demarchesStr += (demarchesStr ? ' ' : '')+'Le '+new Date(s.date_tentative2).toLocaleDateString('fr-FR')+', j\'ai renouvelé ma demande '+(s.canal_tentative2 ? canalL[s.canal_tentative2] : '')+'. Votre société '+rep2+'.';
   }
@@ -1676,14 +1686,16 @@ function genererPDFMiseEnDemeure() {
   doc.setFontSize(11);
   doc.text(nomComplet, 20, 20);
   if(adresseComplete) doc.text(adresseComplete, 20, 27);
-  doc.text(ville+', le '+date, 20, 34);
-  doc.text('À l\'attention du Service Juridique', 20, 48);
-  doc.text(entreprise, 20, 55);
+  if(s.telephone) doc.text(s.telephone, 20, 34);
+  doc.text(ville+', le '+date, 20, s.telephone ? 41 : 34);
+  doc.text('À l\'attention du Service Juridique', 20, s.telephone ? 55 : 48);
+  doc.text(entreprise, 20, s.telephone ? 62 : 55);
   doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 20, 69);
+  var yObjet = s.telephone ? 76 : 69;
+  doc.text('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 20, yObjet);
   doc.setFont('helvetica', 'normal');
 
-  var y = 83;
+  var y = yObjet + 14;
   // Exposé
   var lignesIntro = doc.splitTextToSize(intro, 170);
   doc.text(lignesIntro, 20, y);
