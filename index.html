@@ -837,10 +837,11 @@
     </div>
 
     <!-- Bouton final -->
-    <button class="btn-acceder-dossier" id="btnAccederDossier" onclick="afficher('vueDashboard')" disabled>
-      <span>Accéder à mon dossier complet</span>
-      <span style="font-size:18px">→</span>
+    <button class="btn-acceder-dossier" id="btnAccederDossier" onclick="envoyerDossierEtAcceder()" disabled>
+      <span id="btnAccederLabel">Accéder à mon dossier complet</span>
+      <span style="font-size:18px" id="btnAccederArrow">→</span>
     </button>
+    <div id="envoyerStatus" style="display:none;text-align:center;font-size:13px;color:var(--muted);margin-top:10px;line-height:1.6"></div>
     <div class="compl-footer-note">Votre dossier est enregistré. Complétez les blocs à votre rythme — vous pouvez revenir à tout moment.</div>
   </div>
 </div>
@@ -1332,6 +1333,89 @@ function doAction(n) {
 function fmtCarte(input){
   var v=input.value.replace(/\D/g,'').substring(0,16);
   input.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+// ===== ENVOI EMAIL DOSSIER COMPLET =====
+var SUPABASE_DOSSIER_PDFS_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/send-dossier-pdfs';
+
+function pdfToBase64(genererFn) {
+  var { jsPDF } = window.jspdf;
+  var originalSave = jsPDF.prototype.save;
+  var base64Result = null;
+  jsPDF.prototype.save = function(filename) {
+    base64Result = this.output('datauristring').split(',')[1];
+  };
+  try { genererFn(); } catch(e) { console.log('PDF gen error:', e); }
+  jsPDF.prototype.save = originalSave;
+  return base64Result;
+}
+
+async function envoyerDossierEtAcceder() {
+  var btn = document.getElementById('btnAccederDossier');
+  var label = document.getElementById('btnAccederLabel');
+  var arrow = document.getElementById('btnAccederArrow');
+  var status = document.getElementById('envoyerStatus');
+
+  btn.disabled = true;
+  label.textContent = 'Génération des documents…';
+  arrow.textContent = '⏳';
+  status.style.display = 'block';
+  status.style.color = 'var(--muted)';
+  status.textContent = 'Vos 4 documents sont en cours de génération — cela prend quelques secondes.';
+
+  try {
+    var b64MiseEnDemeure = pdfToBase64(genererPDFMiseEnDemeure);
+    var b64Banque        = pdfToBase64(genererPDFBanque);
+    var b64Mediateur     = pdfToBase64(genererPDFMediateur);
+    var b64SignalConso   = pdfToBase64(genererPDFSignalConso);
+
+    var s = getDossierComplet();
+    var entreprise = s.entreprise || 'l\'entreprise';
+    var emailDest = s.email_compl || s.email || '';
+    var lienSignalConso = 'https://signal.conso.gouv.fr/fr/problem?companyName='+encodeURIComponent(entreprise);
+
+    label.textContent = 'Envoi de votre dossier par email…';
+    status.textContent = 'Documents générés ✅ — envoi en cours à '+emailDest+' …';
+
+    var response = await fetch(SUPABASE_DOSSIER_PDFS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email:               emailDest,
+        prenom:              s.prenom || '',
+        nom:                 s.nom_compl || s.nom || '',
+        entreprise:          entreprise,
+        pdf_mise_en_demeure: b64MiseEnDemeure,
+        pdf_banque:          b64Banque,
+        pdf_mediateur:       b64Mediateur,
+        pdf_signal_conso:    b64SignalConso,
+        lien_signal_conso:   lienSignalConso
+      })
+    });
+
+    var result = await response.json();
+
+    if(response.ok && result.success) {
+      label.textContent = 'Accéder à mon dossier complet';
+      arrow.textContent = '→';
+      btn.disabled = false;
+      btn.onclick = function(){ afficher('vueDashboard'); };
+      status.innerHTML = '✅ <strong>Email envoyé !</strong> Vos 4 documents ont été envoyés à <strong>'+emailDest+'</strong>.<br>Vérifiez votre boîte (et vos spams si besoin).';
+      status.style.color = '#2E7D52';
+      setTimeout(function(){ afficher('vueDashboard'); }, 2500);
+    } else {
+      throw new Error(result.error || 'Erreur serveur');
+    }
+
+  } catch(err) {
+    console.log('Erreur envoi dossier:', err);
+    label.textContent = 'Accéder à mon dossier complet';
+    arrow.textContent = '→';
+    btn.disabled = false;
+    btn.onclick = function(){ afficher('vueDashboard'); };
+    status.innerHTML = '⚠️ L\'envoi email a échoué — vous pouvez quand même accéder à votre dossier et télécharger vos documents manuellement.';
+    status.style.color = '#D97706';
+  }
 }
 
 // ===== BASE ADRESSES SERVICES JURIDIQUES GRANDES ENSEIGNES =====
