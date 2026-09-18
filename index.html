@@ -1684,18 +1684,22 @@ function genererPDFMiseEnDemeure() {
 
   doc.setFont('helvetica');
   doc.setFontSize(11);
-  doc.text(nomComplet, 20, 20);
-  if(adresseComplete) doc.text(adresseComplete, 20, 27);
-  if(s.telephone) doc.text(s.telephone, 20, 34);
-  doc.text(ville+', le '+date, 20, s.telephone ? 41 : 34);
-  doc.text('À l\'attention du Service Juridique', 20, s.telephone ? 55 : 48);
-  doc.text(entreprise, 20, s.telephone ? 62 : 55);
+  // En-tête expéditeur — lignes dynamiques selon présence tél et email
+  var yH = 20;
+  doc.text(nomComplet, 20, yH); yH += 7;
+  if(adresseComplete){ doc.text(adresseComplete, 20, yH); yH += 7; }
+  if(s.telephone){ doc.text('Tél. : '+s.telephone, 20, yH); yH += 7; }
+  var emailVal = s.email_compl || s.email || '';
+  if(emailVal){ doc.text('Email : '+emailVal, 20, yH); yH += 7; }
+  yH += 3; // petit espace avant la date
+  doc.text(ville+', le '+date, 20, yH); yH += 14;
+  doc.text('À l\'attention du Service Juridique', 20, yH); yH += 7;
+  doc.text(entreprise, 20, yH); yH += 14;
   doc.setFont('helvetica', 'bold');
-  var yObjet = s.telephone ? 76 : 69;
-  doc.text('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 20, yObjet);
+  doc.text('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 20, yH);
   doc.setFont('helvetica', 'normal');
 
-  var y = yObjet + 14;
+  var y = yH + 14;
   // Exposé
   var lignesIntro = doc.splitTextToSize(intro, 170);
   doc.text(lignesIntro, 20, y);
