@@ -688,6 +688,20 @@
             <option value="inconnu">Je ne sais pas comment cet abonnement a été souscrit</option>
           </select>
         </div>
+
+        <div class="compl-field" style="margin-top:4px">
+          <label>Adresse du service juridique de l'entreprise</label>
+          <div id="adresseDestPrefill" style="display:none;background:#F0FBF4;border:1px solid #C6E8D3;border-radius:8px;padding:10px 14px;font-size:13px;color:#1B5E3A;margin-bottom:8px">
+            ✅ Adresse identifiée automatiquement — vous pouvez la modifier si nécessaire.
+          </div>
+          <input type="text" id="cp_dest_ligne1" placeholder="Nom / Service juridique" oninput="checkCompl2()" style="margin-bottom:8px">
+          <input type="text" id="cp_dest_adresse" placeholder="Adresse (numéro et rue)" oninput="checkCompl2()" style="margin-bottom:8px">
+          <div class="compl-field-row" style="margin-bottom:0">
+            <div><input type="text" id="cp_dest_cp" placeholder="Code postal" maxlength="10" oninput="checkCompl2()"></div>
+            <div><input type="text" id="cp_dest_ville" placeholder="Ville" oninput="checkCompl2()"></div>
+          </div>
+          <div class="hint">Cette adresse figurera sur la mise en demeure. Vous êtes responsable de son exactitude.</div>
+        </div>
         <button class="btn-valider-bloc" id="cbtn2" onclick="validerBloc(2)" disabled>Valider →</button>
       </div>
     </div>
@@ -1296,7 +1310,57 @@ function fmtCarte(input){
   input.value=v.replace(/(.{4})/g,'$1 ').trim();
 }
 
-// ===== FORMULAIRE COMPLEMENTAIRE =====
+// ===== BASE ADRESSES SERVICES JURIDIQUES GRANDES ENSEIGNES =====
+var adressesEnseignes = {
+  'fnac':       {ligne1:'Fnac — Service Juridique', adresse:'9 rue des Bateaux-Lavoirs', cp:'94768', ville:'Ivry-sur-Seine Cedex'},
+  'darty':      {ligne1:'Darty — Service Juridique', adresse:'9 rue des Bateaux-Lavoirs', cp:'94768', ville:'Ivry-sur-Seine Cedex'},
+  'sfr':        {ligne1:'SFR — Service Juridique', adresse:'16 rue du Général Alain de Boissieu', cp:'75015', ville:'Paris'},
+  'orange':     {ligne1:'Orange — Direction Juridique', adresse:'78 rue Olivier de Serres', cp:'75015', ville:'Paris'},
+  'free':       {ligne1:'Free — Service Juridique', adresse:'8 rue de la Ville-l\'Évêque', cp:'75008', ville:'Paris'},
+  'bouygues':   {ligne1:'Bouygues Telecom — Service Juridique', adresse:'13-15 avenue du Maréchal Juin', cp:'92360', ville:'Meudon-la-Forêt'},
+  'amazon':     {ligne1:'Amazon France Logistique SAS — Service Juridique', adresse:'67 boulevard du Général Leclerc', cp:'92110', ville:'Clichy'},
+  'netflix':    {ligne1:'Netflix International BV — Service Juridique', adresse:'Herengracht 597', cp:'1017 CE', ville:'Amsterdam (Pays-Bas)'},
+  'spotify':    {ligne1:'Spotify AB — Service Juridique', adresse:'Regeringsgatan 19', cp:'111 53', ville:'Stockholm (Suède)'},
+  'apple':      {ligne1:'Apple Distribution International — Service Juridique', adresse:'Hollyhill Industrial Estate', cp:'', ville:'Cork, Irlande'},
+  'google':     {ligne1:'Google France SARL — Service Juridique', adresse:'8 rue de Londres', cp:'75009', ville:'Paris'},
+  'canal':      {ligne1:'Canal+ — Direction Juridique', adresse:'1 place du Spectacle', cp:'92863', ville:'Issy-les-Moulineaux Cedex 9'},
+  'edf':        {ligne1:'EDF — Direction Juridique', adresse:'22-30 avenue de Wagram', cp:'75382', ville:'Paris Cedex 08'},
+  'engie':      {ligne1:'Engie — Direction Juridique', adresse:'1 place Samuel de Champlain', cp:'92400', ville:'Courbevoie'},
+  'sncf':       {ligne1:'SNCF — Direction Juridique', adresse:'2 place aux Étoiles', cp:'93633', ville:'La Plaine-Saint-Denis Cedex'},
+  'leclerc':    {ligne1:'E.Leclerc — Service Juridique (siège)', adresse:'26 quai Marcel Boyer', cp:'94200', ville:'Ivry-sur-Seine'},
+  'carrefour':  {ligne1:'Carrefour France — Direction Juridique', adresse:'93 avenue de Paris', cp:'91300', ville:'Massy'},
+  'boulanger':  {ligne1:'Boulanger — Service Juridique', adresse:'Rue du Maréchal de Lattre de Tassigny', cp:'59810', ville:'Lesquin'},
+  'amazon prime':{ligne1:'Amazon France Logistique SAS — Service Juridique', adresse:'67 boulevard du Général Leclerc', cp:'92110', ville:'Clichy'},
+  'playstation':{ligne1:'Sony Interactive Entertainment Europe — Legal Dept.', adresse:'10 Great Marlborough Street', cp:'W1F 7LP', ville:'Londres (Royaume-Uni)'},
+  'xbox':       {ligne1:'Microsoft France — Direction Juridique', adresse:'39 quai du Président Roosevelt', cp:'92130', ville:'Issy-les-Moulineaux'},
+};
+
+function prefillAdresseDestinataire() {
+  var entreprise = (document.getElementById('f_entreprise') ? document.getElementById('f_entreprise').value : '') || '';
+  var key = entreprise.toLowerCase().trim();
+  var found = null;
+  // Cherche une correspondance dans la base
+  for(var k in adressesEnseignes) {
+    if(key.includes(k) || k.includes(key)) { found = adressesEnseignes[k]; break; }
+  }
+  if(found) {
+    document.getElementById('cp_dest_ligne1').value = found.ligne1;
+    document.getElementById('cp_dest_adresse').value = found.adresse;
+    document.getElementById('cp_dest_cp').value = found.cp;
+    document.getElementById('cp_dest_ville').value = found.ville;
+    document.getElementById('adresseDestPrefill').style.display = 'block';
+  } else {
+    document.getElementById('adresseDestPrefill').style.display = 'none';
+  }
+  checkCompl2();
+}
+
+// Appeler le pré-remplissage à l'ouverture du bloc 2
+var _origToggleBloc = toggleBloc;
+function toggleBloc(n) {
+  _origToggleBloc(n);
+  if(n === 2) setTimeout(prefillAdresseDestinataire, 100);
+}
 var canalSelected = {1: null, 2: null};
 var blocsValides = {1:false, 2:false, 3:false, 4:false, 5:false};
 var nbBlocsValides = 0;
@@ -1351,6 +1415,10 @@ function sauvegarderDossierCompl() {
     montant_mensuel: document.getElementById('cp_montant_mensuel').value,
     ref_contrat: document.getElementById('cp_ref_contrat').value,
     mode_souscription: document.getElementById('cp_mode_souscription').value,
+    dest_ligne1: document.getElementById('cp_dest_ligne1').value,
+    dest_adresse: document.getElementById('cp_dest_adresse').value,
+    dest_cp: document.getElementById('cp_dest_cp').value,
+    dest_ville: document.getElementById('cp_dest_ville').value,
     date_tentative1: document.getElementById('cp_date_tentative1').value,
     canal_tentative1: canalSelected[1],
     reponse_tentative1: document.getElementById('cp_reponse1').value,
@@ -1400,11 +1468,15 @@ function checkCompl2() {
   var d = document.getElementById('cp_date_souscription').value;
   var m = document.getElementById('cp_montant_mensuel').value;
   var mo = document.getElementById('cp_mode_souscription').value;
-  var ok = d && m>0 && mo;
+  var l1 = document.getElementById('cp_dest_ligne1').value.trim();
+  var adr = document.getElementById('cp_dest_adresse').value.trim();
+  var cp = document.getElementById('cp_dest_cp').value.trim();
+  var vi = document.getElementById('cp_dest_ville').value.trim();
+  var ok = d && m>0 && mo && l1.length>2 && adr.length>3 && cp.length>2 && vi.length>1;
   document.getElementById('cbtn2').disabled = !ok;
   if(ok){
-    var modeL = {'en_magasin':'En magasin','en_ligne':'En ligne','par_telephone':'Par téléphone','lors_achat':'Ajouté lors d\'un achat'};
-    document.getElementById('cbresum2').textContent = m+'€/mois · '+modeL[mo]+' · depuis le '+new Date(d).toLocaleDateString('fr-FR');
+    var modeL = {'en_magasin':'En magasin','en_ligne':'En ligne','par_telephone':'Par téléphone','lors_achat':'Coché par défaut','inconnu':'Voie inconnue'};
+    document.getElementById('cbresum2').textContent = m+'€/mois · '+( modeL[mo]||mo)+' · depuis le '+new Date(d).toLocaleDateString('fr-FR');
   }
 }
 
@@ -1694,7 +1766,15 @@ function genererPDFMiseEnDemeure() {
   yH += 3; // petit espace avant la date
   doc.text(ville+', le '+date, 20, yH); yH += 14;
   doc.text('À l\'attention du Service Juridique', 20, yH); yH += 7;
-  doc.text(entreprise, 20, yH); yH += 14;
+  // Adresse destinataire saisie par l'utilisateur
+  var destLigne1 = s.dest_ligne1 || entreprise+' — Service Juridique';
+  var destAdresse = s.dest_adresse || '';
+  var destCp = s.dest_cp || '';
+  var destVille = s.dest_ville || '';
+  doc.text(destLigne1, 20, yH); yH += 7;
+  if(destAdresse) { doc.text(destAdresse, 20, yH); yH += 7; }
+  if(destCp || destVille) { doc.text((destCp+' '+destVille).trim(), 20, yH); yH += 7; }
+  yH += 7; // espace avant objet
   doc.setFont('helvetica', 'bold');
   doc.text('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 20, yH);
   doc.setFont('helvetica', 'normal');
