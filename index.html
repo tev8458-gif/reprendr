@@ -880,8 +880,11 @@
           <div class="action-body">
             <div class="action-titre">Signalement DGCCRF — SignalConso</div>
             <div class="action-badge gratuit">Gratuit</div>
-            <div class="action-desc">Votre signalement est pré-rempli sur SignalConso.gouv.fr. Un clic le soumet officiellement à la DGCCRF — cela crée un dossier administratif et renforce considérablement votre position.</div>
-            <button class="btn-action primary" id="ab2" onclick="doAction(2)" disabled>Soumettre le signalement →</button>
+            <div class="action-desc">Votre fiche de signalement est préparée avec le texte à copier-coller sur SignalConso.gouv.fr. Téléchargez d'abord le guide, puis ouvrez SignalConso pour soumettre votre signalement officiel.</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn-action secondary" id="ab2pdf" onclick="genererPDFSignalConso();doAction(2)" disabled>📄 Télécharger le guide SignalConso →</button>
+              <button class="btn-action primary" id="ab2link" onclick="ouvrirSignalConso()" disabled style="background:#D97706">🏛️ Ouvrir SignalConso →</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1272,6 +1275,13 @@ if(window.location.search.includes('paiement=ok')){
   afficher('vueComplementaire');
 }
 
+function ouvrirSignalConso() {
+  var s = getDossierComplet();
+  var entreprise = s.entreprise || '';
+  var lien = 'https://signal.conso.gouv.fr/fr/problem?companyName='+encodeURIComponent(entreprise);
+  window.open(lien, '_blank');
+}
+
 function doAction(n) {
   try {
     var colonnes = {1:'action_mise_en_demeure', 2:'action_dgccrf', 3:'action_banque', 4:'action_mediateur'};
@@ -1284,9 +1294,18 @@ function doAction(n) {
         body:JSON.stringify(patch)
       });
     }
-    document.getElementById('ab'+n).textContent='✓ Effectué';
-    document.getElementById('ab'+n).className='btn-action done';
-    document.getElementById('ab'+n).disabled=true;
+    // Gestion spéciale action 2 (deux boutons)
+    if(n === 2) {
+      document.getElementById('ab2pdf').textContent='✓ Guide téléchargé';
+      document.getElementById('ab2pdf').className='btn-action done';
+      document.getElementById('ab2pdf').disabled=true;
+      document.getElementById('ab2link').disabled=false;
+      document.getElementById('ab2link').style.opacity='1';
+    } else {
+      document.getElementById('ab'+n).textContent='✓ Effectué';
+      document.getElementById('ab'+n).className='btn-action done';
+      document.getElementById('ab'+n).disabled=true;
+    }
     document.getElementById('ac'+n).className='action-card done';
     document.getElementById('an'+n).className='action-num done';
     document.getElementById('an'+n).textContent='✓';
@@ -1294,12 +1313,17 @@ function doAction(n) {
     var pct=Math.round((nbActions/4)*100);
     document.getElementById('pgFill').style.width=pct+'%';
     document.getElementById('pgLabel').textContent=nbActions+' action'+(nbActions>1?'s':'')+' sur 4 effectuée'+(nbActions>1?'s':'');
-    var s=n+1;
-    if(s<=4){
-      document.getElementById('ac'+s).className='action-card active';
-      document.getElementById('an'+s).className='action-num active';
-      document.getElementById('ab'+s).disabled=false;
-      document.getElementById('ab'+s).style.opacity='1';
+    var suivant=n+1;
+    if(suivant<=4){
+      document.getElementById('ac'+suivant).className='action-card active';
+      document.getElementById('an'+suivant).className='action-num active';
+      if(suivant===2){
+        document.getElementById('ab2pdf').disabled=false;
+        document.getElementById('ab2pdf').style.opacity='1';
+      } else {
+        document.getElementById('ab'+suivant).disabled=false;
+        document.getElementById('ab'+suivant).style.opacity='1';
+      }
     }
   } catch(e){ console.log('doAction error:',e); }
   if(nbActions===4){setTimeout(function(){document.getElementById('recapFinal').style.display='block';window.scrollTo(0,document.body.scrollHeight);},400);}
@@ -1801,6 +1825,131 @@ function genererPDFMiseEnDemeure() {
   doc.text(nomComplet, 20, y);
 
   doc.save('mise-en-demeure-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
+}
+
+function genererPDFSignalConso() {
+  var { jsPDF } = window.jspdf;
+  var doc = new jsPDF();
+  var s = getDossierComplet();
+
+  var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
+  var entreprise = s.entreprise || 'l\'entreprise';
+  var montant = s.montant_mensuel || s.montant || '';
+  var date = new Date().toLocaleDateString('fr-FR');
+  var nbMois = s.nb_mois || '';
+  var montantTotal = (parseFloat(montant)||0) * (parseInt(nbMois)||1);
+  var montantTotalStr = montantTotal > 0 ? montantTotal.toFixed(2)+'€' : '';
+
+  // Construction du lien SignalConso pré-rempli
+  var categorieMap = {
+    'abonnement_cache': 'Internet+%2F+Téléphonie',
+    'resiliation_refus': 'Internet+%2F+Téléphonie',
+    'prelevement_inconnu': 'Banque+%2F+Assurance',
+    'frais_non_autorises': 'Banque+%2F+Assurance',
+    'autre': 'Autre'
+  };
+  var categorie = categorieMap[s.type_litige] || 'Autre';
+  var lienSignalConso = 'https://signal.conso.gouv.fr/fr/problem?siret=&companyName='+encodeURIComponent(entreprise);
+
+  // Texte à copier-coller dans SignalConso (500 caractères max)
+  var tL = {
+    'abonnement_cache': 'Abonnement souscrit à mon insu lors d\'un achat',
+    'resiliation_refus': 'Résiliation refusée malgré mes demandes répétées',
+    'prelevement_inconnu': 'Prélèvement non reconnu sur mon compte bancaire',
+    'frais_non_autorises': 'Frais prélevés sans mon autorisation',
+    'autre': 'Pratique commerciale abusive'
+  };
+  var typeLibelle = tL[s.type_litige] || 'Pratique commerciale abusive';
+
+  var texteSignal = typeLibelle+' de la part de '+entreprise
+    +(montant ? '. Montant : '+montant+'€/mois' : '')
+    +(nbMois ? ', soit '+montantTotalStr+' au total sur '+nbMois+' mois' : '')
+    +'. Malgré mes démarches amiables, la société refuse de résilier et de rembourser les sommes indûment prélevées. Une mise en demeure et une saisine du médiateur ont été envoyées.';
+  // Tronquer à 490 caractères pour rester sous la limite SignalConso
+  if(texteSignal.length > 490) texteSignal = texteSignal.substring(0, 487)+'...';
+
+  // ---- Mise en page ----
+  doc.setFont('helvetica');
+  doc.setFontSize(11);
+
+  // En-tête
+  doc.setFillColor(27, 63, 110);
+  doc.rect(0, 0, 210, 18, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(13);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Reprendr. — Guide de signalement DGCCRF', 20, 12);
+  doc.setTextColor(0, 0, 0);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+
+  var y = 30;
+  doc.setFont('helvetica', 'bold');
+  doc.text('Signalement DGCCRF via SignalConso — '+entreprise, 20, y); y += 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(90, 100, 120);
+  doc.text('Préparé pour : '+nomComplet+' · le '+date, 20, y); y += 14;
+  doc.setTextColor(0, 0, 0);
+
+  // Pourquoi signaler ?
+  doc.setFillColor(240, 244, 250);
+  doc.rect(15, y-5, 180, 28, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.text('Pourquoi signaler à la DGCCRF ?', 20, y); y += 8;
+  doc.setFont('helvetica', 'normal');
+  var pourquoi = 'Le signalement sur SignalConso crée un dossier administratif officiel auprès de la Direction Générale de la Concurrence, de la Consommation et de la Répression des Fraudes. Il renforce votre position dans tout recours ultérieur et alerte les autorités sur des pratiques potentiellement systémiques.';
+  var lgPourquoi = doc.splitTextToSize(pourquoi, 170);
+  doc.text(lgPourquoi, 20, y); y += lgPourquoi.length * 6 + 10;
+
+  // Étapes
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.text('Comment signaler — 4 étapes', 20, y); y += 10;
+  doc.setFontSize(11);
+
+  var etapes = [
+    {num:'1', titre:'Accédez à SignalConso', detail:'Ouvrez le lien ci-dessous dans votre navigateur (ou scannez le QR code si disponible) :\n'+lienSignalConso},
+    {num:'2', titre:'Identifiez l\'entreprise', detail:'Recherchez "'+entreprise+'" dans le champ de recherche. Sélectionnez l\'établissement concerné dans les résultats.'},
+    {num:'3', titre:'Décrivez le problème', detail:'Choisissez la catégorie "Contrat / Abonnement" puis "Pratiques commerciales trompeuses".\nCopiez-collez le texte préparé ci-dessous dans le champ description.'},
+    {num:'4', titre:'Finalisez et soumettez', detail:'Indiquez si vous souhaitez être recontacté(e). Vous recevrez un numéro de dossier par email — conservez-le précieusement.'}
+  ];
+
+  etapes.forEach(function(e) {
+    doc.setFillColor(27, 63, 110);
+    doc.circle(23, y-2, 4, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.text(e.num, 21.5, y+0.5);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'bold');
+    doc.text(e.titre, 32, y); y += 7;
+    doc.setFont('helvetica', 'normal');
+    var lgDetail = doc.splitTextToSize(e.detail, 160);
+    doc.text(lgDetail, 32, y); y += lgDetail.length * 6 + 8;
+  });
+
+  // Texte à copier-coller
+  y += 4;
+  doc.setFillColor(255, 248, 238);
+  doc.setDrawColor(217, 119, 6);
+  doc.rect(15, y-5, 180, 6 + Math.ceil(texteSignal.length/80)*7, 'FD');
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(146, 64, 14);
+  doc.text('✂  Texte à copier-coller dans SignalConso (champ description)', 20, y); y += 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(55, 65, 81);
+  var lgTexte = doc.splitTextToSize(texteSignal, 170);
+  doc.text(lgTexte, 20, y); y += lgTexte.length * 7 + 10;
+
+  // Note finale
+  doc.setTextColor(90, 100, 120);
+  doc.setFontSize(10);
+  var note = 'Ce signalement est complémentaire à la mise en demeure et à la saisine du médiateur déjà envoyées. Il ne génère pas automatiquement de remboursement mais crée un historique officiel auprès des autorités françaises de protection des consommateurs.';
+  var lgNote = doc.splitTextToSize(note, 170);
+  doc.text(lgNote, 20, y);
+
+  doc.save('guide-signalement-dgccrf-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
+  return lienSignalConso;
 }
 </script>
 </body>
