@@ -515,7 +515,8 @@
       <div style="font-size:14px;color:var(--muted);margin-top:6px">Vérifiez avant que <strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span> analyse votre situation.</div></div>
       <div id="syntheseContent" style="margin:24px 0"></div>
       <div style="background:#FFF5F5;border:1px solid #FFCDD2;border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;color:#B71C1C;line-height:1.5">⚡ Analyse en cours de qualification — cliquez ci-dessous pour obtenir le verdict.</div>
-      <button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick="lancerAnalyse()">Obtenir le verdict gratuit →</button>
+      <button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px" onclick="lancerAnalyse()">Obtenir le verdict gratuit →</button>
+      <button class="btn-back" style="width:100%;text-align:center;padding:10px" onclick="goDstep(3)">← Corriger mes informations</button>
     </div>
   </div>
 </div>
@@ -1720,11 +1721,11 @@ function genererPDFMediateur(modeBase64) {
   if(s.telephone){ doc.text('Tél. : '+s.telephone, 20, yG); yG += 6; }
   if(s.email_compl || s.email){ doc.text('Email : '+(s.email_compl || s.email), 20, yG); yG += 6; }
 
-  // Destinataire — colonne droite
-  doc.text('Au Médiateur de la consommation compétent', 120, 20);
+  // Destinataire — colonne droite, aligné sur la dernière ligne de l'expéditeur
+  doc.text('Au Médiateur de la consommation compétent', 120, yG);
 
   // Date + objet
-  var yBase = Math.max(yG, 26) + 8;
+  var yBase = Math.max(yG+6, 26) + 8;
   doc.text(ville+', le '+date, 20, yBase); yBase += 10;
   doc.setFont('helvetica', 'bold');
   var lignesObjet = doc.splitTextToSize('Objet : Saisine du médiateur — Information consommateur abusive — Litige avec '+entreprise, 170);
@@ -1800,12 +1801,12 @@ function genererPDFBanque(modeBase64) {
   var emailVal = s.email_compl || s.email || '';
   if(emailVal){ doc.text('Email : '+emailVal, 20, yG); yG += 6; }
 
-  // Destinataire — colonne droite
-  doc.text('À l\'attention du Service Clientèle', 120, 20);
-  doc.text('Ma banque / Mon établissement de paiement', 120, 26);
+  // Destinataire — colonne droite, aligné sur la dernière ligne de l'expéditeur
+  doc.text('À l\'attention du Service Clientèle', 120, yG);
+  doc.text('Ma banque / Mon établissement de paiement', 120, yG+6);
 
   // Date + objet
-  var yBase = Math.max(yG, 32) + 8;
+  var yBase = Math.max(yG+12, 32) + 8;
   doc.text(ville+', le '+date, 20, yBase); yBase += 10;
   doc.setFont('helvetica', 'bold');
   var lignesObjet = doc.splitTextToSize('Objet : Révocation de mandat de prélèvement SEPA — Créancier : '+entreprise, 170);
@@ -1905,12 +1906,12 @@ function genererPDFMiseEnDemeure(modeBase64) {
   var emailVal = s.email_compl || s.email || '';
   if(emailVal){ doc.text('Email : '+emailVal, 20, yH); yH += 6; }
 
-  // Destinataire — colonne droite
+  // Destinataire — colonne droite, aligné sur la dernière ligne de l'expéditeur
   var destLigne1 = s.dest_ligne1 || entreprise+' — Service Juridique';
   var destAdresse = s.dest_adresse || '';
   var destCp = s.dest_cp || '';
   var destVille = s.dest_ville || '';
-  var yD = 20;
+  var yD = yH;
   doc.text('À l\'attention du Service Juridique', 120, yD); yD += 6;
   doc.text(destLigne1, 120, yD); yD += 6;
   if(destAdresse){ doc.text(destAdresse, 120, yD); yD += 6; }
