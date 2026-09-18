@@ -853,81 +853,91 @@
     <span style="font-size:13px;color:var(--muted)">Votre dossier</span>
   </nav>
   <div class="wrapper">
-    <div class="card">
-      <div class="dashboard-header">
-        <div class="dashboard-icon">📁</div>
-        <div class="dashboard-titre">Votre dossier est prêt</div>
-        <div class="dashboard-sub">Effectuez les 4 actions dans l'ordre.<br>Chaque envoi se fait en un clic — aucun déplacement nécessaire.</div>
-      </div>
-      <div class="progress-global"><div class="progress-fill" id="pgFill" style="width:0%"></div></div>
-      <div class="progress-label" id="pgLabel">0 action sur 4 effectuée</div>
 
-      <div class="action-card active" id="ac1">
+    <!-- En-tête succès -->
+    <div class="card" style="text-align:center;padding:32px 36px 28px">
+      <div style="font-size:48px;margin-bottom:12px">✅</div>
+      <div class="dashboard-titre">Vos documents ont été envoyés par email</div>
+      <div class="dashboard-sub" style="margin-top:8px">
+        Vous avez reçu vos 4 documents par email. Retrouvez-les ci-dessous pour les télécharger à nouveau à tout moment.<br>
+        <span style="color:var(--blue);font-weight:600">La mise en demeure sera envoyée en recommandé électronique dans les 24h par Reprendr.</span>
+      </div>
+    </div>
+
+    <!-- Carte récapitulatif -->
+    <div class="card" style="padding:28px 36px">
+      <div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:20px">📎 Vos 4 documents — téléchargement individuel</div>
+
+      <!-- Action 1 -->
+      <div class="action-card active" id="ac1" style="margin-bottom:12px">
         <div class="action-header">
           <div class="action-num active" id="an1">1</div>
           <div class="action-body">
             <div class="action-titre">Mise en demeure — <span id="dashEntreprise">l'entreprise</span></div>
-            <div class="action-badge offert">🎁 Recommandé électronique offert</div>
-            <div class="doc-apercu"><strong>Aperçu du document généré</strong><span id="nomUser">Jean Dupont</span><br>Paris<br><br>À l'attention du Service Juridique<br><span id="dashEntreprise2">l'entreprise</span><br><br><strong>Objet : Mise en demeure — Résiliation d'abonnement non consenti et remboursement des sommes indûment prélevées</strong><br><br>Conformément à l'article L.121-1 du Code de la consommation relatif aux pratiques commerciales trompeuses, je vous mets en demeure de procéder au remboursement des sommes prélevées sans consentement éclairé et de résilier immédiatement l'abonnement concerné, sous 15 jours à compter de la réception du présent courrier...</div>
-            <div class="action-desc">Votre lettre est rédigée et adressée. L'envoi recommandé électronique génère un accusé de réception ayant valeur juridique — sans nécessité de se rendre à La Poste ni de faire la queue.</div>
-            <button class="btn-action primary" id="ab1" onclick="genererPDFMiseEnDemeure();doAction(1)">Envoyer en recommandé électronique →</button>
+            <div class="action-badge offert">🎁 Recommandé électronique envoyé par Reprendr. sous 24h</div>
+            <div class="action-desc">Conservez ce PDF comme archive. L'envoi en recommandé électronique est effectué par nos soins — vous recevrez l'accusé de réception par email.</div>
+            <button class="btn-action secondary" id="ab1" onclick="genererPDFMiseEnDemeure();marquerFait(1)">📄 Télécharger la mise en demeure →</button>
           </div>
         </div>
       </div>
 
-      <div class="action-card locked" id="ac2">
+      <!-- Action 2 -->
+      <div class="action-card active" id="ac2" style="margin-bottom:12px">
         <div class="action-header">
-          <div class="action-num locked" id="an2">2</div>
+          <div class="action-num active" id="an2">2</div>
           <div class="action-body">
             <div class="action-titre">Signalement DGCCRF — SignalConso</div>
             <div class="action-badge gratuit">Gratuit</div>
-            <div class="action-desc">Votre fiche de signalement est préparée avec le texte à copier-coller sur SignalConso.gouv.fr. Téléchargez d'abord le guide, puis ouvrez SignalConso pour soumettre votre signalement officiel.</div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <button class="btn-action secondary" id="ab2pdf" onclick="genererPDFSignalConso();doAction(2)" disabled>📄 Télécharger le guide SignalConso →</button>
-              <button class="btn-action primary" id="ab2link" onclick="ouvrirSignalConso()" disabled style="background:#D97706">🏛️ Ouvrir SignalConso →</button>
+            <div class="action-desc">Téléchargez le guide avec le texte à copier-coller, puis ouvrez SignalConso pour soumettre votre signalement officiel.</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+              <button class="btn-action secondary" id="ab2pdf" onclick="genererPDFSignalConso();marquerFait(2)">📄 Télécharger le guide →</button>
+              <button class="btn-action primary" id="ab2link" onclick="ouvrirSignalConso()" style="background:#D97706">🏛️ Ouvrir SignalConso →</button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="action-card locked" id="ac3">
+      <!-- Action 3 -->
+      <div class="action-card active" id="ac3" style="margin-bottom:12px">
         <div class="action-header">
-          <div class="action-num locked" id="an3">3</div>
+          <div class="action-num active" id="an3">3</div>
           <div class="action-body">
-            <div class="action-titre">Opposition bancaire — Blocage du prélèvement</div>
+            <div class="action-titre">Courrier bancaire — Blocage SEPA</div>
             <div class="action-badge gratuit">Gratuit</div>
-            <div class="action-desc">Ce courrier est valable auprès de toute banque française ou européenne, conformément au Règlement SEPA (UE n°260/2012). Il contient l'identifiant créancier SEPA (ICS) permettant à votre banque de bloquer tout prélèvement futur.</div>
-            <div class="banque-note">⚠️ La procédure varie selon votre banque. Le PDF inclut les instructions pour BNP, Crédit Agricole, Société Générale, LCL, La Banque Postale, Boursorama, Revolut et N26.</div>
-            <button class="btn-action secondary" id="ab3" onclick="genererPDFBanque();doAction(3)" disabled>Télécharger le courrier PDF + instructions →</button>
+            <div class="action-desc">À envoyer à votre banque pour bloquer tout futur prélèvement de <span id="dashEntreprise3">l'entreprise</span>. Joignez une copie de votre relevé bancaire.</div>
+            <button class="btn-action secondary" id="ab3" onclick="genererPDFBanque();marquerFait(3)">📄 Télécharger le courrier bancaire →</button>
           </div>
         </div>
       </div>
 
-      <div class="action-card locked" id="ac4">
+      <!-- Action 4 -->
+      <div class="action-card active" id="ac4" style="margin-bottom:0">
         <div class="action-header">
-          <div class="action-num locked" id="an4">4</div>
+          <div class="action-num active" id="an4">4</div>
           <div class="action-body">
             <div class="action-titre">Saisine du médiateur sectoriel</div>
-            <div class="action-badge legal">⚖️ Légalement obligatoire pour l'entreprise</div>
-            <div class="action-desc">La médiation de la consommation est entièrement gratuite pour vous. L'entreprise est légalement tenue d'y répondre sous 90 jours (loi Hamon, 17 mars 2014). Votre formulaire est pré-rempli.</div>
-            <button class="btn-action secondary" id="ab4" onclick="genererPDFMediateur();doAction(4)" disabled>Télécharger la saisine du médiateur →</button>
+            <div class="action-badge legal">⚖️ À envoyer si pas de réponse sous 15 jours</div>
+            <div class="action-desc">L'entreprise est légalement tenue de répondre au médiateur sous 90 jours (loi Hamon, 17 mars 2014). Entièrement gratuit pour vous.</div>
+            <button class="btn-action secondary" id="ab4" onclick="genererPDFMediateur();marquerFait(4)">📄 Télécharger la saisine du médiateur →</button>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Suivi -->
     <div class="suivi-card">
-      <div class="suivi-titre">⏱ Suivi automatique activé — ce qui se passe ensuite</div>
-      <div class="suivi-etape"><div class="suivi-dot"></div><div><strong>J+15 — Pas de réponse</strong><span class="suivi-badge gratuit">Inclus</span><br>Reprendr vous alerte et génère automatiquement une relance renforcée mentionnant la saisine imminente du médiateur et le dépôt de plainte DGCCRF.</div></div>
-      <div class="suivi-etape"><div class="suivi-dot orange"></div><div><strong>J+30 — Refus ou silence persistant</strong><span class="suivi-badge gratuit">Inclus</span><br>Analyse de la situation, génération d'un courrier de contestation de refus, activation de la médiation sectorielle si non effectuée.</div></div>
-      <div class="suivi-etape"><div class="suivi-dot orange"></div><div><strong>Si procédure judiciaire nécessaire</strong><span class="suivi-badge payant">Honoraires cabinet</span><br>Orientation vers un cabinet partenaire spécialisé. Leurs honoraires vous sont communiqués avant tout engagement — vous restez libre d'accepter ou non.</div></div>
-      <div class="suivi-etape"><div class="suivi-dot vert"></div><div><strong>Remboursement obtenu</strong><span class="suivi-badge gratuit">Inclus</span><br>Reprendr confirme la clôture de votre dossier et vous invite à partager votre expérience pour aider d'autres consommateurs.</div></div>
+      <div class="suivi-titre">⏱ Ce qui se passe ensuite</div>
+      <div class="suivi-etape"><div class="suivi-dot"></div><div><strong>Maintenant</strong> — Envoyez la mise en demeure (faite par Reprendr.) et le courrier bancaire à votre banque</div></div>
+      <div class="suivi-etape"><div class="suivi-dot"></div><div><strong>Dans les 24h</strong> — Reprendr. envoie votre mise en demeure en recommandé électronique à <span id="dashEntreprise4">l'entreprise</span></div></div>
+      <div class="suivi-etape"><div class="suivi-dot orange"></div><div><strong>J+15 — Pas de réponse</strong><span class="suivi-badge gratuit">Inclus</span><br>Envoyez la saisine du médiateur. Reprendr. vous alerte et génère une relance automatique.</div></div>
+      <div class="suivi-etape"><div class="suivi-dot orange"></div><div><strong>J+30 — Silence persistant</strong><span class="suivi-badge gratuit">Inclus</span><br>Activation de la médiation sectorielle si non effectuée.</div></div>
+      <div class="suivi-etape"><div class="suivi-dot vert"></div><div><strong>Remboursement obtenu</strong><span class="suivi-badge gratuit">Inclus</span><br>Reprendr. confirme la clôture de votre dossier.</div></div>
     </div>
 
     <div class="card" id="recapFinal" style="display:none">
       <div class="recap-final">
-        <div class="recap-final-titre">🎉 Toutes vos actions sont effectuées !</div>
-        <div class="recap-final-sub">Votre dossier complet a été transmis.<br>L'entreprise dispose de <strong>15 jours</strong> pour vous répondre.<br><strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span> surveille et vous alerte à chaque avancement.</div>
+        <div class="recap-final-titre">🎉 Tous vos documents ont été téléchargés !</div>
+        <div class="recap-final-sub">Votre dossier complet est entre vos mains.<br>L'entreprise dispose de <strong>15 jours</strong> pour répondre à la mise en demeure.<br><strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span> vous accompagne à chaque étape.</div>
         <button class="share-btn" onclick="afficher('vueAccueil')">← Retour à l'accueil</button>
       </div>
     </div>
@@ -1257,9 +1267,9 @@ function afficherVerdict(r, total, col, entreprise) {
   window.scrollTo(0,0);
 
   var ent = document.getElementById('f_entreprise').value||'l\'entreprise';
-  document.querySelectorAll('#dashEntreprise,#dashEntreprise2').forEach(function(el){el.textContent=ent;});
+  document.querySelectorAll('#dashEntreprise,#dashEntreprise3,#dashEntreprise4').forEach(function(el){el.textContent=ent;});
   var nom = document.getElementById('f_nom').value||'';
-  if(nom) document.getElementById('nomUser').textContent=nom;
+  if(nom) { var els = document.querySelectorAll('#nomUser'); els.forEach(function(el){el.textContent=nom;}); }
 }
 
 function resetDossier() {
@@ -1276,14 +1286,9 @@ if(window.location.search.includes('paiement=ok')){
   afficher('vueComplementaire');
 }
 
-function ouvrirSignalConso() {
-  var s = getDossierComplet();
-  var entreprise = s.entreprise || '';
-  var lien = 'https://signal.conso.gouv.fr/fr/problem?companyName='+encodeURIComponent(entreprise);
-  window.open(lien, '_blank');
-}
+var nbActions = 0;
 
-function doAction(n) {
+function marquerFait(n) {
   try {
     var colonnes = {1:'action_mise_en_demeure', 2:'action_dgccrf', 3:'action_banque', 4:'action_mediateur'};
     if(dernierDossierId && colonnes[n]){
@@ -1295,39 +1300,23 @@ function doAction(n) {
         body:JSON.stringify(patch)
       });
     }
-    // Gestion spéciale action 2 (deux boutons)
-    if(n === 2) {
-      document.getElementById('ab2pdf').textContent='✓ Guide téléchargé';
-      document.getElementById('ab2pdf').className='btn-action done';
-      document.getElementById('ab2pdf').disabled=true;
-      document.getElementById('ab2link').disabled=false;
-      document.getElementById('ab2link').style.opacity='1';
-    } else {
-      document.getElementById('ab'+n).textContent='✓ Effectué';
-      document.getElementById('ab'+n).className='btn-action done';
-      document.getElementById('ab'+n).disabled=true;
+    // Marquer visuellement comme effectué
+    var btn = n===2 ? document.getElementById('ab2pdf') : document.getElementById('ab'+n);
+    if(btn && !btn.classList.contains('done')){
+      btn.classList.remove('primary','secondary');
+      btn.classList.add('done');
+      document.getElementById('ac'+n).classList.add('done');
+      document.getElementById('ac'+n).classList.remove('active');
+      document.getElementById('an'+n).className='action-num done';
+      document.getElementById('an'+n).textContent='✓';
+      nbActions++;
     }
-    document.getElementById('ac'+n).className='action-card done';
-    document.getElementById('an'+n).className='action-num done';
-    document.getElementById('an'+n).textContent='✓';
-    nbActions++;
-    var pct=Math.round((nbActions/4)*100);
-    document.getElementById('pgFill').style.width=pct+'%';
-    document.getElementById('pgLabel').textContent=nbActions+' action'+(nbActions>1?'s':'')+' sur 4 effectuée'+(nbActions>1?'s':'');
-    var suivant=n+1;
-    if(suivant<=4){
-      document.getElementById('ac'+suivant).className='action-card active';
-      document.getElementById('an'+suivant).className='action-num active';
-      if(suivant===2){
-        document.getElementById('ab2pdf').disabled=false;
-        document.getElementById('ab2pdf').style.opacity='1';
-      } else {
-        document.getElementById('ab'+suivant).disabled=false;
-        document.getElementById('ab'+suivant).style.opacity='1';
-      }
-    }
-  } catch(e){ console.log('doAction error:',e); }
-  if(nbActions===4){setTimeout(function(){document.getElementById('recapFinal').style.display='block';window.scrollTo(0,document.body.scrollHeight);},400);}
+  } catch(e){ console.log('marquerFait error:',e); }
+  if(nbActions>=4){ setTimeout(function(){ document.getElementById('recapFinal').style.display='block'; window.scrollTo(0,document.body.scrollHeight); },400); }
+}
+
+function ouvrirSignalConso() {
+  window.open('https://signal.conso.gouv.fr', '_blank');
 }
 
 function fmtCarte(input){
@@ -1623,11 +1612,9 @@ function majMontantTotal() {
 window.addEventListener('load', function(){
   var session = JSON.parse(sessionStorage.getItem('reprendr_dossier') || '{}');
   if(session.email) {
-    // Pré-remplir email et ville si déjà saisis au diagnostic
     if(session.email) document.getElementById('cp_email').value = session.email;
     if(session.ville) document.getElementById('cp_ville').value = session.ville;
     if(session.montant) document.getElementById('cp_montant_mensuel').value = session.montant;
-    // Pré-remplir prénom/nom depuis le champ nom complet
     if(session.nom) {
       var parts = session.nom.split(' ');
       if(parts.length>=2){
@@ -1639,7 +1626,26 @@ window.addEventListener('load', function(){
     }
     checkCompl1();
   }
+  // Pré-remplir adresse destinataire si entreprise connue
+  if(session.entreprise) prefillAdresseDestinataire(session.entreprise);
 });
+
+function prefillAdresseDestinataire(entrepriseNom) {
+  var key = (entrepriseNom || '').toLowerCase().trim();
+  var found = null;
+  for(var k in adressesEnseignes) {
+    if(key.includes(k) || k.includes(key)) { found = adressesEnseignes[k]; break; }
+  }
+  if(found) {
+    document.getElementById('cp_dest_ligne1').value = found.ligne1;
+    document.getElementById('cp_dest_adresse').value = found.adresse;
+    document.getElementById('cp_dest_cp').value = found.cp;
+    document.getElementById('cp_dest_ville').value = found.ville;
+    var banner = document.getElementById('adresseDestPrefill');
+    if(banner) banner.style.display = 'block';
+  }
+  checkCompl2();
+}
 
 // ===== PDF GENERATION =====
 function getDossierComplet() {
@@ -1706,52 +1712,63 @@ function genererPDFMediateur(modeBase64) {
   // Mise en page
   doc.setFont('helvetica');
   doc.setFontSize(11);
-  doc.text(nomComplet, 20, 20);
-  if(adresseComplete) doc.text(adresseComplete, 20, 27);
-  if(s.telephone) doc.text(s.telephone, 20, 34);
-  if(s.email_compl || s.email) doc.text(s.email_compl || s.email, 20, 41);
-  doc.text(ville+', le '+date, 20, 50);
-  doc.text('Au Médiateur de la consommation compétent', 20, 64);
+
+  // Expéditeur — colonne gauche
+  var yG = 20;
+  doc.text(nomComplet, 20, yG); yG += 6;
+  if(adresseComplete){ doc.text(adresseComplete, 20, yG); yG += 6; }
+  if(s.telephone){ doc.text('Tél. : '+s.telephone, 20, yG); yG += 6; }
+  if(s.email_compl || s.email){ doc.text('Email : '+(s.email_compl || s.email), 20, yG); yG += 6; }
+
+  // Destinataire — colonne droite
+  doc.text('Au Médiateur de la consommation compétent', 120, 20);
+
+  // Date + objet
+  var yBase = Math.max(yG, 26) + 8;
+  doc.text(ville+', le '+date, 20, yBase); yBase += 10;
   doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Saisine du médiateur — Information consommateur abusive — Litige avec '+entreprise, 20, 78);
+  var lignesObjet = doc.splitTextToSize('Objet : Saisine du médiateur — Information consommateur abusive — Litige avec '+entreprise, 170);
+  doc.text(lignesObjet, 20, yBase);
   doc.setFont('helvetica', 'normal');
 
-  var y = 92;
+  var y = yBase + lignesObjet.length * 6 + 10;
 
   doc.setFont('helvetica', 'bold');
-  doc.text('Exposé des faits', 20, y); y += 9;
+  doc.text('Exposé des faits', 20, y); y += 7;
   doc.setFont('helvetica', 'normal');
   var lignesFaits = doc.splitTextToSize(faits, 170);
   doc.text(lignesFaits, 20, y);
-  y += lignesFaits.length * 7 + 6;
+  y += lignesFaits.length * 6 + 5;
 
   if(prejudice) {
     var lignesPrejudice = doc.splitTextToSize(prejudice, 170);
     doc.text(lignesPrejudice, 20, y);
-    y += lignesPrejudice.length * 7 + 6;
+    y += lignesPrejudice.length * 6 + 5;
   }
 
   doc.setFont('helvetica', 'bold');
-  doc.text('Démarches amiables tentées', 20, y); y += 9;
+  doc.text('Démarches amiables tentées', 20, y); y += 7;
   doc.setFont('helvetica', 'normal');
   var lignesTentatives = doc.splitTextToSize(tentativesStr, 170);
   doc.text(lignesTentatives, 20, y);
-  y += lignesTentatives.length * 7 + 6;
+  y += lignesTentatives.length * 6 + 5;
 
   doc.setFont('helvetica', 'bold');
-  doc.text('Demande', 20, y); y += 9;
+  doc.text('Demande', 20, y); y += 7;
   doc.setFont('helvetica', 'normal');
   var demande = 'Conformément à la loi Hamon du 17 mars 2014 et à l\'article L.612-1 du Code de la consommation, je sollicite votre intervention en qualité de médiateur afin d\'obtenir :\n- La résiliation immédiate du contrat et la cessation de tout prélèvement afférent'+(montantTotalStr ? '\n- Le remboursement des prélèvements indûment effectués pour un montant de '+montantTotalStr : '');
   var lignesDemande = doc.splitTextToSize(demande, 170);
   doc.text(lignesDemande, 20, y);
-  y += lignesDemande.length * 7 + 10;
+  y += lignesDemande.length * 6 + 7;
 
   var suite = 'Je reste à votre disposition pour tout renseignement complémentaire et vous adresse ci-joint les pièces justificatives disponibles.';
   var lignesSuite = doc.splitTextToSize(suite, 170);
   doc.text(lignesSuite, 20, y);
-  y += lignesSuite.length * 7 + 14;
+  y += lignesSuite.length * 6 + 10;
+
+  if(y > 262) y = 262;
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y += 14;
+  y += 10;
   doc.text(nomComplet, 20, y);
 
   if(modeBase64) return doc.output('datauristring').split(',')[1];
@@ -1774,38 +1791,51 @@ function genererPDFBanque(modeBase64) {
 
   doc.setFont('helvetica');
   doc.setFontSize(11);
-  doc.text(nomComplet, 20, 20);
-  if(adresseComplete) doc.text(adresseComplete, 20, 27);
-  doc.text(ville+', le '+date, 20, 34);
-  doc.text('À l\'attention du Service Clientèle', 20, 48);
-  doc.text('Ma banque / Mon établissement de paiement', 20, 55);
+
+  // Expéditeur — colonne gauche
+  var yG = 20;
+  doc.text(nomComplet, 20, yG); yG += 6;
+  if(adresseComplete){ doc.text(adresseComplete, 20, yG); yG += 6; }
+  if(s.telephone){ doc.text('Tél. : '+s.telephone, 20, yG); yG += 6; }
+  var emailVal = s.email_compl || s.email || '';
+  if(emailVal){ doc.text('Email : '+emailVal, 20, yG); yG += 6; }
+
+  // Destinataire — colonne droite
+  doc.text('À l\'attention du Service Clientèle', 120, 20);
+  doc.text('Ma banque / Mon établissement de paiement', 120, 26);
+
+  // Date + objet
+  var yBase = Math.max(yG, 32) + 8;
+  doc.text(ville+', le '+date, 20, yBase); yBase += 10;
   doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Révocation de mandat de prélèvement SEPA — Créancier : '+entreprise, 20, 69);
+  var lignesObjet = doc.splitTextToSize('Objet : Révocation de mandat de prélèvement SEPA — Créancier : '+entreprise, 170);
+  doc.text(lignesObjet, 20, yBase);
   doc.setFont('helvetica', 'normal');
 
-  var y = 83;
+  var y = yBase + lignesObjet.length * 6 + 10;
   var intro = 'Je me permets de vous adresser ce courrier afin de contester les prélèvements opérés sur mon compte par la société '+entreprise+(montant ? ' ('+montant+'€ par mois)' : '')+' au titre d\'un '+typeContrat+' dont les conditions ne m\'ont pas été clairement communiquées et dont je n\'ai pu obtenir la résiliation malgré mes démarches. Je vous demande de révoquer le mandat de prélèvement SEPA correspondant avec effet immédiat.';
   var lignesIntro = doc.splitTextToSize(intro, 170);
   doc.text(lignesIntro, 20, y);
-  y += lignesIntro.length * 7 + 7;
+  y += lignesIntro.length * 6 + 6;
 
   var fondement = 'Conformément au Règlement européen n°260/2012 relatif aux virements et prélèvements en euros (Règlement SEPA), je dispose du droit de révoquer à tout moment et sans justification mon autorisation de prélèvement. Cette révocation prend effet immédiatement à compter de la réception du présent courrier.';
   var lignesFondement = doc.splitTextToSize(fondement, 170);
   doc.text(lignesFondement, 20, y);
-  y += lignesFondement.length * 7 + 7;
+  y += lignesFondement.length * 6 + 6;
 
   var demande = 'Je vous demande en conséquence de bien vouloir :\n- Bloquer sans délai tout futur prélèvement SEPA émanant du créancier '+entreprise+'.\n- Me confirmer par écrit la prise en compte de cette révocation dans les meilleurs délais.';
   var lignesDemande = doc.splitTextToSize(demande, 170);
   doc.text(lignesDemande, 20, y);
-  y += lignesDemande.length * 7 + 7;
+  y += lignesDemande.length * 6 + 6;
 
   var note = 'Je précise que la demande de remboursement des sommes indûment prélevées fait l\'objet d\'un recours distinct directement auprès de la société '+entreprise+', ainsi que d\'une saisine du médiateur de la consommation compétent. Je joins à ce courrier une copie de mon relevé bancaire faisant apparaître les prélèvements contestés.';
   var lignesNote = doc.splitTextToSize(note, 170);
   doc.text(lignesNote, 20, y);
-  y += lignesNote.length * 7 + 14;
+  y += lignesNote.length * 6 + 10;
 
+  if(y > 260) y = 260;
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y += 14;
+  y += 10;
   doc.text(nomComplet, 20, y);
 
   if(modeBase64) return doc.output('datauristring').split(',')[1];
@@ -1866,48 +1896,54 @@ function genererPDFMiseEnDemeure(modeBase64) {
 
   doc.setFont('helvetica');
   doc.setFontSize(11);
-  // En-tête expéditeur — lignes dynamiques selon présence tél et email
+
+  // Expéditeur — colonne gauche
   var yH = 20;
-  doc.text(nomComplet, 20, yH); yH += 7;
-  if(adresseComplete){ doc.text(adresseComplete, 20, yH); yH += 7; }
-  if(s.telephone){ doc.text('Tél. : '+s.telephone, 20, yH); yH += 7; }
+  doc.text(nomComplet, 20, yH); yH += 6;
+  if(adresseComplete){ doc.text(adresseComplete, 20, yH); yH += 6; }
+  if(s.telephone){ doc.text('Tél. : '+s.telephone, 20, yH); yH += 6; }
   var emailVal = s.email_compl || s.email || '';
-  if(emailVal){ doc.text('Email : '+emailVal, 20, yH); yH += 7; }
-  yH += 3; // petit espace avant la date
-  doc.text(ville+', le '+date, 20, yH); yH += 14;
-  doc.text('À l\'attention du Service Juridique', 20, yH); yH += 7;
-  // Adresse destinataire saisie par l'utilisateur
+  if(emailVal){ doc.text('Email : '+emailVal, 20, yH); yH += 6; }
+
+  // Destinataire — colonne droite
   var destLigne1 = s.dest_ligne1 || entreprise+' — Service Juridique';
   var destAdresse = s.dest_adresse || '';
   var destCp = s.dest_cp || '';
   var destVille = s.dest_ville || '';
-  doc.text(destLigne1, 20, yH); yH += 7;
-  if(destAdresse) { doc.text(destAdresse, 20, yH); yH += 7; }
-  if(destCp || destVille) { doc.text((destCp+' '+destVille).trim(), 20, yH); yH += 7; }
-  yH += 7; // espace avant objet
+  var yD = 20;
+  doc.text('À l\'attention du Service Juridique', 120, yD); yD += 6;
+  doc.text(destLigne1, 120, yD); yD += 6;
+  if(destAdresse){ doc.text(destAdresse, 120, yD); yD += 6; }
+  if(destCp || destVille){ doc.text((destCp+' '+destVille).trim(), 120, yD); yD += 6; }
+
+  // Date + objet
+  var yBase = Math.max(yH, yD) + 8;
+  doc.text(ville+', le '+date, 20, yBase); yBase += 10;
   doc.setFont('helvetica', 'bold');
-  doc.text('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 20, yH);
+  var lignesObjet = doc.splitTextToSize('Objet : Mise en demeure — Information consommateur abusive et prélèvements non consentis', 170);
+  doc.text(lignesObjet, 20, yBase);
   doc.setFont('helvetica', 'normal');
 
-  var y = yH + 14;
+  var y = yBase + lignesObjet.length * 6 + 10;
   // Exposé
   var lignesIntro = doc.splitTextToSize(intro, 170);
   doc.text(lignesIntro, 20, y);
-  y += lignesIntro.length * 7 + 8;
+  y += lignesIntro.length * 6 + 6;
 
   // Démarches
   var lignesDemarches = doc.splitTextToSize(demarchesStr, 170);
   doc.text(lignesDemarches, 20, y);
-  y += lignesDemarches.length * 7 + 8;
+  y += lignesDemarches.length * 6 + 6;
 
   // Mise en demeure formelle
   var corps = 'En l\'absence de règlement amiable, je vous mets formellement en demeure, dans un délai de 15 jours à compter de la réception du présent courrier, de :\n- Procéder à la résiliation immédiate du contrat concerné et à la cessation de tout prélèvement afférent.\n- Rembourser l\'intégralité des sommes indûment prélevées'+montantTotalStr+'.\n\nPassé ce délai sans réponse satisfaisante de votre part, je me réserve le droit de saisir la DGCCRF, l\'Autorité de contrôle prudentiel et de résolution (ACPR), le médiateur sectoriel compétent, et le cas échéant d\'engager toute procédure judiciaire appropriée.';
   var lignesCorps = doc.splitTextToSize(corps, 170);
   doc.text(lignesCorps, 20, y);
-  y += lignesCorps.length * 7 + 14;
+  y += lignesCorps.length * 6 + 10;
 
+  if(y > 262) y = 262;
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
-  y += 14;
+  y += 10;
   doc.text(nomComplet, 20, y);
   if(modeBase64) return doc.output('datauristring').split(',')[1];
   doc.save('mise-en-demeure-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
