@@ -1649,7 +1649,7 @@ function getDossierComplet() {
 
 function genererPDFMediateur() {
   var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
+  var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
 
   var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
@@ -1759,7 +1759,7 @@ function genererPDFMediateur() {
 
 function genererPDFBanque() {
   var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
+  var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
 
   var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
@@ -1812,7 +1812,7 @@ function genererPDFBanque() {
 
 function genererPDFMiseEnDemeure() {
   var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
+  var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
 
   var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
@@ -1913,7 +1913,7 @@ function genererPDFMiseEnDemeure() {
 
 function genererPDFSignalConso() {
   var { jsPDF } = window.jspdf;
-  var doc = new jsPDF();
+  var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
 
   var nomComplet = (s.prenom && s.nom_compl) ? s.prenom+' '+s.nom_compl : s.nom || 'Le soussigné';
