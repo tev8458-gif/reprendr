@@ -1364,10 +1364,10 @@ async function envoyerDossierEtAcceder() {
   status.textContent = 'Vos 4 documents sont en cours de génération — cela prend quelques secondes.';
 
   try {
-    var b64MiseEnDemeure = pdfToBase64(genererPDFMiseEnDemeure);
-    var b64Banque        = pdfToBase64(genererPDFBanque);
-    var b64Mediateur     = pdfToBase64(genererPDFMediateur);
-    var b64SignalConso   = pdfToBase64(genererPDFSignalConso);
+    var b64MiseEnDemeure = genererPDFMiseEnDemeure(true);
+    var b64Banque        = genererPDFBanque(true);
+    var b64Mediateur     = genererPDFMediateur(true);
+    var b64SignalConso   = genererPDFSignalConso(true);
 
     var s = getDossierComplet();
     var entreprise = s.entreprise || 'l\'entreprise';
@@ -1647,7 +1647,7 @@ function getDossierComplet() {
   return session;
 }
 
-function genererPDFMediateur() {
+function genererPDFMediateur(modeBase64) {
   var { jsPDF } = window.jspdf;
   var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
@@ -1754,10 +1754,11 @@ function genererPDFMediateur() {
   y += 14;
   doc.text(nomComplet, 20, y);
 
+  if(modeBase64) return doc.output('datauristring').split(',')[1];
   doc.save('saisine-mediateur-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
 }
 
-function genererPDFBanque() {
+function genererPDFBanque(modeBase64) {
   var { jsPDF } = window.jspdf;
   var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
@@ -1807,10 +1808,11 @@ function genererPDFBanque() {
   y += 14;
   doc.text(nomComplet, 20, y);
 
+  if(modeBase64) return doc.output('datauristring').split(',')[1];
   doc.save('courrier-bancaire-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
 }
 
-function genererPDFMiseEnDemeure() {
+function genererPDFMiseEnDemeure(modeBase64) {
   var { jsPDF } = window.jspdf;
   var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
@@ -1907,11 +1909,11 @@ function genererPDFMiseEnDemeure() {
   doc.text('Veuillez agréer, Madame, Monsieur, l\'expression de mes salutations distinguées.', 20, y);
   y += 14;
   doc.text(nomComplet, 20, y);
-
+  if(modeBase64) return doc.output('datauristring').split(',')[1];
   doc.save('mise-en-demeure-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
 }
 
-function genererPDFSignalConso() {
+function genererPDFSignalConso(modeBase64) {
   var { jsPDF } = window.jspdf;
   var doc = new jsPDF({ compress: true });
   var s = getDossierComplet();
@@ -2032,6 +2034,7 @@ function genererPDFSignalConso() {
   var lgNote = doc.splitTextToSize(note, 170);
   doc.text(lgNote, 20, y);
 
+  if(modeBase64) return doc.output('datauristring').split(',')[1];
   doc.save('guide-signalement-dgccrf-'+entreprise.replace(/\s+/g,'-').toLowerCase()+'.pdf');
   return lienSignalConso;
 }
