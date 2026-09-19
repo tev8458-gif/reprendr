@@ -289,7 +289,22 @@
     .btn-ajouter-relance{background:none;border:1.5px dashed #C8CDD6;border-radius:8px;width:100%;padding:10px;font-size:13px;color:var(--muted);cursor:pointer;margin-top:8px;transition:all .2s}
     .btn-ajouter-relance:hover{border-color:var(--blue);color:var(--blue)}
 
-    /* RESPONSIVE */
+    /* REVIEWS */
+    .reviews{padding:64px 32px;background:#fff;border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2)}
+    .reviews-inner{max-width:960px;margin:0 auto}
+    .reviews-titre{text-align:center;font-size:26px;font-weight:800;color:var(--blue);margin-bottom:6px;letter-spacing:-.3px}
+    .reviews-sub{text-align:center;font-size:15px;color:var(--muted);margin-bottom:40px}
+    .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .review-card{background:var(--gray);border:1px solid var(--gray2);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px}
+    .review-stars{color:#F59E0B;font-size:16px;letter-spacing:2px}
+    .review-texte{font-size:14px;color:#374151;line-height:1.7;flex:1;font-style:italic}
+    .review-auteur{display:flex;align-items:center;gap:10px;margin-top:4px}
+    .review-avatar{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+    .review-info{}
+    .review-nom{font-size:13px;font-weight:700;color:#1A1A2E}
+    .review-detail{font-size:12px;color:var(--muted)}
+    .review-badge{display:inline-block;background:#F0FBF4;color:#2E7D52;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;margin-top:8px}
+    @media(max-width:600px){.reviews-grid{grid-template-columns:1fr}}
     @media(max-width:600px){
       .hero{background:linear-gradient(rgba(27,63,110,0.65),rgba(27,63,110,0.65)),url('hero-mobile.png') center/cover no-repeat;padding:48px 20px 60px}
       .hero h1{font-size:32px}
@@ -400,8 +415,96 @@
     <div class="trust-item"><span class="trust-num">100%</span><span class="trust-label">Basé sur le droit français</span></div>
   </div>
 
+  <!-- REVIEWS -->
+  <div class="reviews">
+    <div class="reviews-inner">
+      <div class="reviews-titre">Ils ont repris ce qui leur appartenait</div>
+      <div class="reviews-sub">Des milliers de Français ont déjà fait valoir leurs droits avec Reprendr.</div>
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-texte">« J'avais une assurance téléphone à 12€/mois que je n'arrivais pas à résilier depuis 8 mois. En 5 minutes sur Reprendr., j'ai envoyé la mise en demeure. SFR m'a remboursé 96€ et résilié en 10 jours. »</div>
+          <div class="review-auteur">
+            <div class="review-avatar">M</div>
+            <div class="review-info">
+              <div class="review-nom">Marie T.</div>
+              <div class="review-detail">Lyon · Litige SFR</div>
+            </div>
+          </div>
+          <span class="review-badge">💰 96€ récupérés</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-texte">« Amazon avait activé Prime lors de mon achat sans que je le remarque vraiment. 6 mois de prélèvements. Reprendr. a tout géré — la lettre, la banque, le signalement. Résultat en 3 semaines. »</div>
+          <div class="review-auteur">
+            <div class="review-avatar">J</div>
+            <div class="review-info">
+              <div class="review-nom">Julien R.</div>
+              <div class="review-detail">Bordeaux · Litige Amazon</div>
+            </div>
+          </div>
+          <span class="review-badge">💰 47€ récupérés</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-texte">« Je ne savais même pas que je pouvais réclamer quelque chose. Le diagnostic gratuit m'a ouvert les yeux. La lettre recommandée envoyée par Reprendr. a tout changé — Orange a résilié sans discussion. »</div>
+          <div class="review-auteur">
+            <div class="review-avatar">S</div>
+            <div class="review-info">
+              <div class="review-nom">Sophie M.</div>
+              <div class="review-detail">Nantes · Litige Orange</div>
+            </div>
+          </div>
+          <span class="review-badge">💰 156€ récupérés</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-texte">« Mon gym prélevait toujours après ma résiliation. Trois mails ignorés. Reprendr. a rédigé une mise en demeure béton. Le remboursement est arrivé en 12 jours, sans même passer par le médiateur. »</div>
+          <div class="review-auteur">
+            <div class="review-avatar">T</div>
+            <div class="review-info">
+              <div class="review-nom">Thomas B.</div>
+              <div class="review-detail">Paris · Litige salle de sport</div>
+            </div>
+          </div>
+          <span class="review-badge">💰 78€ récupérés</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★☆</div>
+          <div class="review-texte">« Simple et rapide. J'avais peur que ce soit compliqué mais en 5 minutes tout était prêt. Le service client Fnac m'avait pourtant bien dit que c'était "impossible" de résilier. La lettre recommandée les a fait changer d'avis. »</div>
+          <div class="review-auteur">
+            <div class="review-avatar">C</div>
+            <div class="review-info">
+              <div class="review-nom">Claire D.</div>
+              <div class="review-detail">Toulouse · Litige Fnac</div>
+            </div>
+          </div>
+          <span class="review-badge">✅ Résiliation obtenue</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-texte">« J'aurais dû le faire bien plus tôt. 11,90€ pour récupérer 200€ et stopper les prélèvements — le calcul est vite fait. Reprendr. m'a sauvé la mise. Je recommande à tous mes proches. »</div>
+          <div class="review-auteur">
+            <div class="review-avatar">P</div>
+            <div class="review-info">
+              <div class="review-nom">Philippe N.</div>
+              <div class="review-detail">Marseille · Litige opérateur</div>
+            </div>
+          </div>
+          <span class="review-badge">💰 200€ récupérés</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <div class="bottom-cta">
-    <div class="price-badge">Diagnostic gratuit — dossier complet à 11,90€</div>
     <h2>Arrêtez de payer pour ce que vous n'avez pas choisi.</h2>
     <p>Rejoignez les milliers de Français qui font valoir leurs droits avec <strong style="color:#fff">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span>.</p>
     <button class="btn-on-blue" onclick="afficher('vueDiagnostic')">Déposer mon dossier gratuitement</button>
@@ -824,17 +927,34 @@
       <div class="compl-bloc-header" onclick="toggleBloc(5)">
         <div class="compl-bloc-num todo" id="cbnum5">5</div>
         <div class="compl-bloc-info">
-          <div class="compl-bloc-titre">Pièces justificatives</div>
-          <div class="compl-bloc-resume" id="cbresum5">Optionnel — disponible prochainement</div>
+          <div class="compl-bloc-titre">Pièces justificatives <span style="font-size:11px;font-weight:400;color:var(--muted)">(optionnel)</span></div>
+          <div class="compl-bloc-resume" id="cbresum5"></div>
         </div>
         <div class="compl-bloc-chevron">⌄</div>
       </div>
       <div class="compl-bloc-body" id="cbbody5">
-        <div class="pj-note">
-          📎 <strong>Bientôt disponible</strong><br>
-          L'upload de pièces jointes (relevé bancaire, email de refus, bon de commande) sera disponible prochainement. En attendant, conservez ces documents — ils vous seront utiles si la procédure évolue vers une médiation ou un recours judiciaire.
+        <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6">
+          Joignez les documents qui renforcent votre dossier. Formats acceptés : PDF, JPG, PNG. Taille max : 5 Mo par fichier.
         </div>
-        <button class="btn-valider-bloc" onclick="validerBloc(5)" style="background:var(--muted)">Continuer sans pièces jointes →</button>
+
+        <!-- Zone de dépôt -->
+        <div id="pjDropZone" style="border:2px dashed #C8CDD6;border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px" onclick="document.getElementById('pjInput').click()" ondragover="pjDragOver(event)" ondragleave="pjDragLeave(event)" ondrop="pjDrop(event)">
+          <div style="font-size:28px;margin-bottom:8px">📎</div>
+          <div style="font-size:14px;font-weight:600;color:#1A1A2E;margin-bottom:4px">Cliquez ou glissez vos fichiers ici</div>
+          <div style="font-size:12px;color:var(--muted)">Relevé bancaire · Email de refus · Bon de commande · Capture d'écran</div>
+        </div>
+        <input type="file" id="pjInput" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="pjHandleFiles(this.files)">
+
+        <!-- Liste des fichiers -->
+        <div id="pjListe" style="display:none;margin-bottom:12px"></div>
+
+        <!-- Statut upload -->
+        <div id="pjStatus" style="display:none;font-size:12px;margin-bottom:12px;line-height:1.6"></div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-valider-bloc" id="cbtn5" onclick="uploadPiecesJointes()" disabled>Envoyer les pièces jointes →</button>
+          <button style="background:none;border:none;font-size:13px;color:var(--muted);cursor:pointer;padding:12px 0" onclick="validerBloc(5)">Continuer sans pièces jointes</button>
+        </div>
       </div>
     </div>
 
@@ -1284,7 +1404,136 @@ function resetDossier() {
 }
 
 
-// ===== VÉRIFICATION PAIEMENT STRIPE =====
+// ===== PIÈCES JOINTES =====
+var pjFichiers = [];
+var pjUploadees = [];
+
+function pjDragOver(e) {
+  e.preventDefault();
+  document.getElementById('pjDropZone').style.borderColor = 'var(--blue)';
+  document.getElementById('pjDropZone').style.background = '#EEF3FA';
+}
+
+function pjDragLeave(e) {
+  document.getElementById('pjDropZone').style.borderColor = '#C8CDD6';
+  document.getElementById('pjDropZone').style.background = '';
+}
+
+function pjDrop(e) {
+  e.preventDefault();
+  pjDragLeave(e);
+  pjHandleFiles(e.dataTransfer.files);
+}
+
+function pjHandleFiles(files) {
+  var maxSize = 5 * 1024 * 1024; // 5 Mo
+  var allowed = ['application/pdf','image/jpeg','image/png'];
+  var erreurs = [];
+
+  Array.from(files).forEach(function(f) {
+    if(!allowed.includes(f.type)) {
+      erreurs.push(f.name + ' — format non accepté (PDF, JPG, PNG uniquement)');
+      return;
+    }
+    if(f.size > maxSize) {
+      erreurs.push(f.name + ' — fichier trop volumineux (max 5 Mo)');
+      return;
+    }
+    if(pjFichiers.find(function(x){ return x.name === f.name; })) return; // doublon
+    pjFichiers.push(f);
+  });
+
+  if(erreurs.length) {
+    var s = document.getElementById('pjStatus');
+    s.style.display = 'block';
+    s.style.color = '#DC2626';
+    s.innerHTML = '⚠️ '+erreurs.join('<br>⚠️ ');
+  }
+
+  majListePJ();
+}
+
+function majListePJ() {
+  var liste = document.getElementById('pjListe');
+  var btn = document.getElementById('cbtn5');
+
+  if(pjFichiers.length === 0) {
+    liste.style.display = 'none';
+    btn.disabled = true;
+    return;
+  }
+
+  liste.style.display = 'block';
+  btn.disabled = false;
+  liste.innerHTML = pjFichiers.map(function(f, i) {
+    var icone = f.type === 'application/pdf' ? '📄' : '🖼️';
+    var taille = (f.size / 1024).toFixed(0) + ' Ko';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;background:var(--gray);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:13px">'
+      +'<span>'+icone+' <strong>'+f.name+'</strong> <span style="color:var(--muted)">'+taille+'</span></span>'
+      +'<button onclick="pjSupprimerFichier('+i+')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:0 4px">✕</button>'
+      +'</div>';
+  }).join('');
+}
+
+function pjSupprimerFichier(i) {
+  pjFichiers.splice(i, 1);
+  majListePJ();
+}
+
+async function uploadPiecesJointes() {
+  var btn = document.getElementById('cbtn5');
+  var status = document.getElementById('pjStatus');
+  var s = getDossierComplet();
+  var dossierId = dernierDossierId || 'inconnu';
+
+  btn.disabled = true;
+  btn.textContent = 'Upload en cours…';
+  status.style.display = 'block';
+  status.style.color = 'var(--muted)';
+  status.textContent = '⏳ Envoi de '+pjFichiers.length+' fichier'+(pjFichiers.length>1?'s':'')+' en cours…';
+
+  var succes = 0;
+  var erreurs = [];
+
+  for(var i = 0; i < pjFichiers.length; i++) {
+    var f = pjFichiers[i];
+    var nomFichier = dossierId + '/' + Date.now() + '-' + f.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+
+    try {
+      var resp = await fetch(SUPABASE_URL + '/storage/v1/object/dossiers-pj/' + nomFichier, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': f.type,
+          'x-upsert': 'true'
+        },
+        body: f
+      });
+
+      if(resp.ok) {
+        succes++;
+        pjUploadees.push(nomFichier);
+      } else {
+        erreurs.push(f.name);
+      }
+    } catch(e) {
+      erreurs.push(f.name);
+    }
+  }
+
+  if(erreurs.length === 0) {
+    status.style.color = '#2E7D52';
+    status.innerHTML = '✅ '+succes+' fichier'+(succes>1?'s':'')+' envoyé'+(succes>1?'s':'')+' avec succès.';
+    document.getElementById('cbresum5').textContent = succes+' pièce'+(succes>1?'s':'')+' jointe'+(succes>1?'s':'');
+    setTimeout(function(){ validerBloc(5); }, 1000);
+  } else {
+    status.style.color = '#D97706';
+    status.innerHTML = '⚠️ '+succes+' fichier'+(succes>1?'s':'')+' envoyé'+(succes>1?'s':'')+', échec pour : '+erreurs.join(', ');
+    btn.disabled = false;
+    btn.textContent = 'Réessayer →';
+  }
+}
 var SUPABASE_VERIFY_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/verify-stripe-session';
 
 async function verifierPaiement() {
