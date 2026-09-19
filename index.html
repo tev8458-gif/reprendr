@@ -1283,9 +1283,44 @@ function resetDossier() {
   goDstep(1);
 }
 
-// ===== DASHBOARD =====
-if(window.location.search.includes('paiement=ok')){
-  afficher('vueComplementaire');
+
+// ===== VÉRIFICATION PAIEMENT STRIPE =====
+var SUPABASE_VERIFY_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/verify-stripe-session';
+
+async function verifierPaiement() {
+  var params = new URLSearchParams(window.location.search);
+  var sessionId = params.get('session_id');
+
+  if(!sessionId || !sessionId.startsWith('cs_')) {
+    window.location.href = window.location.pathname;
+    return;
+  }
+
+  // Écran de chargement
+  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Inter,sans-serif;flex-direction:column;gap:16px;background:#F5F7FA"><div style="width:42px;height:42px;border:3px solid #E8ECF2;border-top-color:#1B3F6E;border-radius:50%;animation:spin .8s linear infinite"></div><div style="font-size:15px;color:#5A6478">Vérification du paiement…</div><style>@keyframes spin{to{transform:rotate(360deg)}}</style></div>';
+
+  try {
+    var resp = await fetch(SUPABASE_VERIFY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session_id: sessionId })
+    });
+    var data = await resp.json();
+
+    if(data.valid) {
+      window.location.href = window.location.pathname + '?acces=ok&sid=' + sessionId;
+    } else {
+      window.location.href = window.location.pathname;
+    }
+  } catch(e) {
+    window.location.href = window.location.pathname;
+  }
+}
+
+if(window.location.search.includes('paiement=ok')) {
+  verifierPaiement();
+} else if(window.location.search.includes('acces=ok')) {
+  document.addEventListener('DOMContentLoaded', function(){ afficher('vueComplementaire'); });
 }
 
 var nbActions = 0;
