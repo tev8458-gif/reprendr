@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment contester un abonnement non consenti ou un prélèvement abusif — Reprendr.</title>
+  <meta name="description" content="Découvrez comment Reprendr. vous aide à contester un abonnement non consenti, une résiliation refusée ou un prélèvement abusif en 2 minutes. Mise en demeure, recommandé électronique, médiateur.">
+  <link rel="canonical" href="https://reprendr.fr/comment-ca-marche.html">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#F5F7FA;color:#1A1A2E;line-height:1.7}
+    :root{--blue:#1B3F6E;--red:#E02B2B;--gray:#F5F7FA;--gray2:#E8ECF2;--muted:#5A6478}
+    nav{background:#fff;border-bottom:1px solid var(--gray2);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo .re{color:var(--blue);font-size:22px;font-weight:800;letter-spacing:-0.5px}
+    .logo .ndr{color:var(--red);font-size:22px;font-weight:800;letter-spacing:-0.5px}
+    .nav-cta{background:var(--blue);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none}
+    .wrapper{max-width:760px;margin:0 auto;padding:56px 24px 80px}
+    h1{font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--blue);line-height:1.15;letter-spacing:-.5px;margin-bottom:16px}
+    .intro{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:48px;max-width:600px}
+    h2{font-size:22px;font-weight:800;color:var(--blue);margin:48px 0 12px;padding-top:24px;border-top:2px solid var(--gray2)}
+    h3{font-size:16px;font-weight:700;color:#1A1A2E;margin:24px 0 8px}
+    p{font-size:15px;color:#374151;margin-bottom:14px;line-height:1.75}
+    ul{margin:8px 0 16px 20px}
+    li{font-size:15px;color:#374151;margin-bottom:8px;line-height:1.6}
+    .highlight{background:#EEF3FA;border-left:3px solid var(--blue);padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:14px;color:#374151}
+    .step-box{background:#fff;border:1px solid var(--gray2);border-radius:12px;padding:24px;margin-bottom:16px;display:flex;gap:16px;align-items:flex-start}
+    .step-num{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+    .step-content h3{margin-top:0}
+    .loi-badge{display:inline-block;background:#FFF8EE;color:#92400E;border:1px solid #FCD34D;border-radius:6px;padding:3px 10px;font-size:12px;font-weight:600;margin-bottom:8px}
+    .cta-box{background:var(--blue);color:#fff;border-radius:16px;padding:40px;text-align:center;margin-top:56px}
+    .cta-box h2{color:#fff;border:none;padding:0;margin:0 0 12px}
+    .cta-box p{color:rgba(255,255,255,.85);margin-bottom:28px}
+    .btn-cta{display:inline-block;background:#fff;color:var(--blue);padding:14px 32px;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none}
+    footer{background:#12294A;color:rgba(255,255,255,.6);text-align:center;padding:20px 32px;font-size:12px}
+    footer .re{color:#fff;font-weight:700}
+    footer .ndr{color:var(--red);font-weight:700}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
+  <a href="index.html" class="nav-cta">Déposer un dossier</a>
+</nav>
+
+<div class="wrapper">
+
+  <h1>Comment contester un abonnement non consenti ou un prélèvement abusif ?</h1>
+  <p class="intro">Chaque année, plus de 500 000 Français subissent des prélèvements non autorisés ou se retrouvent bloqués dans des abonnements impossibles à résilier. Voici exactement comment procéder — et comment Reprendr. vous accompagne à chaque étape.</p>
+
+  <h2>Quelles situations peut-on contester ?</h2>
+  <p>Le droit français protège les consommateurs face à plusieurs types de pratiques abusives :</p>
+  <ul>
+    <li><strong>Abonnement caché lors d'un achat</strong> — souscrit à votre insu ou sans consentement éclairé lors du paiement d'un produit ou service</li>
+    <li><strong>Résiliation refusée ou ignorée</strong> — l'entreprise ne tient pas compte de vos demandes de résiliation malgré vos relances répétées</li>
+    <li><strong>Prélèvement non reconnu</strong> — un prélèvement apparaît sur votre relevé bancaire sans que vous ayez souscrit à quoi que ce soit</li>
+    <li><strong>Frais non autorisés</strong> — des frais sont prélevés sans votre accord explicite préalable</li>
+    <li><strong>Assurance affinitaire abusive</strong> — une assurance vendue en complément d'un achat qui fait doublon avec la garantie légale de conformité de 2 ans imposée par la loi</li>
+  </ul>
+
+  <div class="highlight">
+    <strong>Bon à savoir :</strong> Le délai de prescription pour agir est de <strong>3 ans</strong> à compter du premier prélèvement litigieux (article L.218-2 du Code de la consommation). Au-delà, vous ne pouvez plus demander le remboursement des sommes les plus anciennes.
+  </div>
+
+  <h2>Quels sont vos droits ?</h2>
+
+  <h3>La garantie légale de conformité</h3>
+  <p>Tout produit vendu en France bénéficie d'une garantie légale de conformité de <strong>2 ans</strong> (articles L.217-1 et suivants du Code de la consommation). Si une assurance vous a été vendue pour couvrir des risques déjà garantis par la loi, c'est une pratique commerciale trompeuse par omission (art. L.121-2).</p>
+
+  <h3>Le droit à la résiliation simplifiée</h3>
+  <p>Depuis la <strong>loi Pouvoir d'achat du 16 août 2022</strong>, toute entreprise proposant un service avec abonnement est obligée de permettre la résiliation en ligne, de manière simple et sans obstacle. Le refus ou l'obstruction à la résiliation est passible d'une amende pouvant atteindre 75 000€.</p>
+
+  <h3>La protection contre les pratiques commerciales trompeuses</h3>
+  <p>L'article <strong>L.121-1 du Code de la consommation</strong> interdit toute pratique commerciale trompeuse — y compris par omission. Si les conditions d'un abonnement ne vous ont pas été clairement communiquées avant la souscription, c'est une infraction caractérisée.</p>
+
+  <h2>Les 4 recours à activer simultanément</h2>
+
+  <div class="step-box">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <span class="loi-badge">Art. L.121-1 Code conso</span>
+      <h3>La lettre de mise en demeure</h3>
+      <p>C'est le point de départ indispensable. Une mise en demeure formelle, envoyée en recommandé, donne à l'entreprise <strong>15 jours</strong> pour répondre. Elle crée une trace juridique irréfutable et déclenche souvent un règlement rapide — les grandes enseignes préfèrent rembourser plutôt que d'affronter une procédure.</p>
+      <p>Reprendr. rédige cette lettre automatiquement et l'envoie en <strong>Lettre Recommandée Électronique via AR24 by La Poste</strong> — même valeur juridique qu'un recommandé papier.</p>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <span class="loi-badge">DGCCRF — SignalConso</span>
+      <h3>Le signalement DGCCRF</h3>
+      <p>La Direction Générale de la Concurrence, de la Consommation et de la Répression des Fraudes peut enquêter sur les entreprises qui font l'objet de nombreux signalements. Même si votre dossier individuel n'aboutit pas, votre signalement sur <strong>SignalConso.gouv.fr</strong> contribue à protéger d'autres consommateurs et renforce la pression collective sur l'entreprise.</p>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <span class="loi-badge">Règlement SEPA n°260/2012</span>
+      <h3>L'opposition bancaire SEPA</h3>
+      <p>Vous avez le droit de <strong>révoquer à tout moment</strong> votre autorisation de prélèvement SEPA, sans justification. En adressant un courrier à votre banque, elle est tenue de bloquer tout futur prélèvement de l'entreprise concernée. C'est le moyen le plus immédiat de stopper l'hémorragie.</p>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <span class="loi-badge">Loi Hamon — 17 mars 2014</span>
+      <h3>La saisine du médiateur sectoriel</h3>
+      <p>Si l'entreprise ne répond pas favorablement à la mise en demeure, la médiation de la consommation est <strong>totalement gratuite</strong> pour vous. L'entreprise est légalement tenue d'y répondre sous <strong>90 jours</strong>. Le médiateur est un tiers neutre dont les décisions sont généralement respectées par les entreprises pour éviter les procédures judiciaires.</p>
+    </div>
+  </div>
+
+  <h2>Pourquoi utiliser Reprendr. plutôt que de faire seul ?</h2>
+  <p>Techniquement, vous pouvez rédiger ces courriers vous-même. Mais en pratique :</p>
+  <ul>
+    <li>La rédaction juridique d'une mise en demeure efficace nécessite de connaître les bons articles de loi et la bonne formulation</li>
+    <li>L'envoi en recommandé électronique via AR24 représente 8,50€ à lui seul — il est inclus dans les 11,90€ de Reprendr.</li>
+    <li>Reprendr. active simultanément les 4 recours, ce qui maximise la pression sur l'entreprise</li>
+    <li>Le diagnostic gratuit vous dit d'emblée si votre dossier est recevable — évitant toute démarche inutile</li>
+  </ul>
+
+  <div class="cta-box">
+    <h2>Prêt à agir ?</h2>
+    <p>Le diagnostic est gratuit et prend 2 minutes. Vous saurez immédiatement si votre dossier est recevable.</p>
+    <a href="index.html" class="btn-cta">Commencer le diagnostic gratuit →</a>
+  </div>
+
+</div>
+
+<footer>© 2026 <span class="re">Re</span><span class="ndr">prendr.</span> · <a href="legal.html" style="color:rgba(255,255,255,.6)">Mentions légales & CGU</a> · Ce service ne constitue pas un conseil juridique.</footer>
+</body>
+</html>
