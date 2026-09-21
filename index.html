@@ -503,12 +503,12 @@
 
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-question">Qu'est-ce qu'un recommandé électronique ? A-t-il vraiment la même valeur qu'un recommandé La Poste ?<span class="faq-chevron">⌄</span></div>
-        <div class="faq-reponse"><div class="faq-reponse-inner">Oui — la Lettre Recommandée Électronique (LRE) que nous envoyons via AR24 by La Poste a exactement la même valeur juridique qu'un recommandé papier avec accusé de réception, conformément à l'article L.100 du Code des Postes et Communications Électroniques et au règlement eIDAS. Si l'entreprise refuse de l'ouvrir, une "preuve de négligence" est automatiquement générée — ce qui est aussi valable juridiquement que la preuve de réception.</div></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Oui — la Lettre Recommandée Électronique (LRE) que nous envoyons via AR24 by La Poste a exactement la même valeur juridique qu'un recommandé papier avec accusé de réception, conformément à l'article L.100 du Code des Postes et Communications Électroniques et au règlement eIDAS. À La Poste, ce service est facturé <strong>7,35€</strong> aux particuliers — chez Reprendr. il est inclus dans les 11,90€ et envoyé par nos soins. Si l'entreprise refuse de l'ouvrir, une "preuve de négligence" est automatiquement générée — ce qui est aussi valable juridiquement que la preuve de réception.</div></div>
       </div>
 
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">Reprendr. garantit-il le remboursement ?<span class="faq-chevron">⌄</span></div>
-        <div class="faq-reponse"><div class="faq-reponse-inner">Non — et nous préférons être honnêtes sur ce point. Reprendr. génère des documents juridiquement solides et effectue les envois à votre place, mais le résultat dépend de la réponse de l'entreprise concernée. Ce que nous pouvons garantir : votre dossier sera traité avec sérieux, vos documents seront conformes au droit français, et vous serez accompagné à chaque étape. Les taux de succès varient selon les entreprises — les grandes enseignes répondent généralement favorablement face à une mise en demeure formelle.</div></div>
+        <div class="faq-question">Garantissez-vous un résultat ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Non — et nous préférons être honnêtes sur ce point. Reprendr. génère des documents juridiquement solides et effectue les envois à votre place, mais le résultat dépend de la réponse de l'entreprise concernée. Ce que nous pouvons garantir : votre dossier sera traité avec sérieux, vos documents seront conformes au droit français, et vous serez accompagné à chaque étape. En pratique, les grandes enseignes (SFR, Orange, Amazon, Fnac…) répondent favorablement dans la grande majorité des cas face à une mise en demeure formelle envoyée en recommandé électronique.</div></div>
       </div>
 
       <div class="faq-item" onclick="toggleFaq(this)">
@@ -528,7 +528,7 @@
 
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-question">Comment se passe le remboursement si je ne suis pas satisfait ?<span class="faq-chevron">⌄</span></div>
-        <div class="faq-reponse"><div class="faq-reponse-inner">Reprendr. s'engage à rembourser intégralement tout utilisateur qui en fait la demande dans les 7 jours suivant le paiement, à condition qu'aucune action n'ait encore été effectuée (aucun recommandé envoyé). Envoyez votre demande à contact@reprendr.fr avec l'objet "Remboursement" et votre numéro de commande.</div></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Conformément à l'article L.221-28 du Code de la consommation, le droit de rétractation de 14 jours s'éteint dès que l'exécution du service commence — ce que vous acceptez expressément en cochant la case avant le paiement. En effet, votre recommandé électronique étant envoyé immédiatement après validation, le service est exécuté dès le paiement. Toutefois, si vous avez rencontré un problème technique ou une erreur dans votre dossier, contactez-nous à contact@reprendr.fr — nous examinerons votre situation au cas par cas.</div></div>
       </div>
 
     </div>
@@ -732,7 +732,11 @@
       <div class="eyebrow">Étape 3 sur 3</div>
       <div class="card-title">Vos coordonnées</div>
       <div class="card-sub">Pour personnaliser votre lettre de mise en demeure. Vos données ne sont jamais revendues.</div>
-      <div class="field"><label>Prénom et nom</label><input type="text" id="f_nom" placeholder="Ex : Jean Dupont" oninput="checkD3()"></div>
+      <div class="field">
+        <label>Prénom ou pseudo <span style="color:var(--red)">*</span></label>
+        <input type="text" id="f_nom" placeholder="Ex : Jean ou Jean D." oninput="checkD3()">
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">Votre identité complète sera demandée après paiement pour constituer le dossier.</div>
+      </div>
       <div class="field"><label>Adresse email</label><input type="email" id="f_email" placeholder="votre@email.fr" oninput="checkD3()"><div class="hint">Votre dossier vous sera envoyé à cette adresse</div></div>
       <div class="field"><label>Ville</label><input type="text" id="f_ville" placeholder="Ex : Paris" oninput="checkD3()"></div>
       <div class="actions"><button class="btn-back" onclick="goDstep(2)">← Retour</button><button class="btn-next" id="btnD3" disabled onclick="goSynthese()">Analyser mon dossier →</button></div>
@@ -791,19 +795,20 @@
         <div class="recap-ligne total"><span>Total TTC</span><span>11,90€</span></div>
       </div>
       <div class="info-box">💡 <strong>Le recommandé électronique est offert.</strong> Il a la même valeur juridique qu'un recommandé avec accusé de réception — sans nécessité de vous déplacer ni de faire la queue à La Poste. Seule une éventuelle procédure judiciaire via un cabinet partenaire générerait des honoraires supplémentaires, communiqués avant tout engagement.</div>
-      <div class="stripe-zone">
-        <label class="stripe-label">Numéro de carte</label>
-        <input class="stripe-input" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCarte(this)">
-        <div class="stripe-row">
-          <div><label class="stripe-label">Expiration</label><input class="stripe-input" placeholder="MM/AA" maxlength="5"></div>
-          <div><label class="stripe-label">CVC</label><input class="stripe-input" placeholder="123" maxlength="3"></div>
-        </div>
-        <label class="stripe-label">Nom sur la carte</label>
-        <input class="stripe-input" placeholder="Jean Dupont">
-        <div class="stripe-securite">🔒 Paiement sécurisé par Stripe · Vos données bancaires ne sont jamais stockées par <strong style="color:var(--blue)">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span></div>
+
+      <!-- Case à cocher obligatoire — renonciation droit de rétractation -->
+      <div style="background:#FFF8EE;border:1px solid #FCD34D;border-radius:10px;padding:16px 20px;margin:20px 0">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
+          <input type="checkbox" id="cbRetractation" onchange="toggleBtnPayer()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--blue)">
+          <span style="font-size:13px;color:#374151;line-height:1.6">
+            Je reconnais que l'exécution du service commencera <strong>immédiatement après le paiement</strong> et renonce expressément à mon droit de rétractation de 14 jours, conformément à l'article L.221-28 du Code de la consommation.
+            <a href="legal.html#cgu" style="color:var(--blue);display:block;margin-top:4px;font-size:12px">Lire l'article 4 des CGU →</a>
+          </span>
+        </label>
       </div>
-      <button class="btn-payer" onclick="window.open('https://buy.stripe.com/6oU7sKaq3e9DcmG2SgcV201','_blank')">Payer 11,90€ et accéder à mon dossier →</button>
-      <div class="cgu-note">En procédant, vous acceptez nos <a href="legal.html">CGU</a> et notre <a href="legal.html#confidentialite">Politique de confidentialité</a>.<br>Satisfait ou remboursé 7 jours si aucune action effectuée · Paiement unique · Aucun abonnement</div>
+
+      <button class="btn-payer" id="btnPayer" onclick="window.open('https://buy.stripe.com/6oU7sKaq3e9DcmG2SgcV201','_blank')" disabled style="opacity:.4;cursor:not-allowed">Payer 11,90€ et accéder à mon dossier →</button>
+      <div class="cgu-note">En procédant, vous acceptez nos <a href="legal.html">CGU</a> et notre <a href="legal.html#confidentialite">Politique de confidentialité</a>.<br>Paiement unique · Aucun abonnement</div>
     </div>
   </div>
 </div>
@@ -1734,6 +1739,16 @@ function ouvrirSignalConso() {
 function fmtCarte(input){
   var v=input.value.replace(/\D/g,'').substring(0,16);
   input.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+function toggleBtnPayer() {
+  var cb = document.getElementById('cbRetractation');
+  var btn = document.getElementById('btnPayer');
+  if(cb && btn) {
+    btn.disabled = !cb.checked;
+    btn.style.opacity = cb.checked ? '1' : '.4';
+    btn.style.cursor = cb.checked ? 'pointer' : 'not-allowed';
+  }
 }
 
 // ===== FAQ =====
