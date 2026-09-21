@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reprendr. — Contestez vos prélèvements non consentis | Dossier complet en 5 minutes</title>
-  <meta name="description" content="Abonnement caché, résiliation refusée, prélèvement non autorisé ? Reprendr. génère votre dossier juridique complet en 5 minutes : mise en demeure, recommandé électronique AR24, signalement DGCCRF. Diagnostic gratuit.">
+  <title>Reprendr. — Contestez vos prélèvements non consentis | Dossier complet en 2 minutes</title>
+  <meta name="description" content="Abonnement caché, résiliation refusée, prélèvement non autorisé ? Reprendr. génère votre dossier juridique complet en 2 minutes : mise en demeure, recommandé électronique AR24, signalement DGCCRF. Diagnostic gratuit.">
   <meta name="keywords" content="contestation prélèvement, abonnement non consenti, résiliation refusée, mise en demeure, recommandé électronique, droits consommateur, remboursement abonnement">
   <meta name="author" content="Reprendr.">
   <meta name="robots" content="index, follow">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://reprendr.fr/">
   <meta property="og:title" content="Reprendr. — Reprenez ce qui vous appartient">
-  <meta property="og:description" content="Abonnement caché, résiliation refusée ? Reprendr. génère votre dossier de contestation en 5 minutes. Mise en demeure + recommandé électronique inclus. Diagnostic gratuit.">
+  <meta property="og:description" content="Abonnement caché, résiliation refusée ? Reprendr. génère votre dossier de contestation en 2 minutes. Mise en demeure + recommandé électronique inclus. Diagnostic gratuit.">
   <meta property="og:image" content="https://reprendr.fr/hero.png">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Reprendr.">
@@ -24,7 +24,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://reprendr.fr/">
   <meta name="twitter:title" content="Reprendr. — Reprenez ce qui vous appartient">
-  <meta name="twitter:description" content="Abonnement caché, résiliation refusée ? Reprendr. génère votre dossier de contestation en 5 minutes. Diagnostic gratuit.">
+  <meta name="twitter:description" content="Abonnement caché, résiliation refusée ? Reprendr. génère votre dossier de contestation en 2 minutes. Diagnostic gratuit.">
   <meta name="twitter:image" content="https://reprendr.fr/hero.png">
 
   <!-- Schema.org JSON-LD -->
@@ -34,7 +34,7 @@
     "@type": "WebApplication",
     "name": "Reprendr.",
     "url": "https://reprendr.fr",
-    "description": "Service d'aide à la contestation de prélèvements non consentis et d'abonnements frauduleux. Génère un dossier juridique complet en 5 minutes.",
+    "description": "Service d'aide à la contestation de prélèvements non consentis et d'abonnements frauduleux. Génère un dossier juridique complet en 2 minutes.",
     "applicationCategory": "LegalService",
     "operatingSystem": "Web",
     "offers": {
@@ -361,7 +361,25 @@
     .review-nom{font-size:13px;font-weight:700;color:#1A1A2E}
     .review-detail{font-size:12px;color:var(--muted)}
     .review-badge{display:inline-block;background:#F0FBF4;color:#2E7D52;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;margin-top:8px}
-    @media(max-width:600px){.reviews-grid{grid-template-columns:1fr}}
+    /* FAQ */
+    .faq{padding:64px 32px;background:var(--gray)}
+    .faq-inner{max-width:760px;margin:0 auto}
+    .faq-titre{text-align:center;font-size:26px;font-weight:800;color:var(--blue);margin-bottom:6px;letter-spacing:-.3px}
+    .faq-sub{text-align:center;font-size:15px;color:var(--muted);margin-bottom:40px}
+    .faq-item{background:#fff;border:1px solid var(--gray2);border-radius:12px;margin-bottom:10px;overflow:hidden}
+    .faq-question{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;font-size:15px;font-weight:600;color:#1A1A2E;gap:12px}
+    .faq-question:hover{background:#F9FAFB}
+    .faq-chevron{font-size:18px;color:var(--muted);transition:transform .25s;flex-shrink:0}
+    .faq-item.open .faq-chevron{transform:rotate(180deg)}
+    .faq-reponse{max-height:0;overflow:hidden;transition:max-height .3s ease;font-size:14px;color:#374151;line-height:1.7}
+    .faq-item.open .faq-reponse{max-height:400px}
+    .faq-reponse-inner{padding:0 24px 18px}
+
+    /* BANDEAU COOKIES */
+    .cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#12294A;color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:1000;font-size:13px;line-height:1.5;flex-wrap:wrap}
+    .cookie-banner a{color:#93C5FD;text-decoration:underline}
+    .cookie-btn{background:#fff;color:#12294A;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+    @media(max-width:600px){.cookie-banner{flex-direction:column;text-align:center}}
     @media(max-width:600px){
       .hero{background:linear-gradient(rgba(27,63,110,0.65),rgba(27,63,110,0.65)),url('hero-mobile.png') center/cover no-repeat;padding:48px 20px 60px}
       .hero h1{font-size:32px}
@@ -389,12 +407,12 @@
   <div class="hero">
     <div class="hero-eyebrow">Le droit des consommateurs, enfin actionnable</div>
     <h1>Ils vous ont prélevé.<br><em><span style="color:#fff">On vous aide à <span style="color:#fff;font-weight:700">Re</span></span><span class="ndr">prendr.</span></em></h1>
-    <p class="hero-sub">Un abonnement que vous n'avez pas choisi, des frais cachés, un service impossible à résilier — <strong>Re</strong><span style="color:var(--red);font-weight:700">prendr.</span> génère votre dossier de contestation en 5 minutes.</p>
+    <p class="hero-sub">Un abonnement que vous n'avez pas choisi, des frais cachés, un service impossible à résilier — <strong>Re</strong><span style="color:var(--red);font-weight:700">prendr.</span> génère votre dossier de contestation en 2 minutes.</p>
     <div class="hero-stats">
       <div class="hero-stat"><strong>+500 000</strong>victimes par an en France</div>
       <div class="hero-stat"><strong>Gratuit</strong>diagnostic · 11,90€ par dossier traité</div>
       <div class="hero-stat"><strong>Inclus</strong>Recommandé électronique — La Poste vous facturerait 8,50€</div>
-      <div class="hero-stat"><strong>5 min</strong>pour agir</div>
+      <div class="hero-stat"><strong>2 min</strong>pour agir</div>
     </div>
     <div class="hero-actions">
       <button class="btn-on-blue" onclick="afficher('vueDiagnostic')">Commencer gratuitement</button>
@@ -443,7 +461,7 @@
       <p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic">Reprendr. maximise vos chances de succès en actionnant simultanément tous les recours légaux à votre disposition. Les résultats dépendent de la nature du litige et de la réponse de l'entreprise concernée. Nous ne pouvons garantir un remboursement dans tous les cas.</p>
       <div id="comment" style="text-align:center;margin-bottom:60px;scroll-margin-top:80px">
         <div class="section-title" style="text-align:center">Comment ça marche ?</div>
-        <p class="section-sub" style="text-align:center">Diagnostic gratuit. 5 minutes. Un dossier complet pour agir.</p>
+        <p class="section-sub" style="text-align:center">Diagnostic gratuit. 2 minutes. Un dossier complet pour agir.</p>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
@@ -467,9 +485,53 @@
 
   <div class="trust">
     <div class="trust-item"><span class="trust-num">0€</span><span class="trust-label">Pour le diagnostic initial</span></div>
-    <div class="trust-item"><span class="trust-num">5 min</span><span class="trust-label">Pour un dossier complet</span></div>
+    <div class="trust-item"><span class="trust-num">2 min</span><span class="trust-label">Pour un dossier complet</span></div>
     <div class="trust-item"><span class="trust-num">11,90€</span><span class="trust-label">Seulement si vous passez à l'action</span></div>
     <div class="trust-item"><span class="trust-num">100%</span><span class="trust-label">Basé sur le droit français</span></div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <div class="faq-inner">
+      <div class="faq-titre">Questions fréquentes</div>
+      <div class="faq-sub">Tout ce que vous devez savoir avant de déposer votre dossier.</div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Le diagnostic est vraiment gratuit ? Sans engagement ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Oui, totalement. Le diagnostic analyse votre situation et évalue les chances de succès de votre dossier — sans aucun frais. Les 11,90€ ne sont demandés que si votre dossier est recevable ET que vous décidez de passer à l'action. Si votre dossier n'est pas recevable, nous vous l'expliquons clairement et ne vous demandons rien.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Qu'est-ce qu'un recommandé électronique ? A-t-il vraiment la même valeur qu'un recommandé La Poste ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Oui — la Lettre Recommandée Électronique (LRE) que nous envoyons via AR24 by La Poste a exactement la même valeur juridique qu'un recommandé papier avec accusé de réception, conformément à l'article L.100 du Code des Postes et Communications Électroniques et au règlement eIDAS. Si l'entreprise refuse de l'ouvrir, une "preuve de négligence" est automatiquement générée — ce qui est aussi valable juridiquement que la preuve de réception.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Reprendr. garantit-il le remboursement ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Non — et nous préférons être honnêtes sur ce point. Reprendr. génère des documents juridiquement solides et effectue les envois à votre place, mais le résultat dépend de la réponse de l'entreprise concernée. Ce que nous pouvons garantir : votre dossier sera traité avec sérieux, vos documents seront conformes au droit français, et vous serez accompagné à chaque étape. Les taux de succès varient selon les entreprises — les grandes enseignes répondent généralement favorablement face à une mise en demeure formelle.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Combien de temps prend la procédure ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Le dossier se prépare en 2 minutes. L'entreprise dispose ensuite de 15 jours pour répondre à la mise en demeure. Si elle ne répond pas, la saisine du médiateur permet d'obtenir une décision sous 90 jours maximum (loi Hamon, 17 mars 2014). Dans la majorité des cas, un accord amiable intervient dans les 15 à 30 premiers jours.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Mes données personnelles sont-elles en sécurité ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Vos données sont stockées de façon sécurisée sur des serveurs européens (Supabase) et ne sont jamais vendues à des tiers. Elles sont transmises uniquement aux prestataires strictement nécessaires : AR24 for La Poste (envoi du recommandé), Stripe (paiement) et Resend (emails). Conformément au RGPD, vous pouvez demander l'accès, la modification ou la suppression de vos données à tout moment via privacy@reprendr.fr.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Puis-je utiliser Reprendr. si l'entreprise est à l'étranger ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Si l'entreprise est dans l'Union européenne, le recours est possible via la plateforme ODR européenne en complément de nos démarches. Si l'entreprise est hors UE (USA, Asie…), la portée juridique de la mise en demeure française est limitée — notre diagnostic vous le signalera clairement et vous orientera vers les recours les plus efficaces (blocage bancaire SEPA notamment). Dans ce cas, aucun frais ne vous sera demandé.</div></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">Comment se passe le remboursement si je ne suis pas satisfait ?<span class="faq-chevron">⌄</span></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Reprendr. s'engage à rembourser intégralement tout utilisateur qui en fait la demande dans les 7 jours suivant le paiement, à condition qu'aucune action n'ait encore été effectuée (aucun recommandé envoyé). Envoyez votre demande à contact@reprendr.fr avec l'objet "Remboursement" et votre numéro de commande.</div></div>
+      </div>
+
+    </div>
   </div>
 
   <!-- REVIEWS -->
@@ -481,7 +543,7 @@
 
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
-          <div class="review-texte">« J'avais une assurance téléphone à 12€/mois que je n'arrivais pas à résilier depuis 8 mois. En 5 minutes sur Reprendr., j'ai envoyé la mise en demeure. SFR m'a remboursé 96€ et résilié en 10 jours. »</div>
+          <div class="review-texte">« J'avais une assurance téléphone à 12€/mois que je n'arrivais pas à résilier depuis 8 mois. En 2 minutes sur Reprendr., j'ai envoyé la mise en demeure. SFR m'a remboursé 96€ et résilié en 10 jours. »</div>
           <div class="review-auteur">
             <div class="review-avatar">M</div>
             <div class="review-info">
@@ -533,7 +595,7 @@
 
         <div class="review-card">
           <div class="review-stars">★★★★☆</div>
-          <div class="review-texte">« Simple et rapide. J'avais peur que ce soit compliqué mais en 5 minutes tout était prêt. Le service client Fnac m'avait pourtant bien dit que c'était "impossible" de résilier. La lettre recommandée les a fait changer d'avis. »</div>
+          <div class="review-texte">« Simple et rapide. J'avais peur que ce soit compliqué mais en 2 minutes tout était prêt. Le service client Fnac m'avait pourtant bien dit que c'était "impossible" de résilier. La lettre recommandée les a fait changer d'avis. »</div>
           <div class="review-auteur">
             <div class="review-avatar">C</div>
             <div class="review-info">
@@ -569,6 +631,12 @@
   </div>
 
   <footer>© 2026 <span class="re">Re</span><span class="ndr">prendr.</span> · <a href="legal.html#mentions" style="color:rgba(255,255,255,.6)">Mentions légales</a> · <a href="legal.html#cgu" style="color:rgba(255,255,255,.6)">CGU</a> · <a href="legal.html#confidentialite" style="color:rgba(255,255,255,.6)">Politique de confidentialité</a> · <a href="mailto:contact@reprendr.fr" style="color:rgba(255,255,255,.6)">Contact</a> — Ce service ne constitue pas un conseil juridique.</footer>
+</div>
+
+<!-- BANDEAU COOKIES -->
+<div class="cookie-banner" id="cookieBanner" style="display:none">
+  <span>🍪 Reprendr. utilise uniquement des cookies techniques strictement nécessaires au fonctionnement du service. Aucun cookie publicitaire ou de traçage. <a href="legal.html#confidentialite">En savoir plus</a></span>
+  <button class="cookie-btn" onclick="accepterCookies()">J'ai compris</button>
 </div>
 
 <!-- ========== VUE : DIAGNOSTIC ========== -->
@@ -1668,6 +1736,19 @@ function fmtCarte(input){
   input.value=v.replace(/(.{4})/g,'$1 ').trim();
 }
 
+// ===== FAQ =====
+function toggleFaq(item) {
+  var estOuvert = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+  if(!estOuvert) item.classList.add('open');
+}
+
+// ===== COOKIES =====
+function accepterCookies() {
+  localStorage.setItem('reprendr_cookies', '1');
+  document.getElementById('cookieBanner').style.display = 'none';
+}
+
 // ===== ENVOI EMAIL DOSSIER COMPLET =====
 var SUPABASE_DOSSIER_PDFS_URL = 'https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/send-dossier-pdfs';
 
@@ -1972,6 +2053,11 @@ window.addEventListener('load', function(){
   }
   // Pré-remplir adresse destinataire si entreprise connue
   if(session.entreprise) prefillAdresseDestinataire(session.entreprise);
+
+  // Bandeau cookies
+  if(!localStorage.getItem('reprendr_cookies')) {
+    setTimeout(function(){ document.getElementById('cookieBanner').style.display = 'flex'; }, 1000);
+  }
 });
 
 function prefillAdresseDestinataire(entrepriseNom) {
