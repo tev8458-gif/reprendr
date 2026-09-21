@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://reprendr.fr/comment-ca-marche.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://reprendr.fr/legal.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
