@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /?paiement=ok
+Disallow: /?acces=ok
+
+Sitemap: https://reprendr.fr/sitemap.xml
