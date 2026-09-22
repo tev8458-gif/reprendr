@@ -801,7 +801,15 @@
       </div>
       <div class="info-box">💡 <strong>Le recommandé électronique est offert.</strong> Il a la même valeur juridique qu'un recommandé avec accusé de réception — sans nécessité de vous déplacer ni de faire la queue à La Poste. Seule une éventuelle procédure judiciaire via un cabinet partenaire générerait des honoraires supplémentaires, communiqués avant tout engagement.</div>
 
-      <!-- Case à cocher obligatoire — renonciation droit de rétractation -->
+      <!-- Code promo -->
+      <div style="margin:16px 0">
+        <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px">Code promo (optionnel)</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="inputCodePromo" placeholder="ex : RPR-ABCD-1234" style="flex:1;border:1px solid var(--gray2);border-radius:8px;padding:10px 14px;font-size:14px;font-family:inherit;outline:none;text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+          <button onclick="verifierCodePromo()" style="background:var(--blue);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Appliquer</button>
+        </div>
+        <div id="promoStatus" style="display:none;font-size:12px;margin-top:6px"></div>
+      </div>
       <div style="background:#FFF8EE;border:1px solid #FCD34D;border-radius:10px;padding:16px 20px;margin:20px 0">
         <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
           <input type="checkbox" id="cbRetractation" onchange="toggleBtnPayer()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--blue)">
@@ -812,7 +820,7 @@
         </label>
       </div>
 
-      <button class="btn-payer" id="btnPayer" onclick="window.open('https://buy.stripe.com/6oU7sKaq3e9DcmG2SgcV201','_blank')" disabled style="opacity:.4;cursor:not-allowed">Payer 11,90€ et accéder à mon dossier →</button>
+      <button class="btn-payer" id="btnPayer" onclick="ouvrirPaiementStripe()" disabled style="opacity:.4;cursor:not-allowed">Payer 11,90€ et accéder à mon dossier →</button>
       <div class="cgu-note">En procédant, vous acceptez nos <a href="legal.html">CGU</a> et notre <a href="legal.html#confidentialite">Politique de confidentialité</a>.<br>Paiement unique · Aucun abonnement</div>
     </div>
   </div>
@@ -1742,6 +1750,49 @@ function ouvrirSignalConso() {
 function fmtCarte(input){
   var v=input.value.replace(/\D/g,'').substring(0,16);
   input.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+var codePromoValide = null;
+
+async function verifierCodePromo() {
+  var code = document.getElementById('inputCodePromo').value.trim();
+  var status = document.getElementById('promoStatus');
+  if(!code) return;
+
+  status.style.display = 'block';
+  status.style.color = 'var(--muted)';
+  status.textContent = 'Vérification…';
+
+  try {
+    var resp = await fetch('https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/verifier-code-promo', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ code })
+    });
+    var data = await resp.json();
+    if(data.valide) {
+      codePromoValide = code;
+      status.style.color = '#2E7D52';
+      status.innerHTML = '✅ Code valide — <strong>3€ de réduction</strong> appliquée. Vous payerez 8,90€.';
+      document.getElementById('btnPayer').textContent = 'Payer 8,90€ et accéder à mon dossier →';
+    } else {
+      codePromoValide = null;
+      status.style.color = '#DC2626';
+      status.textContent = '❌ Code invalide ou déjà utilisé.';
+      document.getElementById('btnPayer').textContent = 'Payer 11,90€ et accéder à mon dossier →';
+    }
+  } catch(e) {
+    status.style.color = '#DC2626';
+    status.textContent = 'Erreur de vérification — réessayez.';
+  }
+}
+
+function ouvrirPaiementStripe() {
+  var baseUrl = 'https://buy.stripe.com/6oU7sKaq3e9DcmG2SgcV201';
+  var url = codePromoValide
+    ? baseUrl + '?prefilled_promo_code=' + codePromoValide
+    : baseUrl;
+  window.open(url, '_blank');
 }
 
 function toggleBtnPayer() {
