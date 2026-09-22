@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laissez votre avis — Reprendr.</title>
+  <meta name="robots" content="noindex">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;background:#F5F7FA;color:#1A1A2E;min-height:100vh;display:flex;flex-direction:column}
+    :root{--blue:#1B3F6E;--red:#E02B2B;--gray:#F5F7FA;--gray2:#E8ECF2;--muted:#5A6478}
+    nav{background:#fff;border-bottom:1px solid var(--gray2);padding:0 32px;height:56px;display:flex;align-items:center}
+    .logo .re{color:var(--blue);font-size:22px;font-weight:800}
+    .logo .ndr{color:var(--red);font-size:22px;font-weight:800}
+    .main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px}
+    .card{background:#fff;border-radius:16px;padding:40px;max-width:520px;width:100%;box-shadow:0 2px 16px rgba(0,0,0,0.08)}
+    h1{font-size:22px;font-weight:800;color:var(--blue);margin-bottom:8px}
+    .sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+    .field{margin-bottom:18px}
+    label{display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px}
+    input,textarea{width:100%;border:1px solid var(--gray2);border-radius:8px;padding:10px 14px;font-size:14px;font-family:inherit;color:#1A1A2E;outline:none;transition:border-color .2s}
+    input:focus,textarea:focus{border-color:var(--blue)}
+    textarea{resize:vertical;min-height:100px}
+    .stars{display:flex;gap:8px;margin-bottom:4px}
+    .star{font-size:32px;cursor:pointer;color:#D1D5DB;transition:color .15s;user-select:none}
+    .star.active{color:#F59E0B}
+    .note-label{font-size:12px;color:var(--muted);margin-bottom:4px}
+    .btn{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .success{text-align:center;padding:20px 0}
+    .success-icon{font-size:56px;margin-bottom:16px}
+    .success h2{font-size:20px;font-weight:800;color:var(--blue);margin-bottom:8px}
+    .success p{font-size:14px;color:var(--muted);line-height:1.6}
+    .coupon-box{background:#F0FBF4;border:2px solid #86EFAC;border-radius:12px;padding:20px;margin:20px 0;text-align:center}
+    .coupon-code{font-size:28px;font-weight:800;color:var(--blue);letter-spacing:3px;margin:8px 0}
+    .coupon-note{font-size:12px;color:var(--muted)}
+    footer{background:#12294A;color:rgba(255,255,255,.6);text-align:center;padding:16px;font-size:12px}
+    footer .re{color:#fff;font-weight:700}
+    footer .ndr{color:var(--red);font-weight:700}
+  </style>
+</head>
+<body>
+<nav><div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div></nav>
+
+<div class="main">
+  <div class="card" id="formCard">
+    <h1>Partagez votre expérience</h1>
+    <div class="sub">Votre avis aide d'autres consommateurs à reprendre ce qui leur appartient. En échange, recevez votre coupon de 3€ valable indéfiniment.</div>
+
+    <div class="field">
+      <label>Votre note <span style="color:var(--red)">*</span></label>
+      <div class="stars" id="stars">
+        <span class="star" data-note="1" onclick="setNote(1)">★</span>
+        <span class="star" data-note="2" onclick="setNote(2)">★</span>
+        <span class="star" data-note="3" onclick="setNote(3)">★</span>
+        <span class="star" data-note="4" onclick="setNote(4)">★</span>
+        <span class="star" data-note="5" onclick="setNote(5)">★</span>
+      </div>
+      <div class="note-label" id="noteLabel">Cliquez sur une étoile</div>
+    </div>
+
+    <div class="field">
+      <label>Votre commentaire <span style="color:var(--red)">*</span></label>
+      <textarea id="commentaire" placeholder="Décrivez votre expérience avec Reprendr. (min. 50 caractères)" oninput="checkForm()"></textarea>
+      <div id="charCount" style="font-size:11px;color:var(--muted);margin-top:4px">0 / 50 caractères minimum</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="field">
+        <label>Prénom <span style="color:var(--red)">*</span></label>
+        <input type="text" id="prenom" placeholder="Marie" oninput="checkForm()">
+      </div>
+      <div class="field">
+        <label>Ville <span style="color:var(--red)">*</span></label>
+        <input type="text" id="ville" placeholder="Lyon" oninput="checkForm()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Email <span style="color:var(--red)">*</span></label>
+      <input type="email" id="email" placeholder="votre@email.fr" oninput="checkForm()">
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Pour recevoir votre coupon — non publié</div>
+    </div>
+
+    <div style="background:#FFF8EE;border-radius:8px;padding:12px 14px;font-size:12px;color:#92400E;margin-bottom:16px">
+      ✅ En soumettant cet avis, vous acceptez qu'il puisse être publié sur reprendr.fr sous votre prénom et ville.
+    </div>
+
+    <button class="btn" id="btnSoumettre" onclick="soumettreAvis()" disabled>Envoyer mon avis et recevoir mon coupon →</button>
+    <div id="erreur" style="display:none;color:#DC2626;font-size:13px;margin-top:8px;text-align:center"></div>
+  </div>
+
+  <div class="card success" id="successCard" style="display:none">
+    <div class="success-icon">🎉</div>
+    <h2>Merci pour votre avis !</h2>
+    <p>Votre coupon de 3€ vous a été envoyé par email. Utilisez-le sur votre prochain dossier ou offrez-le à un proche.</p>
+    <div class="coupon-box">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Votre coupon</div>
+      <div class="coupon-code" id="displayCoupon">—</div>
+      <div class="coupon-note">Valable indéfiniment · 3€ de réduction · Utilisable une fois</div>
+    </div>
+    <a href="/" style="display:inline-block;background:var(--blue);color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:700;margin-top:8px">Retour à l'accueil →</a>
+  </div>
+</div>
+
+<footer>© 2026 <span class="re">Re</span><span class="ndr">prendr.</span> — Ce service ne constitue pas un conseil juridique.</footer>
+
+<script>
+var noteSelectionnee = 0;
+var noteLabels = ['','Très insatisfait','Insatisfait','Correct','Satisfait','Très satisfait !'];
+
+function setNote(n) {
+  noteSelectionnee = n;
+  document.querySelectorAll('.star').forEach(function(s,i){
+    s.classList.toggle('active', i < n);
+  });
+  document.getElementById('noteLabel').textContent = noteLabels[n];
+  checkForm();
+}
+
+function checkForm() {
+  var commentaire = document.getElementById('commentaire').value.trim();
+  var prenom = document.getElementById('prenom').value.trim();
+  var ville = document.getElementById('ville').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var charCount = document.getElementById('charCount');
+  charCount.textContent = commentaire.length + ' / 50 caractères minimum';
+  charCount.style.color = commentaire.length >= 50 ? '#2E7D52' : 'var(--muted)';
+  var ok = noteSelectionnee > 0 && commentaire.length >= 50 && prenom && ville && email.includes('@');
+  document.getElementById('btnSoumettre').disabled = !ok;
+}
+
+async function soumettreAvis() {
+  var btn = document.getElementById('btnSoumettre');
+  var erreur = document.getElementById('erreur');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+  erreur.style.display = 'none';
+
+  var params = new URLSearchParams(window.location.search);
+  var dossierId = params.get('did') || null;
+
+  try {
+    var resp = await fetch('https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/submit-avis', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        dossier_id: dossierId,
+        email: document.getElementById('email').value.trim(),
+        prenom: document.getElementById('prenom').value.trim(),
+        ville: document.getElementById('ville').value.trim(),
+        note: noteSelectionnee,
+        commentaire: document.getElementById('commentaire').value.trim()
+      })
+    });
+    var data = await resp.json();
+    if(data.success) {
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+      document.getElementById('displayCoupon').textContent = data.coupon_code;
+    } else {
+      throw new Error(data.error || 'Erreur serveur');
+    }
+  } catch(e) {
+    erreur.style.display = 'block';
+    erreur.textContent = 'Une erreur est survenue. Réessayez dans quelques instants.';
+    btn.disabled = false;
+    btn.textContent = 'Envoyer mon avis et recevoir mon coupon →';
+  }
+}
+</script>
+</body>
+</html>
