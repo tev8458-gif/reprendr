@@ -379,6 +379,11 @@
     .cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#12294A;color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:1000;font-size:13px;line-height:1.5;flex-wrap:wrap}
     .cookie-banner a{color:#93C5FD;text-decoration:underline}
     .cookie-btn{background:#fff;color:#12294A;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+    /* NAV TABS */
+    .nav-tab{background:#fff;border:2px solid var(--gray2);border-radius:20px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s}
+    .nav-tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
+    .nav-tab:hover:not(.active){border-color:var(--blue);color:var(--blue)}
+
     @media(max-width:600px){.cookie-banner{flex-direction:column;text-align:center}}
     @media(max-width:600px){
       .hero{background:linear-gradient(rgba(27,63,110,0.65),rgba(27,63,110,0.65)),url('hero-mobile.png') center/cover no-repeat;padding:48px 20px 60px}
@@ -423,12 +428,43 @@
   <div class="section">
     <div class="section-title">Vous avez été prélevé sans vraiment l'avoir accepté ?</div>
     <p class="section-sub">Décrivez votre situation — le diagnostic est gratuit, sans engagement.</p>
-    <div class="case-card" onclick="afficher('vueDiagnostic')">
-      <div class="case-icon">💳</div>
-      <h3>Prélèvement ou abonnement non consenti</h3>
-      <p>Un abonnement caché lors d'un achat, des frais que vous n'avez pas autorisés, un service que vous ne pouvez pas résilier malgré vos demandes.</p>
-      <span class="case-amount">Montant moyen récupéré : 180€ · Diagnostic gratuit</span><br><br>
-      <button class="btn-on-white">Déposer mon dossier →</button>
+    <div class="nav-tabs" style="display:flex;gap:8px;margin-bottom:20px;justify-content:center">
+      <button class="nav-tab active" id="tab-abonnements" onclick="switchTab('abonnements')">💳 Abonnements & Prélèvements</button>
+      <button class="nav-tab" id="tab-voyages" onclick="switchTab('voyages')">✈️ Voyages perturbés</button>
+    </div>
+
+    <div id="section-abonnements">
+      <div class="case-card" onclick="afficher('vueDiagnostic')">
+        <div class="case-icon">💳</div>
+        <h3>Prélèvement ou abonnement non consenti</h3>
+        <p>Un abonnement caché lors d'un achat, des frais que vous n'avez pas autorisés, un service que vous ne pouvez pas résilier malgré vos demandes.</p>
+        <span class="case-amount">Montant moyen récupéré : 180€ · Diagnostic gratuit</span><br><br>
+        <button class="btn-on-white">Déposer mon dossier →</button>
+      </div>
+    </div>
+
+    <div id="section-voyages" style="display:none">
+      <div class="case-card" onclick="afficher('vueDiagnosticVoyages')" style="border-left:4px solid #0EA5E9">
+        <div class="case-icon">✈️</div>
+        <h3>Vol annulé ou retardé</h3>
+        <p>Votre vol a été annulé ou a subi un retard important ? Le règlement EU 261/2004 vous garantit une indemnisation de <strong>250€ à 600€</strong> — quelle que soit la mention "non remboursable" sur votre billet.</p>
+        <span class="case-amount">Indemnisation : 250€ à 600€ garantis · Diagnostic gratuit</span><br><br>
+        <button class="btn-on-white" style="background:#0EA5E9">Vérifier mes droits →</button>
+      </div>
+      <div class="case-card" onclick="afficher('vueDiagnosticVoyages')" style="border-left:4px solid #0EA5E9;margin-top:12px">
+        <div class="case-icon">🚄</div>
+        <h3>Train annulé ou retardé</h3>
+        <p>Retard SNCF de plus d'1 heure ? Le règlement EU 2021/782 vous ouvre droit à une indemnisation de 25% à 75% du prix de votre billet, voire un remboursement intégral en cas d'annulation.</p>
+        <span class="case-amount">Indemnisation : 25% à 100% du billet · Diagnostic gratuit</span><br><br>
+        <button class="btn-on-white" style="background:#0EA5E9">Vérifier mes droits →</button>
+      </div>
+      <div class="case-card" onclick="afficher('vueDiagnosticVoyages')" style="border-left:4px solid #0EA5E9;margin-top:12px">
+        <div class="case-icon">🏨</div>
+        <h3>Séjour, hôtel ou croisière annulé</h3>
+        <p>Votre prestataire a annulé votre voyage à forfait ou vous a proposé un avoir au lieu d'un remboursement ? La directive européenne 2015/2302 vous garantit un remboursement intégral sous 14 jours.</p>
+        <span class="case-amount">Remboursement : 100% du prix payé · Diagnostic gratuit</span><br><br>
+        <button class="btn-on-white" style="background:#0EA5E9">Vérifier mes droits →</button>
+      </div>
     </div>
   </div>
 
@@ -644,7 +680,142 @@
   <button class="cookie-btn" onclick="accepterCookies()">J'ai compris</button>
 </div>
 
-<!-- ========== VUE : DIAGNOSTIC ========== -->
+<!-- ========== VUE : DIAGNOSTIC VOYAGES ========== -->
+<div id="vueDiagnosticVoyages" style="display:none">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
+    <button class="btn-back" onclick="afficher('vueAccueil')">← Retour</button>
+  </nav>
+  <div class="wrapper">
+    <div class="card">
+      <div class="diag-header">
+        <div class="diag-eyebrow">✈️ Reprendr. Voyages — Diagnostic gratuit</div>
+        <h2 class="diag-titre">Votre voyage a été perturbé ?</h2>
+        <p class="diag-sub">Répondez à 3 questions pour connaître vos droits et le montant que vous pouvez récupérer.</p>
+      </div>
+
+      <!-- Étape 1 -->
+      <div id="vd-step1">
+        <div class="step-label">Étape 1 sur 3 — Type de perturbation</div>
+        <div class="options-grid">
+          <div class="option-card" onclick="vdStep1('vol_annule')">
+            <div class="option-icon">✈️</div>
+            <div class="option-label">Vol annulé</div>
+          </div>
+          <div class="option-card" onclick="vdStep1('vol_retard')">
+            <div class="option-icon">⏱️</div>
+            <div class="option-label">Vol retardé</div>
+          </div>
+          <div class="option-card" onclick="vdStep1('train_annule')">
+            <div class="option-icon">🚄</div>
+            <div class="option-label">Train annulé</div>
+          </div>
+          <div class="option-card" onclick="vdStep1('train_retard')">
+            <div class="option-icon">🕐</div>
+            <div class="option-label">Train retardé</div>
+          </div>
+          <div class="option-card" onclick="vdStep1('sejour_annule')">
+            <div class="option-icon">🏨</div>
+            <div class="option-label">Séjour / Hôtel annulé</div>
+          </div>
+          <div class="option-card" onclick="vdStep1('croisiere_annule')">
+            <div class="option-icon">🚢</div>
+            <div class="option-label">Croisière annulée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div id="vd-step2" style="display:none">
+        <div class="step-label">Étape 2 sur 3 — Ce que le prestataire a proposé</div>
+        <div class="options-grid">
+          <div class="option-card" onclick="vdStep2('rien')">
+            <div class="option-icon">🚫</div>
+            <div class="option-label">Rien du tout</div>
+          </div>
+          <div class="option-card" onclick="vdStep2('avoir')">
+            <div class="option-icon">📋</div>
+            <div class="option-label">Un avoir / bon d'échange</div>
+          </div>
+          <div class="option-card" onclick="vdStep2('remboursement_partiel')">
+            <div class="option-icon">💸</div>
+            <div class="option-label">Remboursement partiel</div>
+          </div>
+          <div class="option-card" onclick="vdStep2('remboursement_refuse')">
+            <div class="option-icon">❌</div>
+            <div class="option-label">Remboursement refusé</div>
+          </div>
+        </div>
+        <button class="btn-back" onclick="document.getElementById('vd-step2').style.display='none';document.getElementById('vd-step1').style.display='block'">← Retour</button>
+      </div>
+
+      <!-- Étape 3 -->
+      <div id="vd-step3" style="display:none">
+        <div class="step-label">Étape 3 sur 3 — Votre prénom et email</div>
+        <div class="field"><label>Prénom ou pseudo *</label><input type="text" id="vd_prenom" placeholder="Ex : Sophie" oninput="checkVd3()"></div>
+        <div class="field"><label>Email *</label><input type="email" id="vd_email" placeholder="votre@email.fr" oninput="checkVd3()"></div>
+        <div class="field"><label>Distance approximative du vol / trajet</label>
+          <select id="vd_distance" style="width:100%;border:1px solid var(--gray2);border-radius:8px;padding:10px 14px;font-size:14px;font-family:inherit">
+            <option value="">Sélectionnez...</option>
+            <option value="court">Moins de 1 500 km (ex: Paris-Madrid)</option>
+            <option value="moyen">1 500 à 3 500 km (ex: Paris-New York)</option>
+            <option value="long">Plus de 3 500 km (ex: Paris-Tokyo)</option>
+            <option value="na">Train / Séjour (non applicable)</option>
+          </select>
+        </div>
+        <button class="btn-primary" id="vd-btn3" onclick="lancerAnalyseVoyages()" disabled>Obtenir mon verdict gratuit →</button>
+        <button class="btn-back" onclick="document.getElementById('vd-step3').style.display='none';document.getElementById('vd-step2').style.display='block'">← Retour</button>
+      </div>
+
+      <!-- Verdict -->
+      <div id="vd-verdict" style="display:none"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VUE : PAIEMENT VOYAGES ========== -->
+<div id="vuePaiementVoyages" style="display:none">
+  <nav class="nav">
+    <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
+    <button class="btn-back" onclick="afficher('vueDiagnosticVoyages')">← Retour</button>
+  </nav>
+  <div class="wrapper">
+    <div class="card">
+      <div class="diag-header">
+        <div class="diag-eyebrow">✈️ Reprendr. Voyages</div>
+        <h2 class="diag-titre">Votre dossier voyage est prêt</h2>
+      </div>
+      <div class="recap-card">
+        <div class="recap-ligne"><span>Mise en demeure à la compagnie</span><span class="badge-inclus">Inclus</span></div>
+        <div class="recap-ligne"><span>Saisine médiateur Tourisme & Voyage</span><span class="badge-inclus">Inclus</span></div>
+        <div class="recap-ligne"><span>Signalement DGCCRF</span><span class="badge-inclus">Inclus</span></div>
+        <div class="recap-ligne"><span>Rappel email à J+15 si pas de réponse</span><span class="badge-inclus">Inclus</span></div>
+        <div class="recap-ligne recap-total"><span>Total</span><span>19,90€ TTC</span></div>
+      </div>
+      <div style="background:#EFF6FF;border-left:3px solid #0EA5E9;border-radius:0 8px 8px 0;padding:14px 18px;margin:16px 0;font-size:13px;color:#1e40af">
+        ✈️ <strong>Montant potentiellement récupérable :</strong> <span id="montantVoyages">250€ à 600€</span> selon le règlement EU 261/2004 ou la directive 2015/2302.
+      </div>
+      <div style="margin:16px 0">
+        <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px">Code promo (optionnel)</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="inputCodePromoV" placeholder="ex : RPR-ABCD-1234" style="flex:1;border:1px solid var(--gray2);border-radius:8px;padding:10px 14px;font-size:14px;font-family:inherit;outline:none;text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+          <button onclick="verifierCodePromoVoyages()" style="background:var(--blue);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer">Appliquer</button>
+        </div>
+        <div id="promoStatusV" style="display:none;font-size:12px;margin-top:6px"></div>
+      </div>
+      <div style="background:#FFF8EE;border:1px solid #FCD34D;border-radius:10px;padding:16px 20px;margin:20px 0">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
+          <input type="checkbox" id="cbRetractationV" onchange="toggleBtnPayerVoyages()" style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--blue)">
+          <span style="font-size:13px;color:#374151;line-height:1.6">
+            Je reconnais que l'exécution du service commencera <strong>immédiatement après le paiement</strong> et renonce expressément à mon droit de rétractation de 14 jours, conformément à l'article L.221-28 du Code de la consommation.
+          </span>
+        </label>
+      </div>
+      <button class="btn-payer" id="btnPayerVoyages" onclick="ouvrirPaiementStripeVoyages()" disabled style="opacity:.4;cursor:not-allowed">Payer 19,90€ et accéder à mon dossier →</button>
+      <div class="cgu-note">En procédant, vous acceptez nos <a href="legal.html">CGU</a> et notre <a href="legal.html#confidentialite">Politique de confidentialité</a>.<br>Paiement unique · Aucun abonnement</div>
+    </div>
+  </div>
+</div>
 <div id="vueDiagnostic" style="display:none">
   <nav class="nav">
     <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
@@ -1805,11 +1976,133 @@ function toggleBtnPayer() {
   }
 }
 
+function switchTab(tab) {
+  document.getElementById('section-abonnements').style.display = tab === 'abonnements' ? 'block' : 'none';
+  document.getElementById('section-voyages').style.display = tab === 'voyages' ? 'block' : 'none';
+  document.getElementById('tab-abonnements').classList.toggle('active', tab === 'abonnements');
+  document.getElementById('tab-voyages').classList.toggle('active', tab === 'voyages');
+}
+
 // ===== FAQ =====
 function toggleFaq(item) {
   var estOuvert = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
   if(!estOuvert) item.classList.add('open');
+}
+
+// ===== DIAGNOSTIC VOYAGES =====
+var vdData = { type: null, proposition: null };
+var STRIPE_VOYAGES = 'https://buy.stripe.com/14A4gyaq30iN4UegJ6cV202';
+var codePromoValideV = null;
+
+var indemnisations = {
+  vol_annule: { court: '250€', moyen: '400€', long: '600€', na: '250€ à 600€' },
+  vol_retard: { court: '250€', moyen: '400€', long: '600€', na: '250€ à 600€' },
+  train_annule: { court: '100% du billet', moyen: '100% du billet', long: '100% du billet', na: '100% du billet' },
+  train_retard: { court: '25% à 75% du billet', moyen: '25% à 75% du billet', long: '25% à 75% du billet', na: '25% à 75% du billet' },
+  sejour_annule: { court: '100% du séjour', moyen: '100% du séjour', long: '100% du séjour', na: '100% du séjour' },
+  croisiere_annule: { court: '100% de la croisière', moyen: '100% de la croisière', long: '100% de la croisière', na: '100% de la croisière' },
+};
+
+var typeLabels = {
+  vol_annule: 'Vol annulé', vol_retard: 'Vol retardé',
+  train_annule: 'Train annulé', train_retard: 'Train retardé',
+  sejour_annule: 'Séjour / Hôtel annulé', croisiere_annule: 'Croisière annulée'
+};
+
+function vdStep1(type) {
+  vdData.type = type;
+  document.getElementById('vd-step1').style.display = 'none';
+  document.getElementById('vd-step2').style.display = 'block';
+}
+
+function vdStep2(proposition) {
+  vdData.proposition = proposition;
+  document.getElementById('vd-step2').style.display = 'none';
+  document.getElementById('vd-step3').style.display = 'block';
+}
+
+function checkVd3() {
+  var prenom = document.getElementById('vd_prenom').value.trim();
+  var email = document.getElementById('vd_email').value.trim();
+  document.getElementById('vd-btn3').disabled = !(prenom && email.includes('@'));
+}
+
+function lancerAnalyseVoyages() {
+  var prenom = document.getElementById('vd_prenom').value.trim();
+  var email = document.getElementById('vd_email').value.trim();
+  var distance = document.getElementById('vd_distance').value || 'na';
+  var montant = (indemnisations[vdData.type] || {})[distance] || '250€ à 600€';
+
+  document.getElementById('montantVoyages').textContent = montant;
+
+  var lois = {
+    vol_annule: 'Règlement EU 261/2004', vol_retard: 'Règlement EU 261/2004',
+    train_annule: 'Règlement EU 2021/782', train_retard: 'Règlement EU 2021/782',
+    sejour_annule: 'Directive 2015/2302', croisiere_annule: 'Directive 2015/2302'
+  };
+
+  var verdict = document.getElementById('vd-verdict');
+  verdict.style.display = 'block';
+  document.getElementById('vd-step3').style.display = 'none';
+
+  verdict.innerHTML = '<div class="verdict-box recevable">'
+    + '<div class="verdict-icon">✅</div>'
+    + '<div class="verdict-titre">Dossier recevable</div>'
+    + '<div class="verdict-detail">Votre situation entre dans le cadre du <strong>' + (lois[vdData.type] || 'droit européen') + '</strong>. '
+    + 'Vous pouvez potentiellement récupérer <strong>' + montant + '</strong>.</div>'
+    + '<div class="verdict-actions">'
+    + '<button class="btn-primary" onclick="afficher(\'vuePaiementVoyages\')">Constituer mon dossier — 19,90€ →</button>'
+    + '<button class="btn-back" onclick="verdict.style.display=\'none\';document.getElementById(\'vd-step3\').style.display=\'block\'">← Modifier mes réponses</button>'
+    + '</div></div>';
+
+  // Sauvegarder pour le formulaire
+  sessionStorage.setItem('reprendr_voyage', JSON.stringify({
+    type: vdData.type, type_label: typeLabels[vdData.type],
+    proposition: vdData.proposition, distance, montant,
+    prenom, email
+  }));
+}
+
+function toggleBtnPayerVoyages() {
+  var cb = document.getElementById('cbRetractationV');
+  var btn = document.getElementById('btnPayerVoyages');
+  btn.disabled = !cb.checked;
+  btn.style.opacity = cb.checked ? '1' : '.4';
+  btn.style.cursor = cb.checked ? 'pointer' : 'not-allowed';
+}
+
+async function verifierCodePromoVoyages() {
+  var code = document.getElementById('inputCodePromoV').value.trim();
+  var status = document.getElementById('promoStatusV');
+  if(!code) return;
+  status.style.display = 'block';
+  status.style.color = 'var(--muted)';
+  status.textContent = 'Vérification…';
+  try {
+    var resp = await fetch('https://scbcixelfodadmjtpjqh.supabase.co/functions/v1/verifier-code-promo', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ code })
+    });
+    var data = await resp.json();
+    if(data.valide) {
+      codePromoValideV = code;
+      status.style.color = '#2E7D52';
+      status.innerHTML = '✅ Code valide — <strong>3€ de réduction</strong>. Vous payerez 16,90€.';
+      document.getElementById('btnPayerVoyages').textContent = 'Payer 16,90€ et accéder à mon dossier →';
+    } else {
+      codePromoValideV = null;
+      status.style.color = '#DC2626';
+      status.textContent = '❌ Code invalide ou déjà utilisé.';
+    }
+  } catch(e) { status.style.color = '#DC2626'; status.textContent = 'Erreur de vérification.'; }
+}
+
+function ouvrirPaiementStripeVoyages() {
+  var url = codePromoValideV
+    ? STRIPE_VOYAGES + '?prefilled_promo_code=' + codePromoValideV
+    : STRIPE_VOYAGES;
+  window.open(url, '_blank');
 }
 
 // ===== COOKIES =====
