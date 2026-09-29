@@ -34,15 +34,9 @@
     "@type": "WebApplication",
     "name": "Reprendr.",
     "url": "https://reprendr.fr",
-    "description": "Service d'aide à la contestation de prélèvements non consentis et d'abonnements frauduleux. Génère un dossier juridique complet en 2 minutes.",
+    "description": "Service d'aide à la contestation de prélèvements non consentis et d'abonnements frauduleux. Nouvelle version en préparation.",
     "applicationCategory": "LegalService",
     "operatingSystem": "Web",
-    "offers": {
-      "@type": "Offer",
-      "price": "11.90",
-      "priceCurrency": "EUR",
-      "description": "Dossier complet : mise en demeure, recommandé électronique AR24, signalement DGCCRF, courrier bancaire, saisine médiateur"
-    },
     "provider": {
       "@type": "Organization",
       "name": "Reprendr.",
@@ -404,6 +398,7 @@
 
 <!-- ========== VUE : ACCUEIL ========== -->
 <div id="vueAccueil">
+  <div style="background:#1B3F6E;color:#fff;text-align:center;font-size:13px;padding:9px 16px;line-height:1.4">🛠️ Nouvelle version de Reprendr. en préparation — le diagnostic reste gratuit, et nous vous préviendrons par email dès l'ouverture.</div>
   <nav class="nav">
     <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
     <button class="nav-cta" onclick="afficher('vueDiagnostic')">Déposer un dossier</button>
@@ -412,12 +407,11 @@
   <div class="hero">
     <div class="hero-eyebrow">Le droit des consommateurs, enfin actionnable</div>
     <h1>Ils vous ont prélevé.<br><em><span style="color:#fff">On vous aide à <span style="color:#fff;font-weight:700">Re</span></span><span class="ndr">prendr.</span></em></h1>
-    <p class="hero-sub">Un abonnement que vous n'avez pas choisi, des frais cachés, un service impossible à résilier — <strong>Re</strong><span style="color:var(--red);font-weight:700">prendr.</span> génère votre dossier de contestation en 2 minutes.</p>
+    <p class="hero-sub">Un abonnement que vous n'avez pas choisi, des frais cachés, un service impossible à résilier — <strong>Re</strong><span style="color:var(--red);font-weight:700">prendr.</span> vous aide à contester, étape par étape.</p>
     <div class="hero-stats">
       <div class="hero-stat"><strong>+500 000</strong>victimes par an en France</div>
       <div class="hero-stat"><strong>Gratuit</strong>Diagnostic en 30 secondes</div>
-      <div class="hero-stat"><strong>11,90€</strong>Pour agir et réclamer à votre place</div>
-      <div class="hero-stat"><strong>Inclus</strong>Recommandé électronique offert — valeur 7,35€</div>
+      <div class="hero-stat"><strong>Bientôt</strong>Un accompagnement étape par étape</div>
     </div>
     <div class="hero-actions">
       <button class="btn-on-blue" onclick="afficher('vueDiagnostic')">Commencer gratuitement</button>
@@ -438,7 +432,7 @@
         <div class="case-icon">💳</div>
         <h3>Prélèvement ou abonnement non consenti</h3>
         <p>Un abonnement caché lors d'un achat, des frais que vous n'avez pas autorisés, un service que vous ne pouvez pas résilier malgré vos demandes.</p>
-        <span class="case-amount">Montant moyen récupéré : 180€ · Diagnostic gratuit</span><br><br>
+        <span class="case-amount">Diagnostic gratuit et sans engagement</span><br><br>
         <button class="btn-on-white">Déposer mon dossier →</button>
       </div>
     </div>
@@ -470,30 +464,6 @@
 
   <div class="how" id="comment-inclus">
     <div class="how-inner">
-      <div class="section-title" style="text-align:center">Ce qui est inclus dans votre dossier à 11,90€</div>
-      <p style="text-align:center;font-size:16px;color:var(--muted);max-width:600px;margin:-10px auto 30px">Le diagnostic de votre réclamation est entièrement gratuit. Les 11,90€ ne sont demandés que si votre dossier est recevable et que vous souhaitez passer à l'action.</p>
-      <div style="max-width:700px;margin:0 auto 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 20px">
-        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-          <div style="font-size:24px;margin-bottom:8px">📄</div>
-          <h4 style="color:var(--blue);margin-bottom:8px">Lettre de mise en demeure</h4>
-          <p style="font-size:14px;color:var(--muted)">Rédigée selon les articles L.111-1 et L.121-1 du Code de la consommation. <strong>Envoi en recommandé électronique AR24 by La Poste (valeur 7,35€) — offert et effectué par nos soins dans les 24h.</strong></p>
-        </div>
-        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-          <div style="font-size:24px;margin-bottom:8px">🏛️</div>
-          <h4 style="color:var(--blue);margin-bottom:8px">Signalement DGCCRF</h4>
-          <p style="font-size:14px;color:var(--muted)">Pré-rempli et soumis via SignalConso.gouv.fr — crée un dossier administratif officiel qui renforce considérablement votre position.</p>
-        </div>
-        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-          <div style="font-size:24px;margin-bottom:8px">🏦</div>
-          <h4 style="color:var(--blue);margin-bottom:8px">Courrier bancaire</h4>
-          <p style="font-size:14px;color:var(--muted)">Conforme au Règlement SEPA UE n°260/2012. Votre banque est tenue de bloquer tout prélèvement futur de l'entreprise concernée.</p>
-        </div>
-        <div style="background:#f8f9ff;border-radius:12px;padding:20px">
-          <div style="font-size:24px;margin-bottom:8px">⚖️</div>
-          <h4 style="color:var(--blue);margin-bottom:8px">Saisine du médiateur sectoriel</h4>
-          <p style="font-size:14px;color:var(--muted)">L'entreprise est légalement tenue de répondre sous 90 jours (loi Hamon, 17 mars 2014). Entièrement gratuit pour vous.</p>
-        </div>
-      </div>
       <p style="text-align:center;font-size:13px;color:var(--muted);max-width:600px;margin:0 auto 40px;font-style:italic">Reprendr. maximise vos chances de succès en actionnant simultanément tous les recours légaux à votre disposition. Les résultats dépendent de la nature du litige et de la réponse de l'entreprise concernée. Nous ne pouvons garantir un remboursement dans tous les cas.</p>
       <div id="comment" style="text-align:center;margin-bottom:60px;scroll-margin-top:80px">
         <div class="section-title" style="text-align:center">Comment ça marche ?</div>
@@ -507,12 +477,12 @@
           <div class="step">
             <div class="step-num">2</div>
             <h4><span style="color:var(--blue);font-weight:700">Re</span><span style="color:var(--red);font-weight:700">prendr.</span> analyse</h4>
-            <p>Notre IA évalue la recevabilité de votre dossier et vous indique clairement vos chances de succès.</p>
+            <p>Vous savez tout de suite si votre situation relève d'un recours et quels sont les points à renforcer.</p>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <h4>Votre dossier est prêt</h4>
-            <p>Accédez à vos 4 actions juridiques en un clic. Recommandé électronique inclus. 11,90€.</p>
+            <p>Nouvelle version en préparation : un accompagnement étape par étape, de la réclamation au recours.</p>
           </div>
         </div>
       </div>
@@ -521,8 +491,8 @@
 
   <div class="trust">
     <div class="trust-item"><span class="trust-num">0€</span><span class="trust-label">Pour le diagnostic initial</span></div>
-    <div class="trust-item"><span class="trust-num">2 min</span><span class="trust-label">Pour un dossier complet</span></div>
-    <div class="trust-item"><span class="trust-num">11,90€</span><span class="trust-label">Seulement si vous passez à l'action</span></div>
+    <div class="trust-item"><span class="trust-num">2 min</span><span class="trust-label">Pour le diagnostic</span></div>
+    <div class="trust-item"><span class="trust-num">Étape</span><span class="trust-label">par étape, au bon moment</span></div>
     <div class="trust-item"><span class="trust-num">100%</span><span class="trust-label">Basé sur le droit français</span></div>
   </div>
 
@@ -534,12 +504,7 @@
 
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-question">Le diagnostic est vraiment gratuit ? Sans engagement ?<span class="faq-chevron">⌄</span></div>
-        <div class="faq-reponse"><div class="faq-reponse-inner">Oui, totalement. Le diagnostic est <strong>anonyme et gratuit</strong> — seul un prénom ou pseudo vous est demandé. Votre identité complète n'est recueillie qu'après paiement, pour constituer les documents juridiques. Les 11,90€ ne sont demandés que si votre dossier est recevable ET que vous décidez de passer à l'action. Si votre dossier n'est pas recevable, nous vous l'expliquons clairement et ne vous demandons rien.</div></div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">Qu'est-ce qu'un recommandé électronique ? A-t-il vraiment la même valeur qu'un recommandé La Poste ?<span class="faq-chevron">⌄</span></div>
-        <div class="faq-reponse"><div class="faq-reponse-inner">Oui — la Lettre Recommandée Électronique (LRE) que nous envoyons via AR24 by La Poste a exactement la même valeur juridique qu'un recommandé papier avec accusé de réception, conformément à l'article L.100 du Code des Postes et Communications Électroniques et au règlement eIDAS. À La Poste, ce service est facturé <strong>7,35€</strong> aux particuliers — chez Reprendr. il est inclus dans les 11,90€ et envoyé par nos soins. Si l'entreprise refuse de l'ouvrir, une "preuve de négligence" est automatiquement générée — ce qui est aussi valable juridiquement que la preuve de réception.</div></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Oui, totalement. Le diagnostic est <strong>anonyme et gratuit</strong> — seul un prénom ou pseudo vous est demandé. Votre identité complète n'est recueillie qu'après paiement, pour constituer les documents juridiques. Les paiements sont actuellement suspendus pendant la préparation de la nouvelle version de Reprendr. </div></div>
       </div>
 
       <div class="faq-item" onclick="toggleFaq(this)">
@@ -549,12 +514,12 @@
 
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-question">Combien de temps prend la procédure ?<span class="faq-chevron">⌄</span></div>
-        <div class="faq-reponse"><div class="faq-reponse-inner">Le dossier se prépare en 2 minutes. <strong>Dès votre paiement validé, Reprendr. envoie immédiatement votre mise en demeure en recommandé électronique</strong> — sans attendre. L'entreprise dispose ensuite de 15 jours pour répondre. À J+15, vous recevrez un email de Reprendr. vous rappelant d'envoyer la saisine du médiateur si vous n'avez pas obtenu de réponse satisfaisante. La médiation permet d'obtenir une décision sous 90 jours maximum (loi Hamon, 17 mars 2014). Dans la majorité des cas, un accord amiable intervient dans les 15 premiers jours.</div></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">La durée dépend de la réponse de l'entreprise. La nouvelle version de Reprendr. vous accompagnera étape par étape — réclamation, relance, mise en demeure puis recours — en vous indiquant à chaque fois le bon moment pour passer à l'étape suivante.</div></div>
       </div>
 
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-question">Que dois-je faire après avoir reçu mes documents ?<span class="faq-chevron">⌄</span></div>
-        <div class="faq-reponse"><div class="faq-reponse-inner">La mise en demeure est envoyée par Reprendr. en recommandé électronique — vous n'avez rien à faire pour cette étape. De votre côté, deux actions immédiates sont recommandées : <strong>(1)</strong> Envoyez le courrier bancaire à votre banque pour bloquer tout futur prélèvement. <strong>(2)</strong> Soumettez le signalement DGCCRF sur SignalConso.gouv.fr en copiant le texte du guide fourni. Si l'entreprise ne répond pas sous 15 jours, vous recevrez un rappel de notre part pour envoyer la saisine du médiateur.</div></div>
+        <div class="faq-reponse"><div class="faq-reponse-inner">Dans la nouvelle version, chaque document vous sera remis au moment où il est utile, avec des instructions claires sur son envoi et un suivi de votre dossier. En attendant, si un prélèvement n'a pas été autorisé, contactez sans tarder votre banque : vous pouvez en demander le remboursement.</div></div>
       </div>
 
       <div class="faq-item" onclick="toggleFaq(this)">
@@ -576,98 +541,8 @@
   </div>
 
   <!-- REVIEWS -->
-  <div class="reviews">
-    <div class="reviews-inner">
-      <div class="reviews-titre">Ils ont repris ce qui leur appartenait</div>
-      <div class="reviews-sub">Des milliers de Français ont déjà fait valoir leurs droits avec Reprendr.</div>
-      <div class="reviews-grid">
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-texte">« J'avais une assurance téléphone à 12€/mois que je n'arrivais pas à résilier depuis 8 mois. En 2 minutes sur Reprendr., j'ai envoyé la mise en demeure. SFR m'a remboursé 96€ et résilié en 10 jours. »</div>
-          <div class="review-auteur">
-            <div class="review-avatar">M</div>
-            <div class="review-info">
-              <div class="review-nom">Marie T.</div>
-              <div class="review-detail">Lyon · Litige SFR</div>
-            </div>
-          </div>
-          <span class="review-badge">💰 96€ récupérés</span>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-texte">« Amazon avait activé Prime lors de mon achat sans que je le remarque vraiment. 6 mois de prélèvements. Reprendr. a tout géré — la lettre, la banque, le signalement. Résultat en 3 semaines. »</div>
-          <div class="review-auteur">
-            <div class="review-avatar">J</div>
-            <div class="review-info">
-              <div class="review-nom">Julien R.</div>
-              <div class="review-detail">Bordeaux · Litige Amazon</div>
-            </div>
-          </div>
-          <span class="review-badge">💰 47€ récupérés</span>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-texte">« Je ne savais même pas que je pouvais réclamer quelque chose. Le diagnostic gratuit m'a ouvert les yeux. La lettre recommandée envoyée par Reprendr. a tout changé — Orange a résilié sans discussion. »</div>
-          <div class="review-auteur">
-            <div class="review-avatar">S</div>
-            <div class="review-info">
-              <div class="review-nom">Sophie M.</div>
-              <div class="review-detail">Nantes · Litige Orange</div>
-            </div>
-          </div>
-          <span class="review-badge">💰 156€ récupérés</span>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-texte">« Mon gym prélevait toujours après ma résiliation. Trois mails ignorés. Reprendr. a rédigé une mise en demeure béton. Le remboursement est arrivé en 12 jours, sans même passer par le médiateur. »</div>
-          <div class="review-auteur">
-            <div class="review-avatar">T</div>
-            <div class="review-info">
-              <div class="review-nom">Thomas B.</div>
-              <div class="review-detail">Paris · Litige salle de sport</div>
-            </div>
-          </div>
-          <span class="review-badge">💰 78€ récupérés</span>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★☆</div>
-          <div class="review-texte">« Simple et rapide. J'avais peur que ce soit compliqué mais en 2 minutes tout était prêt. Le service client Fnac m'avait pourtant bien dit que c'était "impossible" de résilier. La lettre recommandée les a fait changer d'avis. »</div>
-          <div class="review-auteur">
-            <div class="review-avatar">C</div>
-            <div class="review-info">
-              <div class="review-nom">Claire D.</div>
-              <div class="review-detail">Toulouse · Litige Fnac</div>
-            </div>
-          </div>
-          <span class="review-badge">✅ Résiliation obtenue</span>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-texte">« J'aurais dû le faire bien plus tôt. 11,90€ pour récupérer 200€ et stopper les prélèvements — le calcul est vite fait. Reprendr. m'a sauvé la mise. Je recommande à tous mes proches. »</div>
-          <div class="review-auteur">
-            <div class="review-avatar">P</div>
-            <div class="review-info">
-              <div class="review-nom">Philippe N.</div>
-              <div class="review-detail">Marseille · Litige opérateur</div>
-            </div>
-          </div>
-          <span class="review-badge">💰 200€ récupérés</span>
-        </div>
-
-      </div>
-      <div style="text-align:center;margin-top:24px;font-size:11px;color:#9AA3AF;font-style:italic">
-        * Ces témoignages sont illustratifs des situations traitées par Reprendr. Ils seront remplacés par de vrais avis clients vérifiés dès leur collecte. Les résultats dépendent de chaque situation individuelle.
-      </div>
-    </div>
-  </div>
     <h2>Arrêtez de payer pour ce que vous n'avez pas choisi.</h2>
-    <p>Rejoignez les milliers de Français qui font valoir leurs droits avec <strong style="color:#fff">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span>.</p>
+    <p>Faites valoir vos droits avec <strong style="color:#fff">Re</strong><span style="color:var(--red);font-weight:700">prendr.</span>.</p>
     <button class="btn-on-blue" onclick="afficher('vueDiagnostic')">Déposer mon dossier gratuitement</button>
   </div>
 
@@ -1681,24 +1556,19 @@ function afficherVerdict(r, total, col, entreprise) {
   var critHtml = r.criteres.map(function(c){return '<div class="critere"><span style="flex-shrink:0">'+c.icon+'</span><span>'+c.texte+'</span></div>';}).join('');
   var altHtml = r.alternatives.length?'<div class="alt-box"><div class="alt-titre">Ce que vous pouvez faire</div>'+r.alternatives.map(function(a){return '<div class="alt-item">'+a+'</div>';}).join('')+'</div>':'';
   var montantHtml = col!=='rouge'?'<div class="montant-box">💰 Montant potentiel à récupérer : <strong>~'+total+'€</strong></div>':'';
-  var btnHtml = col==='vert'
-    ?'<button style="width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer" onclick="window.open(\'https://buy.stripe.com/6oU7sKaq3e9DcmG2SgcV201\',\'_blank\')">Constituer mon dossier complet — 11,90€ →</button>'
-    :col==='orange'
-    ?'<button style="width:100%;background:#D97706;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick="window.open(\'https://buy.stripe.com/6oU7sKaq3e9DcmG2SgcV201\',\'_blank\')">Constituer le dossier malgré tout — 11,90€ →</button><p style="font-size:12px;color:var(--muted);text-align:center">Nous vous informerons des risques spécifiques avant paiement.</p>'
+  var btnHtml = col!=='rouge'
+    ?'<div class="gratuit-note">🛠️ <strong>Nouvelle version de Reprendr. en préparation.</strong><br>Nous reconstruisons notre accompagnement pour vous guider étape par étape, de la réclamation au recours. Vous serez prévenu par email dès son ouverture.</div>'
     :'<div class="gratuit-note">🤝 <strong>Aucun frais ne vous est demandé.</strong><br>Reprendr ne constitue pas de dossier sans issue réelle — c\'est notre engagement d\'honnêteté.</div>';
 
   document.getElementById('qResultat').innerHTML =
     '<div class="card"><div class="verdict-box '+col+'">'
     +'<div class="verdict-header"><span class="verdict-emoji">'+emoji+'</span><div class="verdict-titre '+col+'">'+r.titre+'</div></div>'
-    +'<div class="conf-bar"><div class="conf-fill '+col+'" id="cFill" style="width:0%"></div></div>'
-    +'<div class="conf-label">Probabilité de succès estimée : '+r.score+'%</div>'
     +'<div class="verdict-analyse">'+r.analyse+'</div>'
     +'<div class="criteres">'+critHtml+'</div></div>'
     +altHtml+montantHtml+btnHtml
     +'<button style="width:100%;background:var(--gray);color:var(--blue);border:2px solid var(--blue);padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px" onclick="resetDossier()">← Analyser un autre dossier</button>'
     +'</div>';
   document.getElementById('qResultat').style.display='block';
-  setTimeout(function(){var el=document.getElementById('cFill');if(el)el.style.width=r.score+'%';},100);
   window.scrollTo(0,0);
 
   var ent = document.getElementById('f_entreprise').value||'l\'entreprise';
@@ -1881,9 +1751,8 @@ async function verifierPaiement() {
 
 if(window.location.search.includes('paiement=ok')) {
   verifierPaiement();
-} else if(window.location.search.includes('acces=ok')) {
-  document.addEventListener('DOMContentLoaded', function(){ afficher('vueComplementaire'); });
 }
+// Accès direct au formulaire payant désactivé pendant la reconstruction
 
 var nbActions = 0;
 
@@ -1963,7 +1832,7 @@ function ouvrirPaiementStripe() {
   var url = codePromoValide
     ? baseUrl + '?prefilled_promo_code=' + codePromoValide
     : baseUrl;
-  window.open(url, '_blank');
+  alert('Les paiements sont suspendus : une nouvelle version de Reprendr. est en préparation.');
 }
 
 function toggleBtnPayer() {
@@ -2052,10 +1921,12 @@ function lancerAnalyseVoyages() {
     + '<div class="verdict-detail">Votre situation entre dans le cadre du <strong>' + (lois[vdData.type] || 'droit européen') + '</strong>. '
     + 'Vous pouvez potentiellement récupérer <strong>' + montant + '</strong>.</div>'
     + '<div class="verdict-actions">'
-    + '<button class="btn-primary" onclick="afficher(\'vuePaiementVoyages\')">Constituer mon dossier — 19,90€ →</button>'
+    + '<div class="gratuit-note">🛠️ <strong>Nouvelle version de Reprendr. en préparation.</strong><br>Nous reconstruisons notre accompagnement pour vous guider étape par étape, de la réclamation au recours. Vous serez prévenu par email dès son ouverture.</div>'
     + '<button class="btn-back" onclick="verdict.style.display=\'none\';document.getElementById(\'vd-step3\').style.display=\'block\'">← Modifier mes réponses</button>'
     + '</div></div>';
 
+  // Liste d'attente : enregistrer le contact
+  sauvegarderDossier({nom: prenom, email: email, type_litige: 'voyage_'+vdData.type, verdict: 'liste_attente', score: 0});
   // Sauvegarder pour le formulaire
   sessionStorage.setItem('reprendr_voyage', JSON.stringify({
     type: vdData.type, type_label: typeLabels[vdData.type],
@@ -2102,7 +1973,7 @@ function ouvrirPaiementStripeVoyages() {
   var url = codePromoValideV
     ? STRIPE_VOYAGES + '?prefilled_promo_code=' + codePromoValideV
     : STRIPE_VOYAGES;
-  window.open(url, '_blank');
+  alert('Les paiements sont suspendus : une nouvelle version de Reprendr. est en préparation.');
 }
 
 // ===== COOKIES =====
