@@ -37,6 +37,7 @@
   </style>
 </head>
 <body>
+<div style="background:#1B3F6E;color:#fff;text-align:center;font-size:13px;padding:9px 16px;font-family:inherit">🛠️ Nouvelle version de Reprendr. en préparation — le diagnostic reste gratuit.</div>
 <nav>
   <div class="logo"><span class="re">Re</span><span class="ndr">prendr.</span></div>
   <a href="index.html" class="nav-cta">Déposer un dossier</a>
@@ -80,7 +81,7 @@
       <span class="loi-badge">Art. L.121-1 Code conso</span>
       <h3>La lettre de mise en demeure</h3>
       <p>C'est le point de départ indispensable. Une mise en demeure formelle, envoyée en recommandé, donne à l'entreprise <strong>15 jours</strong> pour répondre. Elle crée une trace juridique irréfutable et déclenche souvent un règlement rapide — les grandes enseignes préfèrent rembourser plutôt que d'affronter une procédure.</p>
-      <p>Reprendr. rédige cette lettre automatiquement et l'envoie en <strong>Lettre Recommandée Électronique via AR24 by La Poste</strong> — même valeur juridique qu'un recommandé papier.</p>
+      <p>Elle s'envoie en recommandé avec accusé de réception, pour prouver sa date et sa réception. Elle intervient après une réclamation restée sans réponse satisfaisante.</p>
     </div>
   </div>
 
@@ -115,8 +116,7 @@
   <p>Techniquement, vous pouvez rédiger ces courriers vous-même. Mais en pratique :</p>
   <ul>
     <li>La rédaction juridique d'une mise en demeure efficace nécessite de connaître les bons articles de loi et la bonne formulation</li>
-    <li>L'envoi en recommandé électronique via AR24 représente 8,50€ à lui seul — il est inclus dans les 11,90€ de Reprendr.</li>
-    <li>Reprendr. active simultanément les 4 recours, ce qui maximise la pression sur l'entreprise</li>
+    <li>Reprendr. vous indique la bonne démarche au bon moment, pour que chaque courrier garde toute sa force</li>
     <li>Le diagnostic gratuit vous dit d'emblée si votre dossier est recevable — évitant toute démarche inutile</li>
   </ul>
 
