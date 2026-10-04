@@ -1,6 +1,4 @@
+# Version de test : aucune indexation.
+# À remplacer au lancement par une version autorisant l indexation.
 User-agent: *
-Allow: /
-Disallow: /?paiement=ok
-Disallow: /?acces=ok
-
-Sitemap: https://reprendr.fr/sitemap.xml
+Disallow: /
