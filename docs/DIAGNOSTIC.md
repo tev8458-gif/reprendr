@@ -1,6 +1,6 @@
 # Moteur du diagnostic – règles et données
 
-Fichier : `moteur/diagnostic.js` – Tests : `node moteur/diagnostic.test.mjs` (35 cas, tous réussis le 3 octobre 2026).
+Fichier : `moteur/diagnostic.js` – Tests : `node moteur/diagnostic.test.mjs` (46 cas, tous réussis le 4 octobre 2026 – règles version 2026-10-v2).
 Principe : des règles écrites, sans score ni pourcentage. Chaque conclusion est justifiée.
 
 ## Valeurs juridiques (objet REGLES, à valider par l'avocat)
@@ -16,17 +16,22 @@ Principe : des règles écrites, sans score ni pourcentage. Chaque conclusion es
 | delai_mise_en_demeure_jours | 15 | Délai laissé à l'entreprise après la mise en demeure |
 | mediation_max_mois | 12 | Saisine du médiateur dans l'année suivant la réclamation écrite |
 | seuil_orientation_avocat | 5 000 € | Au-delà, orientation vers un avocat |
-| secteurs_hors_perimetre | assurance, télécoms, énergie, banque | Règles spécifiques, non couvertes au lancement |
+| secteurs_hors_perimetre | banque | Fiche dédiée prévue ultérieurement |
+| assurance_hamon_mois | 12 | Résiliation d'assurance à tout moment après un an (loi Hamon) |
+| assurance_hamon_types | auto, habitation, affinitaire, santé | Assurances concernées par la loi Hamon |
+| telecom_engagement_mois | 12 | Au-delà, frais de résiliation plafonnés au quart des mensualités restantes |
 
 ## Règles appliquées, dans l'ordre
 1. **Débits** : ceux de plus de 5 ans sont écartés ; les dates futures sont ignorées.
-2. **Périmètre** : hors périmètre si secteur spécifique, aucun débit, tous les débits prescrits, montant supérieur à 5 000 €, ou résiliation jamais demandée (il faut d'abord la demander).
+2. **Périmètre** : hors périmètre si secteur bancaire, aucun débit, tous les débits prescrits, montant supérieur à 5 000 €, ou résiliation jamais demandée (il faut d'abord la demander).
 3. **Voie bancaire** :
    - prélèvement ou carte **sans aucune autorisation** → modèle C1, débits de moins de 13 mois ;
    - prélèvement SEPA avec autorisation **donnée, piégée ou incertaine** → modèle C2, débits de moins de 8 semaines (choix prudent pour la case piégée, à valider) ;
    - carte avec autorisation donnée → pas de remboursement bancaire, conseil de blocage des paiements futurs ;
    - alerte si l'échéance bancaire est à moins de 21 jours.
-4. **Fondements** : A1 (souscription cachée, + rétractation si le délai est ouvert), A2 (service non commandé), A3a (résiliation demandée, + mention « en ligne »), A3b (reconduction sans information), A4 (frais non autorisés).
+4. **Fondements** : A1 (souscription cachée, + rétractation si le délai est ouvert), A2 (service non commandé), A3a (résiliation demandée, + mention « en ligne »), A3b (reconduction sans information ; A3b-assurance pour l'assurance), A4 (frais non autorisés).
+   Paragraphes sectoriels de résiliation : A3-energie (toujours) ; A3-assurance-hamon (auto, habitation, affinitaire, santé, contrat de plus d'un an) ; A3-assurance-emprunteur (toujours) ; A3-telecom (contrat de plus de 12 mois). En deçà, point faible expliquant les limites.
+   Médiateur indiqué : Médiateur national de l'énergie, Médiateur des communications électroniques, La Médiation de l'Assurance, sinon médiateur désigné par l'entreprise.
 5. **Point d'entrée** :
    - mise en demeure déjà envoyée → médiation (après 15 jours) ;
    - réclamation écrite refusée → mise en demeure ;
@@ -47,6 +52,8 @@ debits                 [{ date: 'AAAA-MM-JJ', montant: nombre }]
 contrat_en_ligne       booléen
 date_souscription      'AAAA-MM-JJ' (facultatif)
 information_retractation oui | non | ne_sait_pas
+date_debut_contrat     'AAAA-MM-JJ' (assurance et télécoms, résiliation)
+type_assurance         auto | habitation | affinitaire | sante | emprunteur | autre
 prelevements_en_cours  booléen
 resiliation            { date_demande, canal: email|courrier|formulaire|telephone, reconduction_sans_information }
 demarches              { contact_oral, reclamation_ecrite, date_reclamation, reponse: aucune|refus|evasive|partielle,

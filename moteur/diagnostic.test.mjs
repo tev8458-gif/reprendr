@@ -10,9 +10,11 @@ const base = (x = {}) => ({ type_litige: 'souscription_cachee', secteur: 'genera
   contrat_en_ligne: true, demarches: {}, ...x });
 
 console.log('\nPérimètre');
-cas('Secteur assurance : hors périmètre, orientation médiateur sectoriel', () => {
-  const b = diagnostiquer(base({ secteur: 'assurance' }), J);
+cas('Secteur banque : hors périmètre, orientation médiateur sectoriel', () => {
+  const b = diagnostiquer(base({ secteur: 'banque' }), J);
   assert.equal(b.dans_le_perimetre, false); assert.equal(b.orientation, 'mediateur_sectoriel'); });
+cas('Secteurs assurance, énergie et télécoms : dans le périmètre', () => {
+  for (const secteur of ['assurance', 'energie', 'telecom']) assert.equal(diagnostiquer(base({ secteur }), J).dans_le_perimetre, true); });
 cas('Montant supérieur à 5 000 € : orientation avocat', () => {
   const b = diagnostiquer(base({ debits: [{ date: '2026-09-01', montant: 5200 }] }), J);
   assert.equal(b.orientation, 'avocat'); });
@@ -107,6 +109,34 @@ cas('Reconduction sans information : A3b', () => {
 cas('Service non commandé : A2 ; frais non autorisés : A4', () => {
   assert.deepEqual(diagnostiquer(base({ type_litige: 'service_non_commande' }), J).fondements, ['A2']);
   assert.deepEqual(diagnostiquer(base({ type_litige: 'frais_non_autorises' }), J).fondements, ['A4']); });
+
+console.log('\nSecteurs');
+const resil = (x) => base({ type_litige: 'resiliation_refusee', resiliation: { date_demande: '2026-08-01', canal: 'email' }, ...x });
+cas('Énergie : résiliation à tout moment (A3-energie), médiateur national de l\'énergie', () => {
+  const b = diagnostiquer(resil({ secteur: 'energie' }), J);
+  assert.ok(b.fondements.includes('A3-energie')); assert.ok(b.mediateur.includes('énergie')); });
+cas('Assurance habitation de plus d\'un an : loi Hamon', () => {
+  const b = diagnostiquer(resil({ secteur: 'assurance', type_assurance: 'habitation', date_debut_contrat: '2024-05-01' }), J);
+  assert.ok(b.fondements.includes('A3-assurance-hamon')); assert.ok(b.mediateur.includes('Assurance')); });
+cas('Assurance auto de moins d\'un an : pas de Hamon, point faible', () => {
+  const b = diagnostiquer(resil({ secteur: 'assurance', type_assurance: 'auto', date_debut_contrat: '2026-03-01' }), J);
+  assert.ok(!b.fondements.includes('A3-assurance-hamon')); assert.ok(b.points_faibles.some(p => p.includes('moins d\'un an'))); });
+cas('Assurance : limite exacte d\'un an, Hamon ouvert', () => {
+  assert.ok(diagnostiquer(resil({ secteur: 'assurance', type_assurance: 'auto', date_debut_contrat: '2025-10-03' }), J).fondements.includes('A3-assurance-hamon')); });
+cas('Assurance emprunteur : résiliation à tout moment, quelle que soit l\'ancienneté', () => {
+  assert.ok(diagnostiquer(resil({ secteur: 'assurance', type_assurance: 'emprunteur', date_debut_contrat: '2026-09-01' }), J).fondements.includes('A3-assurance-emprunteur')); });
+cas('Assurance sans date de début : point faible', () => {
+  assert.ok(diagnostiquer(resil({ secteur: 'assurance', type_assurance: 'auto' }), J).points_faibles.some(p => p.includes('date de début'))); });
+cas('Assurance : reconduction sans information → A3b-assurance', () => {
+  const b = diagnostiquer(base({ type_litige: 'resiliation_refusee', secteur: 'assurance', type_assurance: 'autre', resiliation: { reconduction_sans_information: true } }), J);
+  assert.ok(b.fondements.includes('A3b-assurance')); assert.ok(!b.fondements.includes('A3b')); });
+cas('Télécoms de plus de 12 mois : frais plafonnés (A3-telecom)', () => {
+  assert.ok(diagnostiquer(resil({ secteur: 'telecom', date_debut_contrat: '2025-01-15' }), J).fondements.includes('A3-telecom')); });
+cas('Télécoms de moins de 12 mois : point faible sur les mensualités restantes', () => {
+  const b = diagnostiquer(resil({ secteur: 'telecom', date_debut_contrat: '2026-02-01' }), J);
+  assert.ok(!b.fondements.includes('A3-telecom')); assert.ok(b.points_faibles.some(p => p.includes('mensualités'))); });
+cas('Secteur général : médiateur de la consommation de l\'entreprise', () => {
+  assert.ok(diagnostiquer(base(), J).mediateur.includes('désigné par l\'entreprise')); });
 
 console.log('\nCohérence');
 cas('Chaque bilan dans le périmètre contient des justifications et aucun pourcentage', () => {

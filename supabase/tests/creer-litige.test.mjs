@@ -20,7 +20,7 @@ const bon = { profil: { prenom: 'Marie', nom: 'Dupont' }, reponses: { type_litig
 const t = (n, c) => console.log((c ? '  ✔ ' : '  ✘ ') + n);
 let r = await appel('mauvais', bon); t('Sans connexion valide : 401', r.statut === 401);
 r = await appel('bon', { reponses: { entreprise_nom: 'X' } }); t('Type de litige manquant : 400', r.statut === 400);
-r = await appel('bon', { ...bon, reponses: { ...bon.reponses, secteur: 'assurance' } }); t('Hors périmètre : 422 avec bilan', r.statut === 422 && r.corps.bilan.orientation === 'mediateur_sectoriel');
+r = await appel('bon', { ...bon, reponses: { ...bon.reponses, secteur: 'banque' } }); t('Hors périmètre : 422 avec bilan', r.statut === 422 && r.corps.bilan.orientation === 'mediateur_sectoriel');
 litigesOuverts = 10; r = await appel('bon', bon); t('Limite de 10 dossiers en cours : 429', r.statut === 429); litigesOuverts = 0;
 inserts.length = 0; r = await appel('bon', bon);
 t('Dossier valide : 201 avec référence', r.statut === 201 && r.corps.reference === 'RPR-2026-TEST01');

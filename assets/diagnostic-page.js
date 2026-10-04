@@ -12,7 +12,7 @@ const ETAPES = ['Votre situation', 'L\'entreprise et le contrat', 'Le paiement',
 const etat = {
   etape: 0,
   r: { type_litige: null, secteur: 'general', entreprise_nom: '', circonstances: '', contrat_en_ligne: null,
-    date_souscription: '', information_retractation: 'ne_sait_pas',
+    date_souscription: '', information_retractation: 'ne_sait_pas', date_debut_contrat: '', type_assurance: null,
     resiliation: { date_demande: '', canal: null, reconduction_sans_information: false },
     moyen_paiement: null, autorisation: null, prelevements_en_cours: null,
     debits: [{ date: '', montant: '' }],
@@ -23,6 +23,7 @@ const etat = {
 const aujourdhui = () => new Intl.DateTimeFormat('fr-CA', { timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 
 // ---------- Outils d'affichage ----------
+const majuscule = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const euros = (n) => Number(n).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
 const dateLongue = (s) => new Date(s + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -84,7 +85,16 @@ const vues = [
       <fieldset><legend>Comment l'avez-vous demandée ?</legend><div class="choix choix-ligne">
         ${[['email', 'Par email'], ['formulaire', 'Sur leur site'], ['courrier', 'Par courrier'], ['telephone', 'Par téléphone']].map(([v, l]) => radio('canal', v, l, '', etat.r.resiliation.canal === v)).join('')}</div></fieldset>
       <div class="champ"><label class="case"><input type="checkbox" id="reconduction" ${etat.r.resiliation.reconduction_sans_information ? 'checked' : ''}>
-        <span>Mon contrat a été reconduit automatiquement sans que l'entreprise m'en ait prévenu par écrit</span></label></div>` : ''}
+        <span>Mon contrat a été reconduit automatiquement sans que l'entreprise m'en ait prévenu par écrit</span></label></div>
+      ${etat.r.secteur === 'assurance' ? `
+        <div class="champ"><label class="etiquette" for="type_assurance">Quel type d'assurance ?</label>
+          <select id="type_assurance"><option value="">Choisissez</option>
+            ${[['auto', 'Auto ou moto'], ['habitation', 'Habitation'], ['affinitaire', 'Téléphone, appareil, voyage (assurance vendue avec un produit)'], ['sante', 'Complémentaire santé (mutuelle)'], ['emprunteur', 'Assurance de prêt immobilier'], ['autre', 'Autre assurance']]
+              .map(([v, t]) => `<option value="${v}" ${etat.r.type_assurance === v ? 'selected' : ''}>${t}</option>`).join('')}
+          </select></div>` : ''}
+      ${['assurance', 'telecom'].includes(etat.r.secteur) ? `
+        <div class="champ"><label class="etiquette" for="date_debut_contrat">Date de début du contrat<span class="aide">Elle figure sur votre contrat ou votre première facture. Vos droits de résiliation en dépendent.</span></label>
+          <input type="date" id="date_debut_contrat" max="${aujourdhui()}" value="${esc(etat.r.date_debut_contrat)}"></div>` : ''}` : ''}
     <div class="champ"><label class="etiquette" for="circonstances">Racontez brièvement ce qui s'est passé<span class="aide">Facultatif. Ce texte pourra figurer dans vos courriers ; vous pourrez le relire avant tout envoi.</span></label>
       <textarea id="circonstances" maxlength="3000">${esc(etat.r.circonstances)}</textarea></div>
     ${actions()}`;
@@ -162,6 +172,8 @@ function lireEtape() {
       if (r.type_litige === 'resiliation_refusee') {
         r.resiliation = { date_demande: champ('date_demande').value, canal: val('canal'), reconduction_sans_information: champ('reconduction').checked };
         if (r.resiliation.date_demande && !r.resiliation.canal) return 'Indiquez comment vous avez demandé la résiliation.';
+        if (r.secteur === 'assurance') { r.type_assurance = champ('type_assurance').value || null; if (!r.type_assurance) return 'Indiquez le type d\'assurance.'; }
+        if (['assurance', 'telecom'].includes(r.secteur)) r.date_debut_contrat = champ('date_debut_contrat').value;
       }
       if (!r.entreprise_nom) return 'Indiquez le nom de l\'entreprise.';
       if (r.contrat_en_ligne === null) return 'Indiquez si le contrat a été conclu en ligne.';
@@ -206,6 +218,7 @@ function reponsesMoteur() {
     moyen_paiement: r.moyen_paiement, autorisation: r.autorisation, prelevements_en_cours: r.prelevements_en_cours,
     contrat_en_ligne: r.contrat_en_ligne === true, date_souscription: r.date_souscription || null,
     information_retractation: r.information_retractation,
+    date_debut_contrat: r.date_debut_contrat || null, type_assurance: r.type_assurance,
     debits: r.debits.filter(d => d.date && Number(d.montant) > 0).map(d => ({ date: d.date, montant: Math.round(Number(d.montant) * 100) / 100 })),
     resiliation: { ...r.resiliation, date_demande: r.resiliation.date_demande || null },
     demarches: { ...r.demarches, date_reclamation: r.demarches.date_reclamation || null, date_mise_en_demeure: r.demarches.date_mise_en_demeure || null },
@@ -262,11 +275,17 @@ function brancherDemarches() {
 
 // ---------- Bilan ----------
 const ORIENTATIONS = {
-  mediateur_sectoriel: 'Ce type de contrat relève de règles particulières. Contactez le médiateur de ce secteur, dont les coordonnées figurent dans votre contrat ou sur vos factures, ou une association de consommateurs agréée.',
+  mediateur_sectoriel: 'Contactez le médiateur de ce secteur, dont les coordonnées figurent dans votre contrat ou sur vos factures.',
   avocat: 'Pour un montant de cette importance, l\'avis d\'un avocat est recommandé. Une association de consommateurs peut aussi vous orienter.',
   prescription: 'Les débits indiqués sont trop anciens pour être réclamés. Une association de consommateurs pourra confirmer cette analyse.',
   aucun_debit: 'Revenez au diagnostic et indiquez les débits que vous contestez.',
   resilier_d_abord: 'Demandez d\'abord la résiliation par écrit, de préférence par le moyen prévu au contrat. Si l\'entreprise refuse ou continue de prélever, revenez faire votre diagnostic.',
+};
+const ORIENTATIONS_SECTEUR = {
+  energie: 'Adressez d\'abord une réclamation écrite à votre fournisseur. Sans réponse satisfaisante sous deux mois, vous pouvez saisir gratuitement le Médiateur national de l\'énergie ; son site energie-info.fr vous aide à rédiger votre réclamation.',
+  telecom: 'Adressez d\'abord une réclamation écrite au service client de votre opérateur. En cas d\'échec, vous pouvez saisir gratuitement le Médiateur des communications électroniques.',
+  assurance: 'Adressez d\'abord une réclamation écrite au service réclamations de votre assureur. En cas d\'échec, vous pouvez saisir gratuitement La Médiation de l\'Assurance.',
+  banque: 'Adressez d\'abord une réclamation écrite à votre conseiller puis au service réclamations de votre banque. En cas d\'échec, vous pouvez saisir gratuitement le médiateur de votre banque, dont les coordonnées figurent dans ses conditions tarifaires.',
 };
 const ETAPE_TEXTE = {
   reclamation: ['Première étape : une réclamation écrite', 'Reprendr. prépare votre réclamation et l\'envoie en recommandé à l\'entreprise, après votre validation.'],
@@ -274,7 +293,7 @@ const ETAPE_TEXTE = {
   relance: ['Prochaine étape : une relance', 'Votre réclamation est restée sans réponse satisfaisante. Une relance précède la mise en demeure.'],
   mise_en_demeure: ['Prochaine étape : la mise en demeure', 'Reprendr. la prépare et l\'envoie en recommandé avec accusé de réception, après votre validation.'],
   attente_mise_en_demeure: ['Laissez courir le délai de votre mise en demeure', 'Si l\'entreprise ne répond pas, la prochaine étape sera la saisine du médiateur.'],
-  mediation: ['Prochaine étape : la saisine du médiateur', 'Reprendr. prépare un dossier complet à déposer auprès du médiateur dont relève l\'entreprise.'],
+  mediation: ['Prochaine étape : la saisine du médiateur', 'Reprendr. prépare un dossier complet à déposer auprès du médiateur compétent.'],
 };
 const FORMULES = {
   complete: ['Formule complète', 'réclamation, relance, mise en demeure et dossier de médiation'],
@@ -291,8 +310,9 @@ function afficherBilan() {
   if (!b.dans_le_perimetre) {
     $vue.innerHTML = `
       <h1>Reprendr. ne peut pas traiter ce dossier</h1>
-      <p class="chapeau">${esc(b.justifications.at(-1)?.parce_que || '')}.</p>
-      <p>${esc(ORIENTATIONS[b.orientation] || '')}</p>
+      <p class="chapeau">${esc(majuscule(b.justifications.at(-1)?.parce_que || ''))}.</p>
+      <p>${esc((b.orientation === 'mediateur_sectoriel' && ORIENTATIONS_SECTEUR[b.secteur]) || ORIENTATIONS[b.orientation] || '')}</p>
+      <p>Une association de consommateurs agréée peut aussi vous accompagner gratuitement ou à faible coût.</p>
       <p class="mention">Mieux vaut vous le dire maintenant que vous proposer une démarche inadaptée.</p>${retour}`;
     brancherRetour(); window.scrollTo({ top: 0 }); return;
   }
@@ -322,6 +342,7 @@ function afficherBilan() {
       Reprendr. vous fournit la demande à transmettre ; c'est gratuit et cela se fait en parallèle.</p></div>` : ''}
 
     <div class="bloc"><h3>${esc(titreEtape)}</h3><p>${esc(texteEtape)}</p>
+      <p>En cas d'échec, le médiateur compétent sera ${esc(b.mediateur)}.</p>
       <div class="encadre"><p><strong>${nomFormule}</strong> : ${contenuFormule}.</p>
         <p class="prix">${b.formule === 'mediation' ? euros(b.prix_maximum) : `${euros(b.prix_maximum)} au maximum`}</p>
         ${option ? `<p>Relance en recommandé : ${euros(option.prix)}, ${option.conseillee ? 'conseillée dans votre situation' : 'proposée si l\'entreprise ne répond pas'}.</p>` : ''}

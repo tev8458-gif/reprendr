@@ -54,6 +54,8 @@ function nettoyer(b) {
       contrat_en_ligne: bool(r.contrat_en_ligne),
       date_souscription: date(r.date_souscription),
       information_retractation: choix(r.information_retractation, ['oui', 'non', 'ne_sait_pas'], 'ne_sait_pas'),
+      date_debut_contrat: date(r.date_debut_contrat),
+      type_assurance: choix(r.type_assurance, ['auto', 'habitation', 'affinitaire', 'sante', 'emprunteur', 'autre'], null),
       prelevements_en_cours: bool(r.prelevements_en_cours),
       resiliation: {
         date_demande: date(res.date_demande),

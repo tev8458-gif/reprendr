@@ -23,7 +23,7 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 // =====================================================================
 
 const REGLES = {
-  version: '2026-10-v1',
+  version: '2026-10-v2',
   // Voie bancaire
   banque_non_autorise_mois: 13,     // opération non autorisée (C. mon. fin.)
   banque_sepa_autorise_jours: 56,   // prélèvement SEPA autorisé : 8 semaines
@@ -39,13 +39,25 @@ const REGLES = {
   mediation_max_mois: 12,           // saisine dans l'année suivant la réclamation écrite
   // Périmètre
   seuil_orientation_avocat: 5000,
-  secteurs_hors_perimetre: ['assurance', 'telecom', 'energie', 'banque'],
+  secteurs_hors_perimetre: ['banque'],
+  // Résiliation sectorielle (à valider)
+  assurance_hamon_mois: 12,          // résiliation à tout moment après un an (assurances concernées)
+  assurance_hamon_types: ['auto', 'habitation', 'affinitaire', 'sante'],
+  telecom_engagement_mois: 12,       // au-delà, frais plafonnés au quart des mensualités restantes
   // Alertes d'urgence
   alerte_banque_jours: 21,
   alerte_retractation_jours: 7,
   // Prix TTC par étape
   prix: { reclamation: 11.90, relance: 9.90, mise_en_demeure: 19.90, mediation: 9.90 },
 };
+
+// Libellés lisibles des secteurs
+const MEDIATEURS = {
+  energie: 'le Médiateur national de l\'énergie',
+  telecom: 'le Médiateur des communications électroniques',
+  assurance: 'La Médiation de l\'Assurance',
+};
+const SECTEURS = { assurance: 'd\'assurance', telecom: 'de téléphonie et d\'internet', energie: 'd\'électricité et de gaz', banque: 'bancaires' };
 
 // ---------- Outils de dates (format 'AAAA-MM-JJ', calcul en UTC) ----------
 const versDate = (s) => { const [a, m, j] = s.split('-').map(Number); return new Date(Date.UTC(a, m - 1, j)); };
@@ -78,6 +90,8 @@ function diagnostiquer(r, aujourdhui) {
     debits_prescrits: [],
     voie_bancaire: { ouverte: false, modele: null, debits: [], montant: 0, date_limite: null },
     retractation: { applicable: false, ouverte: false, prolongee: false, date_limite: null },
+    secteur: r.secteur || 'general',
+    mediateur: MEDIATEURS[r.secteur] || 'le médiateur de la consommation désigné par l\'entreprise',
     point_entree: null,
     formule: null,
     prix_maximum: 0,
@@ -109,8 +123,9 @@ function diagnostiquer(r, aujourdhui) {
 
   // ---- 2. Périmètre ----
   if (REGLES.secteurs_hors_perimetre.includes(r.secteur)) {
+    bilan.secteur = r.secteur;
     horsPerimetre('mediateur_sectoriel',
-      `les contrats du secteur « ${r.secteur} » obéissent à des règles spécifiques que Reprendr. ne couvre pas encore ; le médiateur de ce secteur ou une association de consommateurs pourra vous aider`);
+      `les contrats ${SECTEURS[r.secteur]} obéissent à des règles spécifiques que Reprendr. ne couvre pas encore`);
   }
   if (debits.length === 0 && r.type_litige !== 'resiliation_refusee') {
     horsPerimetre('aucun_debit', 'aucun débit contesté n\'a été indiqué');
@@ -193,8 +208,38 @@ function diagnostiquer(r, aujourdhui) {
       if (r.resiliation.canal === 'telephone') bilan.points_faibles.push('Votre demande de résiliation a été faite par téléphone : aucune trace écrite ne la prouve.');
     }
     if (r.resiliation?.reconduction_sans_information) {
-      bilan.fondements.push('A3b');
+      bilan.fondements.push(r.secteur === 'assurance' ? 'A3b-assurance' : 'A3b');
       justifier('Le courrier invoque l\'absence d\'information sur la reconduction', 'vous indiquez que votre contrat a été reconduit sans que l\'entreprise vous ait prévenu');
+    }
+    // Règles sectorielles de résiliation
+    const debut = r.date_debut_contrat;
+    const anciennete = (mois) => debut && aujourdhui >= ajouterMois(debut, mois);
+    if (r.secteur === 'energie') {
+      bilan.fondements.push('A3-energie');
+      justifier('Le courrier rappelle que vous pouvez résilier à tout moment et sans frais', 'pour un contrat d\'électricité ou de gaz, le particulier peut résilier ou changer de fournisseur à tout moment, sans frais');
+    } else if (r.secteur === 'assurance') {
+      if (r.type_assurance === 'emprunteur') {
+        bilan.fondements.push('A3-assurance-emprunteur');
+        justifier('Le courrier rappelle que l\'assurance emprunteur se résilie à tout moment', 'depuis la loi Lemoine, l\'assurance de prêt immobilier peut être résiliée à tout moment, sous réserve d\'une garantie équivalente acceptée par la banque');
+      } else if (REGLES.assurance_hamon_types.includes(r.type_assurance) && anciennete(REGLES.assurance_hamon_mois)) {
+        bilan.fondements.push('A3-assurance-hamon');
+        justifier('Le courrier invoque la résiliation à tout moment (loi Hamon)', 'votre contrat a plus d\'un an et fait partie des assurances que l\'on peut résilier à tout moment, sans frais ; la résiliation prend effet un mois après sa réception');
+      } else if (!debut) {
+        bilan.points_faibles.push('La date de début du contrat est inconnue : elle détermine si vous pouvez résilier à tout moment (après un an de contrat).');
+      } else if (!REGLES.assurance_hamon_types.includes(r.type_assurance)) {
+        bilan.points_faibles.push('Ce type d\'assurance ne relève pas de la résiliation à tout moment : la résiliation se fait en principe à l\'échéance annuelle.');
+      } else {
+        bilan.points_faibles.push('Votre contrat a moins d\'un an : la résiliation à tout moment ne sera possible qu\'après sa première année, sauf à l\'échéance ou en cas de reconduction sans information.');
+      }
+    } else if (r.secteur === 'telecom') {
+      if (anciennete(REGLES.telecom_engagement_mois)) {
+        bilan.fondements.push('A3-telecom');
+        justifier('Le courrier rappelle le plafonnement des frais de résiliation', 'votre contrat a plus de douze mois : les sommes exigibles sont limitées au quart des mensualités restantes de l\'engagement');
+      } else if (!debut) {
+        bilan.points_faibles.push('La date de début du contrat est inconnue : elle détermine les frais que l\'opérateur peut réclamer en cas de résiliation.');
+      } else {
+        bilan.points_faibles.push('Votre contrat a moins de douze mois : l\'opérateur peut en principe réclamer les mensualités restantes jusqu\'à la fin de la première année.');
+      }
     }
   } else if (r.type_litige === 'frais_non_autorises') {
     bilan.fondements.push('A4');
@@ -301,6 +346,8 @@ function nettoyer(b) {
       contrat_en_ligne: bool(r.contrat_en_ligne),
       date_souscription: date(r.date_souscription),
       information_retractation: choix(r.information_retractation, ['oui', 'non', 'ne_sait_pas'], 'ne_sait_pas'),
+      date_debut_contrat: date(r.date_debut_contrat),
+      type_assurance: choix(r.type_assurance, ['auto', 'habitation', 'affinitaire', 'sante', 'emprunteur', 'autre'], null),
       prelevements_en_cours: bool(r.prelevements_en_cours),
       resiliation: {
         date_demande: date(res.date_demande),
